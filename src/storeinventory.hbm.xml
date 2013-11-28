@@ -1,0 +1,11 @@
+<!-- <?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.oa.couponsWebApp.Coupon" table="COUPONS">
+		<id name="id" column="id" type="int"/> 
+		<property name="businessId" column="business_Id" type="int"/> 
+		<property name="image" column="image" type="int"/> 
+	</class>
+</hibernate-mapping> -->
