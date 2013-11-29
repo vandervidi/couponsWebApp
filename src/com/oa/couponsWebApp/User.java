@@ -6,24 +6,28 @@ import javax.persistence.*;
 
 @Entity
 public class User {
-	
-	
+
 	private String userName;
 	private String password;
+	private int privilige;		//1=Admin, 0=Regular user
 	Date dateOfRegistration;
 	
-	//Default Ctor
-	public User(){
+
+	public User(String userName, String password, int privilige) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.privilige=privilige; //1=Admin, 0=Regular user
+		this.dateOfRegistration = new Date();
 	}
 
 	public User(String userName, String password) {
 		super();
 		this.userName = userName;
 		this.password = password;
+		this.privilige=0;  //1=Admin, 0=Regular user
 		this.dateOfRegistration = new Date();
 	}
-
-
 
 
 	//***Func**********************
@@ -52,5 +56,13 @@ public class User {
 	public String toString() {
 		return "Coupon [userName=" + userName + ", password=" + password + ", dateOfRegistration="
 				+ dateOfRegistration + "]";
+	}
+
+	public int getPrivilige() {
+		return privilige;
+	}
+
+	public void setPrivilige(int privilige) {
+		this.privilige = privilige;
 	}
 }

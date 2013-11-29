@@ -44,25 +44,65 @@ public class CouponsPlatformController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String str = request.getPathInfo();
 
-		//part of the code for adding a coupon into db
-		String image = request.getParameter("image");
-		String  bussinessId = request.getParameter("bussinessId");
-		String description = request.getParameter("description");
-		String expireDate = request.getParameter("expDate");
-		
-		int busId=Integer.parseInt(bussinessId);
-		CouponDAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
-		
-		
-		// about
+		// about- working!
 		if (str.equals("/about")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/about.jsp");
 			dispatcher.forward(request, response);
 		} 
+		// Log in 
+				else if(str.equals("/logIn")) {
+					String username = request.getParameter("username");
+					String password = request.getParameter("password");
+					
+					//make a new "user" object.construct only by name
+					//locate the user in the users database
+					//encrypt the password and compare with the one in the DB.
+					//if it matches-> make session. else- redirect to index.
+					//if admin logs in-> redirect to adminPanel.jsp
+					
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/businesses.jsp");
+					dispatcher.forward(request, response);			
+				}
 		
-		// Help
+		// Log out 
+				else if(str.equals("/logIn")) {
+					request.setAttribute("timestamp", new java.util.Date());
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/businesses.jsp");
+					dispatcher.forward(request, response);			
+				}
+		
+		//add a coupon to db - working!
+		else if(str.equals("/addCoupon")) {
+
+			String image = request.getParameter("image");
+			String businessId = request.getParameter("businessId");
+			String description = request.getParameter("description");
+			String expireDate = request.getParameter("expDate");
+			int busId=Integer.parseInt(businessId);
+			DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+
+			RequestDispatcher dispatcher = getServletContext()
+				.getRequestDispatcher("/views/adminPanel.jsp");
+			dispatcher.forward(request, response);			
+		}
+		// add a new business - working!
+	else if(str.equals("/addBusiness")) {
+				
+				//add a business to db
+				String businessName = request.getParameter("businessName");
+				System.out.println(businessName);
+				DAO.getInstance().addBusiness(new Business(businessName));
+	
+				RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/adminPanel.jsp");
+				dispatcher.forward(request, response);			
+			}
+		
+		// Help - working!
 		else if(str.equals("/help")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
@@ -78,11 +118,19 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
-		// All coupons
+		// print all coupons
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/coupons.jsp");
+			dispatcher.forward(request, response);			
+		}
+		
+		// print all businesses - working!
+		else if(str.equals("/businesses")) {
+			request.setAttribute("timestamp", new java.util.Date());
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/businesses.jsp");
 			dispatcher.forward(request, response);			
 		}
 		
@@ -107,39 +155,15 @@ public class CouponsPlatformController extends HttpServlet {
 				response.sendRedirect("/couponsWebApp/controller/coupon/");
 			}
 		}
-		
-		
-//		else if(str.contains("/coupon")) {
-//			CouponDAO dbInstance = null;
-//			Coupon couponUserRequest = null;
-//			//String couponId = str.substring(8);
-//			System.out.println(CouponDAO.getInstance());
-//			try{
-//				
-//				//						System.out.println("couponId="+couponId);
-//				//dbInstance = db.getInstance();
-//				
-//				//						System.out.println( db.getInstance() );
-//				//couponUserRequest = dbInstance.getCoupon( Integer.parseInt(couponId) );
-//				//						System.out.println("finish");
-//				request.setAttribute("couponId", couponId);						
-//				request.setAttribute("timestamp", new java.util.Date());
-//				RequestDispatcher dispatcher = getServletContext()
-//						.getRequestDispatcher("/views/coupon.jsp");
-//				dispatcher.forward(request, response);	
-//			}
-//			catch(Exception e){	
-//				System.out.println("ffff");
-//			}
-//		}
-		
-		// Home-page
+
+		// Home-page - working!
 		else {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/views/home-page.jsp");
+					.getRequestDispatcher("/views/index.html");
 			dispatcher.forward(request, response);			
 		}
+		
 	}
 
 //	void sendError(HttpServletRequest request, HttpServletResponse response, int nm, String msg) throws IOException, ServletException{

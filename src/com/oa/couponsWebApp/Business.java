@@ -6,27 +6,33 @@ import javax.persistence.Id;
 
 @Entity
 public class Business {
-	
-	
 	public int businessId;
 	private String businessName;
 	
 	
 	// Constractors
-	public Business() {
-	}
-	public Business(String businessName) {
-		super();
-		this.businessName = businessName;
-	}
+	
 	public Business(int businessId, String businessName) {
 		super();
 		this.businessId = businessId;
 		this.businessName = businessName;
 	}
 
-	// getters & setters func
-	@Id @GeneratedValue
+	
+	public Business() {
+		super();
+	}
+
+	public Business(String businessName) {
+		super();
+		this.businessName = businessName;
+	}
+	
+
+// getters & setters functions
+	
+	@Id 
+	@GeneratedValue
 	public int getBusinessId() {
 		return businessId;
 	}
@@ -40,13 +46,9 @@ public class Business {
 		this.businessName = businessName;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return "Business [businessId=" + businessId + ", businessName="
 				+ businessName + "]";
-	}
-	
-	
+	}	
 }

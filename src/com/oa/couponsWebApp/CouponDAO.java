@@ -210,7 +210,7 @@ public class CouponDAO implements ICouponsDAO {
 			session.close();
 			System.out.println("getting all coupons completed."+cr);
 		} catch (HibernateException e) {
-        		System.out.println("error: deleting coupon"+cr);
+        		System.out.println("error: failes to make coupons iterator"+cr);
 			return null;
         }
 		return iterator;

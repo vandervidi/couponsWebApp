@@ -5,11 +5,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>Admin Panel</title>
 </head>
 <body>
-	<h2>coupons</h2>
-	<img src="vidi.jpeg">
+	<h2>Admin Panel - list of all coupons </h2>
+<br>
+<div style="color: white; background-color:#151515;text-align: center; margin:0 auto; padding-top: 2px;padding-bottom: 1px;">
+        <a href="addCoupon.html">
+        <div class=divmenu>ADD COUPON</div></a>
+        <a href="addBusiness.html">
+        <div class=divmenu>ADD BUSINESS</div></a>
+         <a href="../controller/logOut">
+        <div class=divmenu>SHOW BUSINESSES</div></a>   
+        <a href="../controller/businesses">
+        <div class=divmenu>LOG OUT</div></a>      
+        </div>
+
+
 <%
 Object ob = request.getAttribute("timestamp");
 out.println("<br/>\n" + ob);
@@ -28,7 +40,7 @@ out.println("<br/>\n" + ob);
 <div id="header" style="background-color:#FFA500;">
 <h1 style="margin-bottom:0;">Coupon name</h1></div>
 
-<div id="menu" style="background-color:#FFD700;height:200px;width:400px;float:left;">
+<div style="background-color:#FFD700;height:200px;width:400px;float:left;">
 <img src=<% out.println(((Coupon)tempOb).getImage()); %>width="300"></div>
 
 <div id="content" style="background-color:#EEEEEE;height:200px;width:300px;float:right;">

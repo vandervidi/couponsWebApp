@@ -13,14 +13,14 @@ public class BusinessDAO {
 	private Session session = null;
 	String cr = "\n----------------";
 	
-	//**Singleton***************************************************************
+	//**Singleton**
 	private static BusinessDAO instance;
 
 	
 	// Private constructor prevents instantiation from other classes
 	  private BusinessDAO() {
 		  sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-		  //sessionFactory = new Configuration().configure().buildSessionFactory();
+		  
 	  }
 
 	  public static BusinessDAO getInstance() {
@@ -39,9 +39,9 @@ public class BusinessDAO {
 			//-------------
 			session.getTransaction().commit();
 			session.close();
-									System.out.println("update business "+ob.getBusinessId()+" completed."+cr);
+			System.out.println("update business "+ob.getBusinessId()+" completed."+cr);
 		} catch (Exception e) {
-									System.out.println("error: update business "+ob.getBusinessId()+cr);
+			System.out.println("error: update business "+ob.getBusinessId()+cr);
 			e.printStackTrace();
 			return false;
 		}
@@ -49,45 +49,45 @@ public class BusinessDAO {
 	}
 
 	public boolean deleteBusiness(int id) {
-		Coupon couponToDel = null;
+		Business businessToDelete  = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			//-------------
-			couponToDel = new Coupon();
-			couponToDel.setId(id);
+
+			businessToDelete = new Business();
+			businessToDelete.setBusinessId(id);
 			
-			System.out.println(couponToDel);
-            session.delete(couponToDel);
-			//-------------
+			System.out.println(businessToDelete);
+            session.delete(businessToDelete );
+
 			session.getTransaction().commit();
 			session.close();
-								System.out.println("deleting business "+id+" completed.");
+			System.out.println("deleting business "+id+" completed.");
 		} catch (HibernateException e) {
-        						System.out.println("error: deleting business: "+id);
+        	System.out.println("error: deleting business: "+id);
             return false;
         }
 		return true;
 	}
 
 
-	public Coupon getBusiness(int id) {
-		Coupon coupon = null;
+	public Business getBusiness(int id) {
+		Business business = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			coupon =  (Coupon) session.get(Coupon.class, id);
+			business =  (Business) session.get(Business.class, id);
 			//-------------
 			session.getTransaction().commit();
 			session.close();
-									System.out.println("get business completed."+cr);
+			System.out.println("get business completed."+cr);
 		} catch (Exception e) {
-									System.out.println("error: get business."+cr);
+			System.out.println("error: get business."+cr);
 			e.printStackTrace();
 			return null;
 		}
-		return coupon;
+		return business;
 	}
 	
 
@@ -115,20 +115,14 @@ public class BusinessDAO {
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			//-------------
-			List coupons = session.createCriteria(Coupon.class).list();
-			System.out.println("There are " + coupons.size() + " business(es):");
-			iterator = coupons.iterator();
-//			while(iterator.hasNext()) 
-//			{
-//				System.out.println(iterator.next());
-//			}
-//			//-------------
+			List businesses = session.createCriteria(Business.class).list();
+			System.out.println("There are: " + businesses.size() + " business(es):");
+			iterator = businesses.iterator();
 			session.getTransaction().commit();
 			session.close();
-			System.out.println("getting all business completed."+cr);
+			System.out.println("getting all businesses completed."+cr);
 		} catch (HibernateException e) {
-        		System.out.println("error: deleting business"+cr);
+        		System.out.println("error: failes to make businesses iterator"+cr);
 			return null;
         }
 		return iterator;

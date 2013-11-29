@@ -17,10 +17,10 @@ public class CouponMain {
 	public static void main(String [] args){
 
 		UserDAO userInstance = UserDAO.getInstance();
-							System.out.println("UserDAO_ClassInstance="+userInstance);
-		User u1 = new User("Ofir", "1234");
-		User u2 = new User("Vidran", "abcd");
-		User u3 = new User("Vidran", "2222");
+		System.out.println("UserDAO_ClassInstance="+userInstance);
+		User u1 = new User("Ofir", "1234",1);
+		User u2 = new User("Vidran", "abcd",0);
+		User u3 = new User("Vidran", "2222",0);
 		
 		userInstance.addUser(u1);
 		userInstance.addUser(u2);
@@ -28,14 +28,14 @@ public class CouponMain {
 							
 		//---------------
 
-		Business b1 = new Business(/*90, */"aaaa");
-		Business b2 = new Business(/*91, */"ssss");
-		Business b3 = new Business(92, "dddd");
-		Business b4 = new Business(93, "ffff");
-		Business b5 = new Business(94, "gggg");
+		Business b1 = new Business("aaaa");
+		Business b2 = new Business("ssss");
+		Business b3 = new Business("dddd");
+		Business b4 = new Business("ffff");
+		Business b5 = new Business("gggg");
 		
 		BusinessDAO businessInstance = BusinessDAO.getInstance();
-							System.out.println("BusinessDAO_ClassInstance="+businessInstance);
+		System.out.println("BusinessDAO_ClassInstance="+businessInstance);
 		businessInstance.addBusiness(b1);
 		businessInstance.addBusiness(b2);
 		businessInstance.addBusiness(b3);

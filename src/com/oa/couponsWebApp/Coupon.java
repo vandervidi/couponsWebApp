@@ -25,9 +25,7 @@ public class Coupon {
 		this.setExpireDate(expireDate);
 	}
 	
-	//***Func**********************
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	
 	@Id @GeneratedValue
 	public int getId() {
 		return id;
