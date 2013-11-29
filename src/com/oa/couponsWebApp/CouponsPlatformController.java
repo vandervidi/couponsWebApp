@@ -45,14 +45,14 @@ public class CouponsPlatformController extends HttpServlet {
 		String str = request.getPathInfo();
 
 		//part of the code for adding a coupon into db
-//		String image = request.getParameter("image");
-//		String  bussinessId = request.getParameter("bussinessId");
-//		String description = request.getParameter("description");
-//		String expireDate = request.getParameter("expDate");
-//		
-//		int busId=Integer.parseInt(bussinessId);
-//		CouponDAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
-//		
+		String image = request.getParameter("image");
+		String  bussinessId = request.getParameter("bussinessId");
+		String description = request.getParameter("description");
+		String expireDate = request.getParameter("expDate");
+		
+		int busId=Integer.parseInt(bussinessId);
+		CouponDAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+		
 		
 		// about
 		if (str.equals("/about")) {
