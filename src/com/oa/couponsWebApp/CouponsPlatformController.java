@@ -51,7 +51,7 @@ public class CouponsPlatformController extends HttpServlet {
 		String expireDate = request.getParameter("expDate");
 		
 		int busId=Integer.parseInt(bussinessId);
-		CouponDAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+		temp_CouponDAO.getInstance().addCoupon(new Entity_Coupon(busId,image,description,expireDate));
 		
 		
 		// about

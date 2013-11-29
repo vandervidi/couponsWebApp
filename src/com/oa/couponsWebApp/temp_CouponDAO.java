@@ -16,7 +16,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 
-public class CouponDAO implements ICouponsDAO {
+public class temp_CouponDAO implements ICouponsDAO {
 
 //	public static String driver = "org.apache.derby.jdbc.ClientDriver";
 //    public static String protocol = "jdbc:derby://localhost:1527/ofirDB;create=true";
@@ -29,18 +29,18 @@ public class CouponDAO implements ICouponsDAO {
 	String cr = "\n----------------";
 	
 	//**Singleton***************************************************************
-	private static CouponDAO instance;
+	private static temp_CouponDAO instance;
 
 	
 	// Private constructor prevents instantiation from other classes
-	  private CouponDAO() {
+	  private temp_CouponDAO() {
 		  sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 		  //sessionFactory = new Configuration().configure().buildSessionFactory();
 	  }
 
-	  public static CouponDAO getInstance() {
+	  public static temp_CouponDAO getInstance() {
 		  if (instance==null)
-			  instance=new CouponDAO();
+			  instance=new temp_CouponDAO();
 		  return instance;
 	  }
 	  
@@ -109,7 +109,7 @@ public class CouponDAO implements ICouponsDAO {
 
 	// Not Working
 	@Override
-	public boolean updateCoupon(Coupon ob) {
+	public boolean updateCoupon(Entity_Coupon ob) {
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
@@ -129,12 +129,12 @@ public class CouponDAO implements ICouponsDAO {
 
 	@Override
 	public boolean deleteCoupon(int id) {
-		Coupon couponToDel = null;
+		Entity_Coupon couponToDel = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			couponToDel = new Coupon();
+			couponToDel = new Entity_Coupon();
 			couponToDel.setId(id);
 			
 			System.out.println(couponToDel);
@@ -151,13 +151,13 @@ public class CouponDAO implements ICouponsDAO {
 	}
 
 	@Override
-	public Coupon getCoupon(int id) {
-		Coupon coupon = null;
+	public Entity_Coupon getCoupon(int id) {
+		Entity_Coupon coupon = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			coupon =  (Coupon) session.get(Coupon.class, id);
+			coupon =  (Entity_Coupon) session.get(Entity_Coupon.class, id);
 			//-------------
 			session.getTransaction().commit();
 			session.close();
@@ -171,7 +171,7 @@ public class CouponDAO implements ICouponsDAO {
 	}
 	
 	@Override
-	public boolean addCoupon(Coupon ob) {
+	public boolean addCoupon(Entity_Coupon ob) {
 
 		try {
 			session = sessionFactory.openSession();
@@ -192,13 +192,13 @@ public class CouponDAO implements ICouponsDAO {
 	}
 	
 	@Override
-	public Iterator<Coupon> getAllCoupons() {
+	public Iterator<Entity_Coupon> getAllCoupons() {
 		Iterator iterator = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			List coupons = session.createCriteria(Coupon.class).list();
+			List coupons = session.createCriteria(Entity_Coupon.class).list();
 			System.out.println("There are " + coupons.size() + " coupon(s):");
 			iterator = coupons.iterator();
 //			while(iterator.hasNext()) 

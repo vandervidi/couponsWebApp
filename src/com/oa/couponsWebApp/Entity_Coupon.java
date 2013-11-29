@@ -5,19 +5,19 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-public class Coupon {
+public class Entity_Coupon {
 	
-	private int id;
+	private int couponId;
 	private int businessId;
 	private String image;
 	private String description;
 	private String expireDate;
 	
 	//Default Ctor
-	public Coupon(){
+	public Entity_Coupon(){
 	}
 	
-	public Coupon(int businessId, String image, String description, String expireDate) {
+	public Entity_Coupon(int businessId, String image, String description, String expireDate) {
 		super();
 		this.businessId = businessId;
 		this.image = image;
@@ -29,11 +29,11 @@ public class Coupon {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	@Id @GeneratedValue
-	public int getId() {
-		return id;
+	public int getCouponId() {
+		return couponId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setCouponId(int couponId) {
+		this.couponId = couponId;
 	}
 	public int getBusinessId() {
 		return businessId;
@@ -63,7 +63,7 @@ public class Coupon {
 	
 	@Override
 	public String toString() {
-		return "Coupon [id=" + id + ", businessId=" + businessId + ", image="
+		return "Coupon [couponId=" + couponId + ", businessId=" + businessId + ", image="
 				+ image + ", description=" + description + ", expireDate="
 				+ expireDate + "]";
 	}

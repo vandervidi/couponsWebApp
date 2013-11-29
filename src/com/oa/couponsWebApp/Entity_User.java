@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class Entity_User {
 	
 	
 	private String userName;
@@ -13,10 +13,10 @@ public class User {
 	Date dateOfRegistration;
 	
 	//Default Ctor
-	public User(){
+	public Entity_User(){
 	}
 
-	public User(String userName, String password) {
+	public Entity_User(String userName, String password) {
 		super();
 		this.userName = userName;
 		this.password = password;

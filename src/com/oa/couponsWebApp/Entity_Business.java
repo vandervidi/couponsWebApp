@@ -5,28 +5,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Business {
+public class Entity_Business {
 	
 	
-	public int businessId;
+	private int businessId;
 	private String businessName;
 	
 	
 	// Constractors
-	public Business() {
+	public Entity_Business() {
 	}
-	public Business(String businessName) {
-		super();
-		this.businessName = businessName;
-	}
-	public Business(int businessId, String businessName) {
+	public Entity_Business(int businessId, String businessName) {
 		super();
 		this.businessId = businessId;
 		this.businessName = businessName;
 	}
 
 	// getters & setters func
-	@Id @GeneratedValue
+	@Id
 	public int getBusinessId() {
 		return businessId;
 	}

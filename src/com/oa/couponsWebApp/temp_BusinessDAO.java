@@ -8,29 +8,29 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.classic.Session;
 
-public class UserDAO {
+public class temp_BusinessDAO {
 	public static SessionFactory sessionFactory = null;
 	private Session session = null;
 	String cr = "\n----------------";
 	
 	//**Singleton***************************************************************
-	private static UserDAO instance;
+	private static temp_BusinessDAO instance;
 
 	
 	// Private constructor prevents instantiation from other classes
-	  private UserDAO() {
+	  private temp_BusinessDAO() {
 		  sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 		  //sessionFactory = new Configuration().configure().buildSessionFactory();
 	  }
 
-	  public static UserDAO getInstance() {
+	  public static temp_BusinessDAO getInstance() {
 		  if (instance==null)
-			  instance=new UserDAO();
+			  instance=new temp_BusinessDAO();
 		  return instance;
 	  }
 
 	// Not Working
-	public boolean updateUser(User ob) {
+	public boolean updateBusiness(Entity_Business ob) {
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
@@ -39,22 +39,22 @@ public class UserDAO {
 			//-------------
 			session.getTransaction().commit();
 			session.close();
-									System.out.println("update User "+ob.getUserName()+" completed."+cr);
+									System.out.println("update business "+ob.getBusinessId()+" completed."+cr);
 		} catch (Exception e) {
-									System.out.println("error: update User "+ob.getUserName()+cr);
+									System.out.println("error: update business "+ob.getBusinessId()+cr);
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
 
-	public boolean deleteUser(int id) {
-		Coupon couponToDel = null;
+	public boolean deleteBusiness(int id) {
+		Entity_Coupon couponToDel = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			couponToDel = new Coupon();
+			couponToDel = new Entity_Coupon();
 			couponToDel.setId(id);
 			
 			System.out.println(couponToDel);
@@ -62,28 +62,28 @@ public class UserDAO {
 			//-------------
 			session.getTransaction().commit();
 			session.close();
-								System.out.println("deleting User "+id+" completed.");
+								System.out.println("deleting business "+id+" completed.");
 		} catch (HibernateException e) {
-        						System.out.println("error: deleting User: "+id);
+        						System.out.println("error: deleting business: "+id);
             return false;
         }
 		return true;
 	}
 
 
-	public Coupon getUser(int id) {
-		Coupon coupon = null;
+	public Entity_Coupon getBusiness(int id) {
+		Entity_Coupon coupon = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			coupon =  (Coupon) session.get(Coupon.class, id);
+			coupon =  (Entity_Coupon) session.get(Entity_Coupon.class, id);
 			//-------------
 			session.getTransaction().commit();
 			session.close();
-									System.out.println("get User completed."+cr);
+									System.out.println("get business completed."+cr);
 		} catch (Exception e) {
-									System.out.println("error: get User."+cr);
+									System.out.println("error: get business."+cr);
 			e.printStackTrace();
 			return null;
 		}
@@ -91,7 +91,7 @@ public class UserDAO {
 	}
 	
 
-	public boolean addUser(User ob) {
+	public boolean addBusiness(Entity_Business ob) {
 
 		try {
 			session = sessionFactory.openSession();
@@ -102,22 +102,22 @@ public class UserDAO {
 			//----------------------
 			session.getTransaction().commit();
 			session.close();
-								System.out.println("add User "+ob.getUserName()+" "+ob.getPassword()+" comleted."+cr);
+								System.out.println("add business "+ob.getBusinessId()+" "+ob.getBusinessName()+" comleted."+cr);
 		} catch (Exception e) {
-								System.out.println("error: add User."+cr);
+								System.out.println("error: add business."+cr);
 			return false;
 		}
 		return true;
 	}
 	
-	public Iterator<User> getAllUsers() {
+	public Iterator<Entity_Business> getAllBusinesses() {
 		Iterator iterator = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			//-------------
-			List coupons = session.createCriteria(Coupon.class).list();
-			System.out.println("There are " + coupons.size() + " User(s):");
+			List coupons = session.createCriteria(Entity_Coupon.class).list();
+			System.out.println("There are " + coupons.size() + " business(es):");
 			iterator = coupons.iterator();
 //			while(iterator.hasNext()) 
 //			{
@@ -126,9 +126,9 @@ public class UserDAO {
 //			//-------------
 			session.getTransaction().commit();
 			session.close();
-			System.out.println("getting all User completed."+cr);
+			System.out.println("getting all business completed."+cr);
 		} catch (HibernateException e) {
-        		System.out.println("error: deleting User"+cr);
+        		System.out.println("error: deleting business"+cr);
 			return null;
         }
 		return iterator;

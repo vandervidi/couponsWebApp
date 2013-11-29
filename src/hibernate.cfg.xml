@@ -15,8 +15,8 @@
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- Mapping files -->
-		<mapping class="com.oa.couponsWebApp.Business"/>
-		<mapping class="com.oa.couponsWebApp.Coupon"/>
-		<mapping class="com.oa.couponsWebApp.User"/>
+		<mapping class="com.oa.couponsWebApp.Entity_Business"/>
+		<mapping class="com.oa.couponsWebApp.Entity_Coupon"/>
+		<mapping class="com.oa.couponsWebApp.Entity_User"/>
 </session-factory>
 </hibernate-configuration>
