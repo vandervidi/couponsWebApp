@@ -118,7 +118,7 @@ public class CouponDAO implements ICouponsDAO {
 			//-------------
 			session.getTransaction().commit();
 			session.close();
-									System.out.println("update coupon "+ob.getId()+"completed."+cr);
+									System.out.println("update coupon "+ob.getId()+" completed."+cr);
 		} catch (Exception e) {
 									System.out.println("error: update coupon "+ob.getId()+cr);
 			e.printStackTrace();
@@ -183,7 +183,7 @@ public class CouponDAO implements ICouponsDAO {
 			//----------------------
 			session.getTransaction().commit();
 			session.close();
-								//System.out.println("add coupon "+ob.getId()+" "+ob.getBusinessId()+" "+ob.getImage()+" comleted."+cr);
+								System.out.println("add coupon "+ob.getId()+" "+ob.getBusinessId()+" "+ob.getImage()+" comleted."+cr);
 		} catch (Exception e) {
 								System.out.println("error: add coupon."+cr);
 			return false;

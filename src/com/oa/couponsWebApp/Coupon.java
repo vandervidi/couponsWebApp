@@ -26,8 +26,9 @@ public class Coupon {
 	}
 	
 	//***Func**********************
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@Id @GeneratedValue
 	public int getId() {
 		return id;
 	}
@@ -46,29 +47,24 @@ public class Coupon {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getExpireDate() {
+		return expireDate;
+	}
+	public void setExpireDate(String expireDate) {
+		this.expireDate = expireDate;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", businessId=" + businessId + ", image="
 				+ image + ", description=" + description + ", expireDate="
 				+ expireDate + "]";
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getExpireDate() {
-		return expireDate;
-	}
-
-	public void setExpireDate(String expireDate) {
-		this.expireDate = expireDate;
-	}
-	
-	
 }
