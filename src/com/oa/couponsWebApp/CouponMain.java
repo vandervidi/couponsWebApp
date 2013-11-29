@@ -35,7 +35,7 @@ public class CouponMain {
 		System.out.println( db.getBusiness(92));
 		db.deleteBusiness(93);
 		
-		//------Check Coupon---------
+		//------Check Coupon---------/
 		db.addCoupon( new Entity_Coupon(db.getBusiness(23).getBusinessId(), "22", "bla bla","1.1.2000") );
 		db.addCoupon( new Entity_Coupon(db.getBusiness(23).getBusinessId(), "444", "bla bla","12.1.2000" ));
 		db.addCoupon( new Entity_Coupon(db.getBusiness(23).getBusinessId(), "11", "bla bla","1.12.2000"));
