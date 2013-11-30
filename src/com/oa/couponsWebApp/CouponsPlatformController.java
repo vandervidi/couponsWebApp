@@ -99,6 +99,28 @@ public class CouponsPlatformController extends HttpServlet {
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);			
 			}
+		// Preview the business that is to be updated in a form.
+				else if(str.equals("/updateBusinessPreview")) {
+					String businessId=request.getParameter("updateId");
+					int businessIdInteger = Integer.parseInt(businessId);
+					Business business = DAO.getInstance().getBusiness(businessIdInteger);
+					request.setAttribute("business", business);
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/updateBusiness.jsp");
+					dispatcher.forward(request, response);			
+				}
+		
+		// Update a Business in db
+				else if(str.equals("/updateBusiness")) {
+					String businessName = request.getParameter("businessName");
+					String businessId = request.getParameter("businessId");
+					int busId=Integer.parseInt(businessId);
+					DAO.getInstance().updateBusiness(new Business(busId,businessName));
+					
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/businesses.jsp");
+					dispatcher.forward(request, response);			
+				}
 		
 		// Preview the coupon that is to be updated in a form.
 		else if(str.equals("/updateCouponPreview")) {
@@ -159,7 +181,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
-		// Delete a coupon by id
+		// Delete a coupon by id - working
 				else if(str.equals("/deleteCoupon")) {
 					String couponId = request.getParameter("deleteId");
 					int couponIdTodelete = Integer.parseInt(couponId);
@@ -170,7 +192,7 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);			
 				}
 		
-		// Delete a business by id
+		// Delete a business by id - working
 				else if(str.equals("/deleteBusiness")) {
 					String couponId = request.getParameter("deleteId");
 					int businessIdTodelete = Integer.parseInt(couponId);

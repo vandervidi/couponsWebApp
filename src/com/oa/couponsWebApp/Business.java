@@ -30,7 +30,7 @@ public class Business {
 	
 
 // getters & setters functions
-	
+
 	@Id 
 	@GeneratedValue
 	public int getBusinessId() {
