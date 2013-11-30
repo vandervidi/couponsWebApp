@@ -91,8 +91,6 @@ public class CouponsPlatformController extends HttpServlet {
 		}
 		// add a new business - working!
 		else if(str.equals("/addBusiness")) {
-				
-				//add a business to db
 				String businessName = request.getParameter("businessName");
 				System.out.println(businessName);
 				DAO.getInstance().addBusiness(new Business(businessName));
@@ -113,7 +111,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
-		// Update a Coupon
+		// Update a Coupon in db- Working
 				else if(str.equals("/updateCoupon")) {
 					String image = request.getParameter("image");
 					String businessId = request.getParameter("businessId");
@@ -123,7 +121,6 @@ public class CouponsPlatformController extends HttpServlet {
 					String couponId = request.getParameter("couponId");
 					int couponIdInteger = Integer.parseInt(couponId);
 					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate));
-					
 					
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/adminPanel.jsp");
@@ -146,7 +143,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
-		// print all coupons
+		// print all coupons - working
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
@@ -162,6 +159,28 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
+		// Delete a coupon by id
+				else if(str.equals("/deleteCoupon")) {
+					String couponId = request.getParameter("deleteId");
+					int couponIdTodelete = Integer.parseInt(couponId);
+					DAO.getInstance().deleteCoupon(couponIdTodelete);
+					
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/adminPanel.jsp");
+					dispatcher.forward(request, response);			
+				}
+		
+		// Delete a business by id
+				else if(str.equals("/deleteBusiness")) {
+					String couponId = request.getParameter("deleteId");
+					int couponIdTodelete = Integer.parseInt(couponId);
+					DAO.getInstance().deleteCoupon(couponIdTodelete);
+					
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/adminPanel.jsp");
+					dispatcher.forward(request, response);	
+	
+				}
 		// Specific coupon
 		else if(str.contains("/coupon")) {
 			if (str.length()>=8 && str.charAt(7)=='/'){

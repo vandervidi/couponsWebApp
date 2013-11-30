@@ -40,7 +40,7 @@
 <h1 style="margin-bottom:0;">Coupon name</h1></div>
 
 <div style="background-color:#FFD700;height:200px;width:400px;float:left;">
-<img src=<% out.print(((Coupon)tempOb).getImage()); %>width="300"></div>
+<img src="../views/<% out.print(((Coupon)tempOb).getImage()); %>" width="300"></div>
 
 <div id="content" style="background-color:#EEEEEE;height:200px;width:300px;float:right;">
 <% out.print(((Coupon)tempOb).getDescription()); %></div>
