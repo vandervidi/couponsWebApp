@@ -83,7 +83,7 @@ public class CouponsPlatformController extends HttpServlet {
 			String description = request.getParameter("description");
 			String expireDate = request.getParameter("expDate");
 			int busId=Integer.parseInt(businessId);
-			CouponDAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+			DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
 
 			RequestDispatcher dispatcher = getServletContext()
 				.getRequestDispatcher("/views/adminPanel.jsp");
@@ -95,7 +95,7 @@ public class CouponsPlatformController extends HttpServlet {
 				//add a business to db
 				String businessName = request.getParameter("businessName");
 				System.out.println(businessName);
-				BusinessDAO.getInstance().addBusiness(new Business(businessName));
+				DAO.getInstance().addBusiness(new Business(businessName));
 	
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
@@ -122,7 +122,7 @@ public class CouponsPlatformController extends HttpServlet {
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/views/coupons.jsp");
+					.getRequestDispatcher("/views/adminPanel.jsp");
 			dispatcher.forward(request, response);			
 		}
 		
@@ -160,7 +160,7 @@ public class CouponsPlatformController extends HttpServlet {
 		else {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/views/index.html");
+					.getRequestDispatcher("/views/index.jsp");
 			dispatcher.forward(request, response);			
 		}
 		

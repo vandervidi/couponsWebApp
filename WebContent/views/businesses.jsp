@@ -1,8 +1,8 @@
 <%@page import="com.oa.couponsWebApp.Business"%>
-<%@page import="com.oa.couponsWebApp.BusinessDAO"%>
+<%@page import="com.oa.couponsWebApp.DAO"%>
 <%@page import="com.oa.couponsWebApp.Coupon"%>
 <%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
-<%@ page import="com.oa.couponsWebApp.CouponDAO , java.util.Iterator" %>
+<%@ page import="com.oa.couponsWebApp.DAO , java.util.Iterator" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,11 +13,11 @@
 	<h2>Admin Panel - List of all businesses registered</h2>
 <br>
 <div style="color: white; background-color:#151515;text-align: center; margin:0 auto; padding-top: 2px;padding-bottom: 1px;">
-        <a href="addCoupon.html">
+        <a href="../views/addCoupon.html">
         <div>ADD COUPON</div></a>
-        <a href="addBusiness.html">
+        <a href="../views/addBusiness.html">
         <div>ADD BUSINESS</div></a>
-         <a href="adminPanel.jsp">
+         <a href="../controller/coupons">
         <div>SHOW COUPONS</div></a>   
         <a href="../controller/logOut">
         <div>LOG OUT</div></a>      
@@ -26,7 +26,7 @@
 
 <%
 //Iterator of businesses
-	Iterator iterator = BusinessDAO.getInstance().getAllBusinesses();
+	Iterator iterator = DAO.getInstance().getAllBusinesses();
 	Object tempOb;
 	while(iterator.hasNext()) {
 		tempOb=iterator.next();

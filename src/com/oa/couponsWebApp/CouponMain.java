@@ -16,7 +16,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public class CouponMain {	
 	public static void main(String [] args){
 
-		UserDAO userInstance = UserDAO.getInstance();
+		DAO userInstance = DAO.getInstance();
 		System.out.println("UserDAO_ClassInstance="+userInstance);
 		User u1 = new User("Ofir", "1234",1);
 		User u2 = new User("Vidran", "abcd",0);
@@ -34,7 +34,7 @@ public class CouponMain {
 		Business b4 = new Business("ffff");
 		Business b5 = new Business("gggg");
 		
-		BusinessDAO businessInstance = BusinessDAO.getInstance();
+		DAO businessInstance = DAO.getInstance();
 		System.out.println("BusinessDAO_ClassInstance="+businessInstance);
 		businessInstance.addBusiness(b1);
 		businessInstance.addBusiness(b2);
@@ -50,8 +50,8 @@ public class CouponMain {
 		Coupon c5 = new Coupon(b5.getBusinessId(), "33", "bla bla","1.10.2000");
 		
 		// Create Instance of CouponDAO
-		CouponDAO CouponInstance = CouponDAO.getInstance();
-							System.out.println("CouponDAO_ClassInstance"+CouponInstance);
+		DAO CouponInstance = DAO.getInstance();
+			System.out.println("CouponDAO_ClassInstance"+CouponInstance);
 		System.out.println("---------------\n");
 		
 		
