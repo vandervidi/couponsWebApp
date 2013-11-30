@@ -25,7 +25,14 @@ public class Coupon {
 		this.setExpireDate(expireDate);
 	}
 	
-	
+	public Coupon(int id,int businessId, String image, String description, String expireDate) {
+		super();
+		this.id=id;
+		this.businessId = businessId;
+		this.image = image;
+		this.description=description;
+		this.setExpireDate(expireDate);
+	}
 	@Id @GeneratedValue
 	public int getId() {
 		return id;

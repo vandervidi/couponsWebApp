@@ -23,8 +23,7 @@
 
 
 <%
-Object ob = request.getAttribute("timestamp");
-out.println("<br/>\n" + ob);
+
 //Iterator of Coupons
         Iterator iterator = DAO.getInstance().getAllCoupons();
         Object tempOb;
@@ -41,11 +40,18 @@ out.println("<br/>\n" + ob);
 <h1 style="margin-bottom:0;">Coupon name</h1></div>
 
 <div style="background-color:#FFD700;height:200px;width:400px;float:left;">
-<img src=<% out.println(((Coupon)tempOb).getImage()); %>width="300"></div>
+<img src=<% out.print(((Coupon)tempOb).getImage()); %>width="300"></div>
 
 <div id="content" style="background-color:#EEEEEE;height:200px;width:300px;float:right;">
-<% out.println(((Coupon)tempOb).getDescription()); %></div>
+<% out.print(((Coupon)tempOb).getDescription()); %></div>
 
+<form action="../controller/updateCouponPreview" method="get">
+<input type="hidden" name="updateId" value="<% out.print(((Coupon)tempOb).getId());%>">
+<input type="submit" value="Update"></form>
+
+<form action="../controller/deleteCoupon" method="get">
+<input type="hidden" name="deleteId" value="<% out.print(((Coupon)tempOb).getId());%>">
+<input type="submit" value="Delete"></form>
 </div>
 <br><br>
 <br>

@@ -90,7 +90,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		// add a new business - working!
-	else if(str.equals("/addBusiness")) {
+		else if(str.equals("/addBusiness")) {
 				
 				//add a business to db
 				String businessName = request.getParameter("businessName");
@@ -101,6 +101,34 @@ public class CouponsPlatformController extends HttpServlet {
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);			
 			}
+		
+		// Preview the coupon that is to be updated in a form.
+		else if(str.equals("/updateCouponPreview")) {
+			String couponId=request.getParameter("updateId");
+			int couponIdInteger = Integer.parseInt(couponId);
+			Coupon coupon = DAO.getInstance().getCoupon(couponIdInteger);
+			request.setAttribute("coupon", coupon);
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/updateCoupon.jsp");
+			dispatcher.forward(request, response);			
+		}
+		
+		// Update a Coupon
+				else if(str.equals("/updateCoupon")) {
+					String image = request.getParameter("image");
+					String businessId = request.getParameter("businessId");
+					String description = request.getParameter("description");
+					String expireDate = request.getParameter("expDate");
+					int busId=Integer.parseInt(businessId);
+					String couponId = request.getParameter("couponId");
+					int couponIdInteger = Integer.parseInt(couponId);
+					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate));
+					
+					
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/adminPanel.jsp");
+					dispatcher.forward(request, response);			
+				}
 		
 		// Help - working!
 		else if(str.equals("/help")) {
