@@ -173,11 +173,11 @@ public class CouponsPlatformController extends HttpServlet {
 		// Delete a business by id
 				else if(str.equals("/deleteBusiness")) {
 					String couponId = request.getParameter("deleteId");
-					int couponIdTodelete = Integer.parseInt(couponId);
-					DAO.getInstance().deleteCoupon(couponIdTodelete);
+					int businessIdTodelete = Integer.parseInt(couponId);
+					DAO.getInstance().deleteBusiness(businessIdTodelete);
 					
 					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/adminPanel.jsp");
+							.getRequestDispatcher("/views/businesses.jsp");
 					dispatcher.forward(request, response);	
 	
 				}

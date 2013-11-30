@@ -42,6 +42,13 @@
 <div id="id" style="background-color:#FFD700;height:200px;width:400px;float:left;">
 Business id: <% out.println(((Business)tempOb).getBusinessId()); %></div>
 
+<form action="../controller/updateBusinessPreview" method="get">
+<input type="hidden" name="updateId" value="<% out.print(((Business)tempOb).getBusinessId());%>">
+<input type="submit" value="Update"></form>
+
+<form action="../controller/deleteBusiness" method="get">
+<input type="hidden" name="deleteId" value="<% out.print(((Business)tempOb).getBusinessId());%>">
+<input type="submit" value="Delete"></form>
 </div>
 <br><br>
 <br>
