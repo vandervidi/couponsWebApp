@@ -8,7 +8,7 @@
 <title>Admin Panel</title>
 </head>
 <body>
-	<h2>Admin Panel - list of all coupons </h2>
+        <h2>Admin Panel - list of all coupons </h2>
 <br>
 <div style="color: white; background-color:#151515;text-align: center; margin:0 auto; padding-top: 2px;padding-bottom: 1px;">
         <a href="addCoupon.html">
@@ -26,11 +26,11 @@
 Object ob = request.getAttribute("timestamp");
 out.println("<br/>\n" + ob);
 //Iterator of Coupons
-	Iterator iterator = CouponDAO.getInstance().getAllCoupons();
-	Object tempOb;
-	while(iterator.hasNext()) {
-		tempOb=iterator.next();
-	
+        Iterator iterator = CouponDAO.getInstance().getAllCoupons();
+        Object tempOb;
+        while(iterator.hasNext()) {
+                tempOb=iterator.next();
+        
 %>
 
 

@@ -83,7 +83,7 @@ public class CouponsPlatformController extends HttpServlet {
 			String description = request.getParameter("description");
 			String expireDate = request.getParameter("expDate");
 			int busId=Integer.parseInt(businessId);
-			DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+			CouponDAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
 
 			RequestDispatcher dispatcher = getServletContext()
 				.getRequestDispatcher("/views/adminPanel.jsp");
@@ -95,7 +95,7 @@ public class CouponsPlatformController extends HttpServlet {
 				//add a business to db
 				String businessName = request.getParameter("businessName");
 				System.out.println(businessName);
-				DAO.getInstance().addBusiness(new Business(businessName));
+				BusinessDAO.getInstance().addBusiness(new Business(businessName));
 	
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
