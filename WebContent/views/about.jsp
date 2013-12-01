@@ -8,6 +8,9 @@
 </head>
 <body>
 	<h2>about</h2>
+	<br><br><br>
+	vidran & ofir<br> 
+	java EE - course project<br><br><br>
 	<%
 	Object ob = request.getAttribute("timestamp");
 	out.println(ob);
