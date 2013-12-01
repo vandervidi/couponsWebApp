@@ -7,10 +7,7 @@
 <title>about</title>
 </head>
 <body>
-	<h2>about</h2>
-	<br><br><br>
-	vidran & ofir<br> 
-	java EE - course project<br><br><br>
+	<h2>Login</h2>
 	<%
 	Object ob = request.getAttribute("timestamp");
 	out.println(ob);

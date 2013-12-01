@@ -2,6 +2,9 @@ package com.oa.couponsWebApp;
 
 
 import java.awt.Image;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,7 +18,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 public class CouponMain {	
 	public static void main(String [] args){
-
+		
 		DAO userInstance = DAO.getInstance();
 		System.out.println("UserDAO_ClassInstance="+userInstance);
 		User u1 = new User("Ofir", "1234",1);

@@ -27,5 +27,11 @@
 
 </div>
 </div>
+	<a href="http://localhost:8080/couponsWebApp/controller/categories">Coupons-categories</a> <br>
+	<a href="http://localhost:8080/couponsWebApp/controller/coupons">All-Coupons</a> <br>
+	<a href="http://localhost:8080/couponsWebApp/controller/coupon">Show coupon By ID</a> <br>
+	<a href="http://localhost:8080/couponsWebApp/controller/help">Help</a> <br>
+	<a href="http://localhost:8080/couponsWebApp/controller/contact">Contact Us</a><br>
+	<a href="http://localhost:8080/couponsWebApp/controller/about">About</a>
 </body>
 </html>

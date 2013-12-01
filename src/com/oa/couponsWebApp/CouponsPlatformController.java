@@ -43,14 +43,15 @@ public class CouponsPlatformController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String str = request.getPathInfo();
-
+		
 		// about- working!
-		if (str.equals("/about")) {
-			request.setAttribute("timestamp", new java.util.Date());
-			RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/views/about.jsp");
-			dispatcher.forward(request, response);
-		} 
+				if (str.equals("/categories")) {
+					request.setAttribute("timestamp", new java.util.Date());
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/categories.jsp");
+					dispatcher.forward(request, response);
+				} 
+		
 		// Log in 
 				else if(str.equals("/logIn")) {
 					String username = request.getParameter("username");
@@ -94,33 +95,33 @@ public class CouponsPlatformController extends HttpServlet {
 				String businessName = request.getParameter("businessName");
 				System.out.println(businessName);
 				DAO.getInstance().addBusiness(new Business(businessName));
-	
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);			
 			}
+		
 		// Preview the business that is to be updated in a form.
-				else if(str.equals("/updateBusinessPreview")) {
-					String businessId=request.getParameter("updateId");
-					int businessIdInteger = Integer.parseInt(businessId);
-					Business business = DAO.getInstance().getBusiness(businessIdInteger);
-					request.setAttribute("business", business);
-					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/updateBusiness.jsp");
-					dispatcher.forward(request, response);			
-				}
+		else if(str.equals("/updateBusinessPreview")) {
+			String businessId=request.getParameter("updateId");
+			int businessIdInteger = Integer.parseInt(businessId);
+			Business business = DAO.getInstance().getBusiness(businessIdInteger);
+			request.setAttribute("business", business);
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/updateBusiness.jsp");
+			dispatcher.forward(request, response);			
+		}
 		
 		// Update a Business in db
-				else if(str.equals("/updateBusiness")) {
-					String businessName = request.getParameter("businessName");
-					String businessId = request.getParameter("businessId");
-					int busId=Integer.parseInt(businessId);
-					DAO.getInstance().updateBusiness(new Business(busId,businessName));
-					
-					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/businesses.jsp");
-					dispatcher.forward(request, response);			
-				}
+		else if(str.equals("/updateBusiness")) {
+			String businessName = request.getParameter("businessName");
+			String businessId = request.getParameter("businessId");
+			int busId=Integer.parseInt(businessId);
+			DAO.getInstance().updateBusiness(new Business(busId,businessName));
+			
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/businesses.jsp");
+			dispatcher.forward(request, response);			
+		}
 		
 		// Preview the coupon that is to be updated in a form.
 		else if(str.equals("/updateCouponPreview")) {
@@ -134,20 +135,20 @@ public class CouponsPlatformController extends HttpServlet {
 		}
 		
 		// Update a Coupon in db- Working
-				else if(str.equals("/updateCoupon")) {
-					String image = request.getParameter("image");
-					String businessId = request.getParameter("businessId");
-					String description = request.getParameter("description");
-					String expireDate = request.getParameter("expDate");
-					int busId=Integer.parseInt(businessId);
-					String couponId = request.getParameter("couponId");
-					int couponIdInteger = Integer.parseInt(couponId);
-					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate));
-					
-					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/adminPanel.jsp");
-					dispatcher.forward(request, response);			
-				}
+		else if(str.equals("/updateCoupon")) {
+			String image = request.getParameter("image");
+			String businessId = request.getParameter("businessId");
+			String description = request.getParameter("description");
+			String expireDate = request.getParameter("expDate");
+			int busId=Integer.parseInt(businessId);
+			String couponId = request.getParameter("couponId");
+			int couponIdInteger = Integer.parseInt(couponId);
+			DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate));
+			
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/adminPanel.jsp");
+			dispatcher.forward(request, response);			
+		}
 		
 		// Help - working!
 		else if(str.equals("/help")) {
@@ -155,8 +156,8 @@ public class CouponsPlatformController extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/help.jsp");
 			dispatcher.forward(request, response);			
-		}
-		
+		}	
+				
 		// Contact
 		else if(str.equals("/contact")) {
 			request.setAttribute("timestamp", new java.util.Date());
@@ -165,6 +166,14 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
+		// about- working!
+		else if(str.equals("/about")) {
+			request.setAttribute("timestamp", new java.util.Date());
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/about.jsp");
+			dispatcher.forward(request, response);			
+		}			
+				
 		// print all coupons - working
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());
@@ -205,24 +214,11 @@ public class CouponsPlatformController extends HttpServlet {
 				}
 		// Specific coupon
 		else if(str.contains("/coupon")) {
-			if (str.length()>=8 && str.charAt(7)=='/'){
-				String couponId = str.substring(8);
-				if (couponId!=null && couponId!=""){
-					request.setAttribute("couponId", couponId);
-					//request.setAttribute("couponUserRequest", couponUserRequest);
-					request.setAttribute("timestamp", new java.util.Date());
-					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/coupon.jsp");
-					dispatcher.forward(request, response);
-				}
-				else{
-				response.sendError(20, "error: coupon id not vaild!");
-				}
-			}
-			//redirect to coupon
-			else{
-				response.sendRedirect("/couponsWebApp/controller/coupon/");
-			}
+			request.setAttribute("timestamp", new java.util.Date());
+			RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/coupon.jsp");
+			dispatcher.forward(request, response);
+
 		}
 
 		// Home-page - working!
