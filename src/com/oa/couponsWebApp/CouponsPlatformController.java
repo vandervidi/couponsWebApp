@@ -99,7 +99,7 @@ public class CouponsPlatformController extends HttpServlet {
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);			
 			}
-		// Preview the business that is to be updated in a form.
+		// Preview the business that is to be updated in a form. - working
 				else if(str.equals("/updateBusinessPreview")) {
 					String businessId=request.getParameter("updateId");
 					int businessIdInteger = Integer.parseInt(businessId);
@@ -110,7 +110,7 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);			
 				}
 		
-		// Update a Business in db
+		// Update a Business in db - working
 				else if(str.equals("/updateBusiness")) {
 					String businessName = request.getParameter("businessName");
 					String businessId = request.getParameter("businessId");
@@ -122,7 +122,7 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);			
 				}
 		
-		// Preview the coupon that is to be updated in a form.
+		// Preview the coupon that is to be updated in a form. - working
 		else if(str.equals("/updateCouponPreview")) {
 			String couponId=request.getParameter("updateId");
 			int couponIdInteger = Integer.parseInt(couponId);
@@ -133,7 +133,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}
 		
-		// Update a Coupon in db- Working
+		// Update a Coupon in db - Working
 				else if(str.equals("/updateCoupon")) {
 					String image = request.getParameter("image");
 					String businessId = request.getParameter("businessId");
@@ -203,7 +203,7 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);	
 	
 				}
-		// Specific coupon
+		// Specific coupon - working
 		else if(str.contains("/coupon")) {
 			if (str.length()>=8 && str.charAt(7)=='/'){
 				String couponId = str.substring(8);
