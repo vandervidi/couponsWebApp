@@ -27,5 +27,11 @@
 
 </div>
 </div>
+	<a href="../controller/categories">Coupons-categories</a> <br>
+	<a href="../controller/coupons">All-Coupons</a> <br>
+	<a href="../controller/coupon">Show coupon By ID</a> <br>
+	<a href="../controller/help">Help</a> <br>
+	<a href="../controller/contact">Contact Us</a><br>
+	<a href="../controller/about">About</a>
 </body>
 </html>
