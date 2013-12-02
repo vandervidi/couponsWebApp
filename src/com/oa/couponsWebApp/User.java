@@ -20,7 +20,7 @@ public class User {
 	public User(String userName, String password, int privilige) {
 		super();
 		this.userName = userName;
-		this.setPassword(password);
+		this.password = password;
 		this.privilige=privilige; //1=Admin, 0=Regular user
 		this.dateOfRegistration = new Date();
 	}
@@ -28,7 +28,7 @@ public class User {
 	public User(String userName, String password) {
 		super();
 		this.userName = userName;
-		this.setPassword(password);
+		this.password = password;
 		this.privilige=0;  //1=Admin, 0=Regular user
 		this.dateOfRegistration = new Date();
 	}
@@ -50,32 +50,7 @@ public class User {
 		return password;
 	}
 	public void setPassword(String password) {
-		String encryptedPass = MD5(password);
-		if (encryptedPass!= null){
-			this.password = encryptedPass;
-		}
-	}
-	
-	// Using MD5
-	public String MD5(String input) {
-		String md5 = null;
-		
-        if( input == null) return null;
-        
-        try {
-	        //Create MessageDigest object for MD5
-	        MessageDigest digest = MessageDigest.getInstance("MD5");
-	         
-	        //Update input string in message digest
-	        digest.update(input.getBytes(), 0, input.length());
-	 
-	        //Converts message digest value in base 16 (hex) 
-	        md5 = new BigInteger(1, digest.digest()).toString(16);
- 
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return md5;
+		this.password = password;
 	}
 	
 	public int getPrivilige() {
@@ -94,12 +69,6 @@ public class User {
 		this.dateOfRegistration = dateOfRegistration;
 	}
 	
-	public boolean checkPassword (String input){
-		if (MD5(input).equals(password))
-			return true;
-		else
-			return false;
-	}
 	
 	@Override
 	public String toString() {
