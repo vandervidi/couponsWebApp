@@ -111,7 +111,7 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);			
 				}
 				
-		
+
 		// Log out 
 				else if(str.equals("/logout")) {
 					request.setAttribute("timestamp", new java.util.Date());
