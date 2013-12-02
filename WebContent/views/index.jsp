@@ -12,7 +12,8 @@
             padding-left: 3px;padding-top: 1px;padding-bottom: 1px;">LOGIN</div>
 <div style="padding-left: 5px;padding-top: 3px;">
 <!-- Login -->
-<form method="get" action="../controller/login">
+
+<form method="post" action="../controller/login">
 <table>
 <tr><td>Username:</td>
 <td><input autocomplete="off" type="text" name="username" size="20"></td></tr>

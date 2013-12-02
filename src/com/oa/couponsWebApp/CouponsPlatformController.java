@@ -33,7 +33,59 @@ public class CouponsPlatformController extends HttpServlet {
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			 throws ServletException, IOException
 	 {
-		 //System.out.println("1111");
+		 String str = request.getPathInfo();
+		 System.out.println(str);
+		
+		 // Log in 
+		if(str.equals("/login")) {
+			System.out.println("/login");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			password = MD5.encryptMD5(password);
+			
+			DAO db = DAO.getInstance();
+			User user = db.getUser(username);
+			if (user!=null){
+//										System.out.println("user.toString()="+user.toString());
+//										System.out.println("user.getPassword()="+user.getPassword());
+//										System.out.println("user.MD5(pagePasswordInput)"+user.MD5(password));
+				//Check password
+				if (user.getPassword().equals(password) ) {
+										System.out.println("user.checkPassword(password) == true");
+					// Pass true
+					if (user.getPrivilige() == 1){
+						// - 1 - UserName login as admin
+						/* Create session & coockie
+						 * 
+						 * 
+						 */
+						RequestDispatcher dispatcher = getServletContext()
+								.getRequestDispatcher("/views/adminPanel.jsp");
+						dispatcher.forward(request, response);
+					}
+					else{// - 0 - userName login as Regular user
+						/* Create session & coockie
+						 * 
+						 * 
+						 */
+						request.setAttribute("userName", username);
+						RequestDispatcher dispatcher = getServletContext()
+								.getRequestDispatcher("/views/index.jsp");
+						dispatcher.forward(request, response);
+					}
+						
+				}else{	// Paswword not vaild
+					request.setAttribute("number", "20");
+					request.setAttribute("msg", "password does not vaild.");
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/error.jsp");
+					dispatcher.forward(request, response);
+				}
+			}
+		}
+		else{
+			System.out.println("2222");
+		}
 	 }
 	 
 	/**
@@ -52,61 +104,14 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);
 				} 
 		
-		// Log in 
+		// Register
 				else if(str.equals("/register")) {					
-					//make a new "user" object.construct only by name
-					//locate the user in the users database
-					//encrypt the password and compare with the one in the DB.
-					//if it matches-> make session. else- redirect to index.
-					//if admin logs in-> redirect to adminPanel.jsp
-					
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/register.jsp");
 					dispatcher.forward(request, response);			
 				}
 				
-		// Log in 
-				else if(str.equals("/login")) {
-					String username = request.getParameter("username");
-					String password = request.getParameter("password");
-					DAO db = DAO.getInstance();
-					User user = db.getUser(username);
-					user.toString();
-					System.out.println("The username from db:"+ user.getUsername());
-					System.out.println("The password from index.jsp:"+ password);
-					System.out.println("Hased pass from index:"+user.MD5(password));
-					System.out.println("the password from DB:"+user.getPassword());
-					if (user!=null){
-						
-						//Check password
-						if (user.checkPassword(password) == true) {
-							
-							// Pass true
-							if (user.getPrivilige() == 1){
-								// UserName login as admin
-								RequestDispatcher dispatcher = getServletContext()
-										.getRequestDispatcher("/views/adminPanel.jsp");
-								dispatcher.forward(request, response);
-							}
-							else{
-								request.setAttribute("userName", username);
-								RequestDispatcher dispatcher = getServletContext()
-										.getRequestDispatcher("/views/helloPage.jsp");
-								dispatcher.forward(request, response);
-							}
-								
-						}else{	// Paswword not vaild
-							request.setAttribute("number", "20");
-							request.setAttribute("msg", "password does not vaild.");
-							RequestDispatcher dispatcher = getServletContext()
-									.getRequestDispatcher("/views/error.jsp");
-							dispatcher.forward(request, response);
-						}
-					}
-					
-					
-				}
-		
+
 		// Log out 
 				else if(str.equals("/logout")) {
 					request.setAttribute("timestamp", new java.util.Date());

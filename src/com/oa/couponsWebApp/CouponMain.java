@@ -20,15 +20,20 @@ public class CouponMain {
 	public static void main(String [] args){
 		
 		DAO userInstance = DAO.getInstance();
-		System.out.println("UserDAO_ClassInstance="+userInstance);
-		User u1 = new User("ofir", "1234",1);
-		User u2 = new User("vidran", "abcd",0);
-		User u3 = new User("Vidran", "2222",0);
 		
-		userInstance.addUser(u1);
-		userInstance.addUser(u2);
-		userInstance.addUser(u3);	// duplicate userName "Vidran"- so, not save this
-							
+		
+		
+		System.out.println("UserDAO_ClassInstance="+userInstance);
+		
+		userInstance.addUser(new User("ofir",	MD5.encryptMD5("1") ,1));
+		userInstance.addUser(new User("ofir", 	MD5.encryptMD5("1") ,1));
+		userInstance.addUser(new User("ofir", 	MD5.encryptMD5("1") ,1));
+		userInstance.addUser(new User("ofir", 	MD5.encryptMD5("1") ,1));
+		userInstance.addUser(new User("ofir",   MD5.encryptMD5("1") ,1));
+		userInstance.addUser(new User("vidran", MD5.encryptMD5("a") ,0));
+		userInstance.addUser(new User("vidran", MD5.encryptMD5("2222") ,0));
+		
+			//System.out.println( userInstance.getUser("ofir").MD5("c4ca4238a0b923820dcc509a6f75849b") );				
 		//---------------
 
 		Business b1 = new Business("aaaa");
@@ -46,11 +51,11 @@ public class CouponMain {
 		
 		//---------------
 		
-		Coupon c1 = new Coupon(b1.getBusinessId(), "22", "bla bla","1.1.2000");
-		Coupon c2 = new Coupon(b1.getBusinessId(), "444", "bla bla","12.1.2000");
-		Coupon c3 = new Coupon(b3.getBusinessId(), "11", "bla bla","1.12.2000");
-		Coupon c4 = new Coupon(b4.getBusinessId(), "22", "bla bla","15.1.2000");
-		Coupon c5 = new Coupon(b5.getBusinessId(), "33", "bla bla","1.10.2000");
+		Coupon c1 = new Coupon(b1.getBusinessId(), "vidi.jpg", "bla bla","1.1.2000");
+		Coupon c2 = new Coupon(b1.getBusinessId(), "vidi.jpg", "bla bla","12.1.2000");
+		Coupon c3 = new Coupon(b3.getBusinessId(), "vidi.jpg", "bla bla","1.12.2000");
+		Coupon c4 = new Coupon(b4.getBusinessId(), "vidi.jpg", "bla bla","15.1.2000");
+		Coupon c5 = new Coupon(b5.getBusinessId(), "vidi.jpg", "bla bla","1.10.2000");
 		
 		// Create Instance of CouponDAO
 		DAO CouponInstance = DAO.getInstance();
