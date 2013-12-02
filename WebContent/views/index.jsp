@@ -11,6 +11,11 @@
 <div style="background-color:#b6ff00;width: 400px;color: #000;font-family: Dotum;font-size: 17px;
             padding-left: 3px;padding-top: 1px;padding-bottom: 1px;">LOGIN</div>
 <div style="padding-left: 5px;padding-top: 3px;">
+
+
+
+
+
 <!-- Login -->
 <form method="post" action="../controller/login">
 <table>
@@ -24,6 +29,13 @@
 <input type="submit" value="Log in">   
 <br> 
 </form>
+
+
+
+
+
+
+
 
 <!-- Register -->
 <form method="get" action="../controller/register">
