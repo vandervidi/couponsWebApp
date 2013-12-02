@@ -11,9 +11,11 @@ import org.hibernate.classic.Session;
 public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 {
 	private static SessionFactory sessionFactory = null;
-	private Session session = null;
-	String cr = "\n----------------";
 	private static DAO instance;
+	
+	private Session session = null;
+	static String  cr = "\n----------------";
+	static String  HTMLcr = "<br/>\n";
 	
 // Private constructor prevents instantiation from other classes
 	  private DAO() {
