@@ -71,6 +71,11 @@ public class CouponsPlatformController extends HttpServlet {
 					String password = request.getParameter("password");
 					DAO db = DAO.getInstance();
 					User user = db.getUser(username);
+					user.toString();
+					System.out.println("The username from db:"+ user.getUsername());
+					System.out.println("The password from index.jsp:"+ password);
+					System.out.println("Hased pass from index:"+user.MD5(password));
+					System.out.println("the password from DB:"+user.getPassword());
 					if (user!=null){
 						
 						//Check password
