@@ -21,8 +21,8 @@ public class CouponMain {
 		
 		DAO userInstance = DAO.getInstance();
 		System.out.println("UserDAO_ClassInstance="+userInstance);
-		User u1 = new User("Ofir", "1234",1);
-		User u2 = new User("Vidran", "abcd",0);
+		User u1 = new User("ofir", "1234",1);
+		User u2 = new User("vidran", "abcd",0);
 		User u3 = new User("Vidran", "2222",0);
 		
 		userInstance.addUser(u1);

@@ -33,7 +33,7 @@ public class CouponsPlatformController extends HttpServlet {
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			 throws ServletException, IOException
 	 {
-		 
+		 //System.out.println("1111");
 	 }
 	 
 	/**
@@ -53,10 +53,7 @@ public class CouponsPlatformController extends HttpServlet {
 				} 
 		
 		// Log in 
-				else if(str.equals("/logIn")) {
-					String username = request.getParameter("username");
-					String password = request.getParameter("password");
-					
+				else if(str.equals("/register")) {					
 					//make a new "user" object.construct only by name
 					//locate the user in the users database
 					//encrypt the password and compare with the one in the DB.
@@ -64,15 +61,52 @@ public class CouponsPlatformController extends HttpServlet {
 					//if admin logs in-> redirect to adminPanel.jsp
 					
 					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/logIn.jsp");
+							.getRequestDispatcher("/views/register.jsp");
 					dispatcher.forward(request, response);			
+				}
+				
+		// Log in 
+				else if(str.equals("/login")) {
+					String username = request.getParameter("username");
+					String password = request.getParameter("password");
+					DAO db = DAO.getInstance();
+					User user = db.getUser(username);
+					if (user!=null){
+						
+						//Check password
+						if (user.checkPassword(password) == true) {
+							
+							// Pass true
+							if (user.getPrivilige() == 1){
+								// UserName login as admin
+								RequestDispatcher dispatcher = getServletContext()
+										.getRequestDispatcher("/views/adminPanel.jsp");
+								dispatcher.forward(request, response);
+							}
+							else{
+								request.setAttribute("userName", username);
+								RequestDispatcher dispatcher = getServletContext()
+										.getRequestDispatcher("/views/helloPage.jsp");
+								dispatcher.forward(request, response);
+							}
+								
+						}else{	// Paswword not vaild
+							request.setAttribute("number", "20");
+							request.setAttribute("msg", "password does not vaild.");
+							RequestDispatcher dispatcher = getServletContext()
+									.getRequestDispatcher("/views/error.jsp");
+							dispatcher.forward(request, response);
+						}
+					}
+					
+					
 				}
 		
 		// Log out 
-				else if(str.equals("/logOut")) {
+				else if(str.equals("/logout")) {
 					request.setAttribute("timestamp", new java.util.Date());
 					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/logOut.jsp");
+							.getRequestDispatcher("/views/logout.jsp");
 					dispatcher.forward(request, response);			
 				}
 		

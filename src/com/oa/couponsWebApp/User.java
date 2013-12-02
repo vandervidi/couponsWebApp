@@ -94,7 +94,12 @@ public class User {
 		this.dateOfRegistration = dateOfRegistration;
 	}
 	
-	
+	public boolean checkPassword (String input){
+		if (MD5(input).equals(password))
+			return true;
+		else
+			return false;
+	}
 	
 	@Override
 	public String toString() {
