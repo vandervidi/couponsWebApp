@@ -227,6 +227,14 @@ public class CouponsPlatformController extends HttpServlet {
 					.getRequestDispatcher("/views/adminPanel.jsp");
 			dispatcher.forward(request, response);			
 		}
+				// print all EXPIRED coupons - working
+			else if(str.equals("/expiredCoupons")) {
+				request.setAttribute("timestamp", new java.util.Date());
+				RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/expiredCoupons.jsp");
+				dispatcher.forward(request, response);			
+					}				
+				
 		
 		// print all businesses - working!
 		else if(str.equals("/businesses")) {
