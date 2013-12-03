@@ -22,7 +22,7 @@ public class Coupon {
 		this.businessId = businessId;
 		this.image = image;
 		this.description=description;
-		this.setExpireDate(expireDate);
+		this.expireDate=expireDate;
 	}
 	
 	public Coupon(int id,int businessId, String image, String description, String expireDate) {

@@ -8,7 +8,7 @@
 <title>Admin Panel</title>
 </head>
 <body>
-        <h2>Admin Panel - list of all coupons </h2>
+        <h2>Admin Panel - list of all #EXPIRED# coupons </h2>
 <br>
 <div style="color: white; background-color:#151515;text-align: center; margin:0 auto; padding-top: 2px;padding-bottom: 1px;">
         <a href="../views/addCoupon.html">
@@ -17,8 +17,8 @@
         <div>ADD BUSINESS</div></a>
          <a href="../controller/businesses">
         <div>SHOW BUSINESSES</div></a>  
-         <a href="../controller/expiredCoupons">
-        <div>SHOW EXPIRED COUPONS</div></a>  
+         <a href="../controller/coupons">
+        <div>SHOW UP TO DATE COUPONS</div></a>  
          <a href="../controller/logOut">
         <div>LOG OUT</div></a>      
         </div>
