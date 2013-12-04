@@ -51,10 +51,10 @@ public class CouponMain {
 		
 		//---------------
 		
-		Coupon c1 = new Coupon(b1.getBusinessId(), "vidi.jpg", "bla bla","1.1.2000");
-		Coupon c2 = new Coupon(b1.getBusinessId(), "vidi.jpg", "bla bla","12.1.2000");
-		Coupon c3 = new Coupon(b3.getBusinessId(), "vidi.jpg", "bla bla","1.12.2000");
-		Coupon c4 = new Coupon(b4.getBusinessId(), "vidi.jpg", "bla bla","15.1.2000");
+		Coupon c1 = new Coupon(b1.getBusinessId(), "vidi.jpg", "bla bla","1.1.2002");
+		Coupon c2 = new Coupon(b1.getBusinessId(), "vidi.jpg", "bla bla","12.1.2003");
+		Coupon c3 = new Coupon(b3.getBusinessId(), "vidi.jpg", "bla bla","1.12.2004");
+		Coupon c4 = new Coupon(b4.getBusinessId(), "vidi.jpg", "bla bla","15.1.2015");
 		Coupon c5 = new Coupon(b5.getBusinessId(), "vidi.jpg", "bla bla","1.10.2000");
 		
 		// Create Instance of CouponDAO
