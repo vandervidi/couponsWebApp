@@ -19,7 +19,7 @@
         <div>SHOW BUSINESSES</div></a>  
          <a href="../controller/coupons">
         <div>SHOW UP TO DATE COUPONS</div></a>  
-         <a href="../controller/logOut">
+         <a href="../controller/logout">
         <div>LOG OUT</div></a>      
         </div>
 
@@ -33,8 +33,9 @@
         while(iterator.hasNext()) {
                 tempOb=iterator.next();
                 String expireDate=((Coupon)tempOb).getExpireDate();
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("dd.mm.yyyy", Locale.ENGLISH);
 		   		Date expDate =  df.parse(expireDate); 
+		   							System.out.print(expDate+"<->"+currDate+",,,,");
 	                if (!(expDate.before(currDate)))
 	                {    
 %>

@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +60,10 @@ public class CouponsPlatformController extends HttpServlet {
 						 * 
 						 * 
 						 */
+						Cookie cookie = new Cookie("connectedWithPrivilige", "1");
+						cookie.setMaxAge(-1);	// till user close browser
+						
+						response.addCookie( cookie );
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/views/adminPanel.jsp");
 						dispatcher.forward(request, response);
@@ -68,6 +73,10 @@ public class CouponsPlatformController extends HttpServlet {
 						 * 
 						 * 
 						 */
+						Cookie cookie = new Cookie("connectedWithPrivilige", "0");
+						cookie.setMaxAge(-1);// till user close browser
+						
+						response.addCookie(new Cookie("connectedWithPrivilige", "0"));
 						request.setAttribute("userName", username);
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/views/index.jsp");
@@ -113,12 +122,28 @@ public class CouponsPlatformController extends HttpServlet {
 				
 
 		// Log out 
-				else if(str.equals("/logout")) {
-					request.setAttribute("timestamp", new java.util.Date());
-					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/logout.jsp");
-					dispatcher.forward(request, response);			
+			else if(str.equals("/logout")) {
+				if (request.getCookies().equals("connectedWithPrivilige" )){
+					Cookie all [] =request.getCookies();
+					for (Cookie c : all){
+//							if (c.getName().equals( "connectedWithPrivilige")){
+							System.out.println(  "c.getName().equals(connectedWithPrivilige)");
+							c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
+							response.addCookie(c);
+							
+							request.setAttribute("timestamp", new java.util.Date());
+							
+							request.getCookies();
+							
+							RequestDispatcher dispatcher = getServletContext()
+									.getRequestDispatcher("/views/index.jsp");
+							dispatcher.forward(request, response);
+										System.out.println("change Cookie to 0, Cookie="+c);
+//							}
+					}
 				}
+							
+			}
 		
 		//add a coupon to db - working!
 		else if(str.equals("/addCoupon")) {
