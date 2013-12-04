@@ -153,11 +153,21 @@ public class CouponsPlatformController extends HttpServlet {
 			String description = request.getParameter("description");
 			String expireDate = request.getParameter("expDate");
 			int busId=Integer.parseInt(businessId);
-			DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
-
-			RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/views/adminPanel.jsp");
-			dispatcher.forward(request, response);			
+			// Check if busId exist
+			if(DAO.getInstance().getBusiness(busId)!=null){
+				
+				DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+	
+				RequestDispatcher dispatcher = getServletContext()
+					.getRequestDispatcher("/views/adminPanel.jsp");
+				dispatcher.forward(request, response);
+			}else{
+				request.setAttribute("number", "20");
+				request.setAttribute("msg", "businessId does not exist.");
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/views/error.jsp");
+				dispatcher.forward(request, response);
+			}
 		}
 		// add a new business - working!
 		else if(str.equals("/addBusiness")) {

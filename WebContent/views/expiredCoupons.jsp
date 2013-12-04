@@ -33,10 +33,9 @@
         while(iterator.hasNext()) {
                 tempOb=iterator.next();
                 String expireDate=((Coupon)tempOb).getExpireDate();
-                DateFormat df = new SimpleDateFormat("dd.mm.yyyy", Locale.ENGLISH);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		   		Date expDate =  df.parse(expireDate); 
-		   							System.out.print(expDate+"<->"+currDate+",,,,");
-	                if (!(expDate.before(currDate)))
+	                if ((expDate.before(currDate)))
 	                {    
 %>
 
