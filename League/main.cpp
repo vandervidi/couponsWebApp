@@ -18,24 +18,21 @@ vector<string> splitStr(string str){
 	}
 
 
-//> Show Maccabbi TA - Galil Elion
-//> Show Teams
-
-
 int check_input(string str)
 {
-	//int case=-1;
+	
 	vector<string> tokenized = splitStr(str);
-	//SHOW TEAMS
+	//ALL TEAMS
 	if (tokenized[0]=="all" && tokenized[1]=="teams")
 	{
 		return 0;
 	}
-
+	//SHOW LEAGUE
 	else if (tokenized[0]=="show" && tokenized[1]=="league")
 	{
 		return 1;
 	}
+
 	else if (tokenized[0]=="show" && tokenized[1]=="league")
 	{
 		return 2;
@@ -48,12 +45,17 @@ int check_input(string str)
 	{
 		return 5;
 	}
+	//Admin cases are equal to 10+
+	else if (tokenized[0]=="add" && tokenized[1]=="team")
+	{
+		return 10;
+	}
 	// Exit
 	else if(tokenized[0]=="exit"){
 		return 777;
 	}
 
-	// command not vaild
+	// return -1 if command is not vaild
 	return -1;
 }
 
@@ -62,23 +64,36 @@ int check_input(string str)
 		//...
 	}
 
-	void admin_menu(){
-		//...
+	void admin_menu(int caseNum){
+		switch(caseNum)
+		{
+		case(10): //Admin add team
+			{
+				cout<<"Enter team name:"<<endl;
+				ofstream output;
+				string tmp;
+				output.open("teams.txt", std::ios_base::app);
+				getline(cin,tmp);
+				output<<tmp<<endl;
+				cout<<"Team :"<<tmp<<" is added"<<endl;
+				output.close();
+				break;
+			}
+		default:
+			cout<<"Wrong admin command"<<endl;
+		}
 	}
 
 int main()
 {
 	string str;
-		int caseNum;
-	
+	bool loggedIn=false;
+	int caseNum;
 
-
-		//-############--------------
 		do {
 			cout<<"type command or type 'help' for list of valid commands."<<endl;
 			getline(cin,str);
 			caseNum = check_input(str);
-											cout<<caseNum<<endl;
 			if (caseNum != -1) { // vaild command
 				switch(caseNum) {
 					case(0): { //SHOW TEAMS
@@ -93,15 +108,7 @@ int main()
 							break;
 					}
 					case(1): {
-							cout<<"show teams identify"<<endl;
-							string temp;
-							ifstream fileReader;
-							fileReader.open("teams.txt");
-							while(getline(fileReader,temp)) {
-
-								cout<<temp<<endl;
-							}
-							fileReader.close();
+							
 							break;
 					}
 					case(2): {
@@ -112,7 +119,7 @@ int main()
 
 							break;
 					}
-					case(4): { // ADMIN ADD TEAM
+					case(4): { // ADMIN LOGIN
 							string username="admin";
 							string password="1234";
 							string buff;
@@ -128,20 +135,34 @@ int main()
 					
 
 									while(buff.compare("exit")!=0){
+										if (!loggedIn){
 										cin>>buff;
-										if (buff.compare(password)==0){
-											cout<<"login success";
-											// admin_menu()
+											if (buff.compare(password)==0){
+												loggedIn=true;
+												cout<<"login success"<<endl<<"What do you want to do? - type 'help' for list of commands."<<endl;
+												cin.ignore();
+												getline(cin,str);
+												caseNum = check_input(str);
+												admin_menu(caseNum);
+											}
+											else 
+												cout<<"Wrong password, try again:"<<endl;
 										}
-										else 
-											cout<<"Wrong password, try again:"<<endl;
+										else
+										{
+												//cin.ignore();
+												cin.clear();
+												getline(cin,str);
+												caseNum = check_input(str);
+												admin_menu(caseNum);
+										}
 									}
 								}else
 									cout<<"Wrong user, try again:"<<endl;
 							}	
 							break;
 						}
-					case (5): {
+					case (5): {// help command - shows content of help file
 						ifstream fileReader;
 						string tmp;
 						fileReader.open("help.txt");
