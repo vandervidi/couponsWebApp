@@ -1,15 +1,44 @@
+//Team members : Vidran Abdovich - 312064829, Ofir Aghai -
 #include <vector>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <fstream>
 using namespace std;
+//-----------------------------------------------//
+//The methods 'sort' - sorts lexicoraphically	//
+//a vector of strings using quick sort algorithm//
+//and then prints the vector as an output.		//
+//----------------------------------------------	//
+void sort(vector<string> v){
+	int sz = v.size();
+    for (int i = 0; i < sz; i++){
+          for (int j = i+1; j < sz; j++){
 
+                  if (v[i].compare(v[j]) > 0){
+
+                      string tmp;
+
+                      tmp = v[i];
+                      v[i] = v[j];
+                      v[j] = tmp;
+              }
+          }
+    }
+for (int i = 0; i < sz; i++){
+       cout<<i+1<<". "<<v[i]<<endl;
+    }
+}
+//-----------------------------------------------//
+//This methods 'splitStr' recives a string type	//
+//and returns a vector of strings where each	//
+//index stores a word from the sentence that is //
+//splitted.										//
+//----------------------------------------------	//
 vector<string> splitStr(string str){
-		string buf; // Have a buffer string
-		stringstream ss(str); // Insert the string into a stream
-
-		vector<string> tokens; // Create vector to hold our words
+		string buf;				
+		stringstream ss(str);	
+		vector<string> tokens;	// Create vector to hold our words
 
 		while (ss >> buf)
 			tokens.push_back(buf);
@@ -17,43 +46,52 @@ vector<string> splitStr(string str){
 		return tokens;
 	}
 
-
-//> Show Maccabbi TA - Galil Elion
-//> Show Teams
-
-
+//-----------------------------------------------//
+//This methods 'chck_input' recieces users input//
+//and directs it to the correct case in the		//
+//Switch/Case menu.								//
+//----------------------------------------------	//
 int check_input(string str)
 {
-	//int case=-1;
+	
 	vector<string> tokenized = splitStr(str);
-	//SHOW TEAMS
+	//In terminal - 'all teams'
 	if (tokenized[0]=="all" && tokenized[1]=="teams")
 	{
 		return 0;
 	}
-
+	//In terminal - 'show league'
 	else if (tokenized[0]=="show" && tokenized[1]=="league")
 	{
 		return 1;
 	}
+
 	else if (tokenized[0]=="show" && tokenized[1]=="league")
 	{
 		return 2;
 	}
+	//In terminal - 'login'
 	else if (tokenized[0]=="login")
 	{
 		return 4;
 	}
+	//In terminal - 'help'
 	else if (tokenized[0]=="help")
 	{
 		return 5;
 	}
-	// Exit
+	//Admin cases are equal to 10+
+	//In terminal - 'register teams'
+	else if (tokenized[0]=="register" && tokenized[1]=="teams")
+	{
+		return 10;
+	}
+	// //In terminal - 'exit'
 	else if(tokenized[0]=="exit"){
 		return 777;
 	}
 
-	// command not vaild
+	// return -1 if command is not vaild
 	return -1;
 }
 
@@ -62,46 +100,57 @@ int check_input(string str)
 		//...
 	}
 
-	void admin_menu(){
-		//...
+	void admin_menu(int caseNum){
+		switch(caseNum)
+		{
+		//Case 10 - Admin adds a team. Two things happen next.
+		//(1) The team name is appended to th file teams.db.
+		//(2) The team is appended to the league.db file and all its league
+		//	   parameters are reset to zero.(Points, number of games ..)
+		case(10): 
+			{
+				cout<<"Enter team name:"<<endl;
+				ofstream outputToTeamsDb;
+				string tmp;
+				outputToTeamsDb.open("teams.db", std::ios_base::app);
+				getline(cin,tmp);
+				outputToTeamsDb<<tmp<<endl;
+				cout<<"Team :"<<tmp<<" is added."<<endl;
+				outputToTeamsDb.close();
+				break;
+			}
+		default:
+			cout<<"Wrong admin command"<<endl;
+		}
 	}
 
 int main()
 {
 	string str;
-		int caseNum;
-	
+	bool loggedIn=false;
+	int caseNum;
 
-
-		//-############--------------
 		do {
 			cout<<"type command or type 'help' for list of valid commands."<<endl;
 			getline(cin,str);
 			caseNum = check_input(str);
-											cout<<caseNum<<endl;
 			if (caseNum != -1) { // vaild command
 				switch(caseNum) {
 					case(0): { //SHOW TEAMS
-					   
-							cout<<"show teams identify"<<endl;
-							string temp;
+							system("CLS"); // clears the screen before 
+							string teamName;
 							ifstream fileReader;
-							fileReader.open("teams.txt");
-							while(getline(fileReader,temp)) {
-								cout<<temp<<endl;
+							fileReader.open("teams.db");
+							vector<string> tmp;
+							while(getline(fileReader,teamName)) {
+								tmp.push_back(teamName);
 							}
+							cout<<"There are "<<tmp.size()<<" teams in this league:"<<endl;
+							sort(tmp);
 							break;
 					}
 					case(1): {
-							cout<<"show teams identify"<<endl;
-							string temp;
-							ifstream fileReader;
-							fileReader.open("teams.txt");
-							while(getline(fileReader,temp)) {
-
-								cout<<temp<<endl;
-							}
-							fileReader.close();
+							
 							break;
 					}
 					case(2): {
@@ -112,7 +161,7 @@ int main()
 
 							break;
 					}
-					case(4): { // ADMIN ADD TEAM
+					case(4): { // ADMIN LOGIN
 							string username="admin";
 							string password="1234";
 							string buff;
@@ -128,20 +177,34 @@ int main()
 					
 
 									while(buff.compare("exit")!=0){
+										if (!loggedIn){
 										cin>>buff;
-										if (buff.compare(password)==0){
-											cout<<"login success";
-											// admin_menu()
+											if (buff.compare(password)==0){
+												loggedIn=true;
+												cout<<"login success"<<endl<<"What do you want to do? - type 'help' for list of commands."<<endl;
+												cin.ignore();
+												getline(cin,str);
+												caseNum = check_input(str);
+												admin_menu(caseNum);
+											}
+											else 
+												cout<<"Wrong password, try again:"<<endl;
 										}
-										else 
-											cout<<"Wrong password, try again:"<<endl;
+										else
+										{
+												//cin.ignore();
+												cin.clear();
+												getline(cin,str);
+												caseNum = check_input(str);
+												admin_menu(caseNum);
+										}
 									}
 								}else
 									cout<<"Wrong user, try again:"<<endl;
 							}	
 							break;
 						}
-					case (5): {
+					case (5): {// help command - shows content of help file
 						ifstream fileReader;
 						string tmp;
 						fileReader.open("help.txt");
@@ -158,7 +221,6 @@ int main()
 			}else
 				cout<<"wrong command."<<endl;
 		}while (caseNum != 777);
-
 
 	system("pause");
 	return 0;

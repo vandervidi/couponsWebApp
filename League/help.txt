@@ -1,5 +1,6 @@
-all teams 		      - show all teams in the league
-show league 		      - shows the league table for this league
-show game X, month. day, year - shows a game in a specific round and date, if exists.for example (Game 2, Oct. 27, 2004)
-show team 1, team 2           - shows a specific game . for example (Show Maccabbi TA - Galil Elion)
+register teams 		      - Show all teams in the league
+show league 		      - Shows the league table for this league
+show game X, month. day, year - Shows a game in a specific round and date, if exists.for example (Game 2, Oct. 27, 2004)
+show team 1 - team 2           - Shows a specific game . for example (Show Maccabbi TA - Galil Elion)
 show teams		      - Dont know.
+login			      - Login to admin panel.
