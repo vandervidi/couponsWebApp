@@ -63,12 +63,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="date.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="league.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="team.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="date.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="league.h" />
     <ClInclude Include="team.h" />
   </ItemGroup>
