@@ -123,23 +123,20 @@ public class CouponsPlatformController extends HttpServlet {
 
 		// Log out 
 			else if(str.equals("/logout")) {
-				if (request.getCookies().equals("connectedWithPrivilige" )){
-					Cookie all [] =request.getCookies();
-					for (Cookie c : all){
-//							if (c.getName().equals( "connectedWithPrivilige")){
+											System.out.println("/logout came in");
+				Cookie all [] =request.getCookies();
+				for (Cookie c : all){
+					if (c.getName().equals("connectedWithPrivilige") ){
 							System.out.println(  "c.getName().equals(connectedWithPrivilige)");
-							c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
-							response.addCookie(c);
-							
-							request.setAttribute("timestamp", new java.util.Date());
-							
-							request.getCookies();
-							
-							RequestDispatcher dispatcher = getServletContext()
-									.getRequestDispatcher("/views/index.jsp");
-							dispatcher.forward(request, response);
-										System.out.println("change Cookie to 0, Cookie="+c);
-//							}
+						c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
+						response.addCookie(c);
+						
+						request.setAttribute("timestamp", new java.util.Date());
+						
+						RequestDispatcher dispatcher = getServletContext()
+								.getRequestDispatcher("/views/index.jsp");
+						dispatcher.forward(request, response);
+									System.out.println("change Cookie to 0, Cookie="+c);
 					}
 				}
 							
