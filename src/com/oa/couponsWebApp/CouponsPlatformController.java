@@ -148,10 +148,10 @@ public class CouponsPlatformController extends HttpServlet {
 		//add a coupon to db - working!
 		else if(str.equals("/addCoupon")) {
 
-			String image = request.getParameter("image");
-			String businessId = request.getParameter("businessId");
-			String description = request.getParameter("description");
-			String expireDate = request.getParameter("expDate");
+			String image		 = request.getParameter("image");
+			String businessId	 = request.getParameter("businessId");
+			String description	 = request.getParameter("description");
+			String expireDate	 = request.getParameter("expDate");
 			int busId=Integer.parseInt(businessId);
 			// Check if busId exist
 			if(DAO.getInstance().getBusiness(busId)!=null){
@@ -171,9 +171,13 @@ public class CouponsPlatformController extends HttpServlet {
 		}
 		// add a new business - working!
 		else if(str.equals("/addBusiness")) {
-				String businessName = request.getParameter("businessName");
-				System.out.println(businessName);
-				DAO.getInstance().addBusiness(new Business(businessName));
+				String businessName		 = request.getParameter("businessName");
+				String businessLength	 = request.getParameter("length");
+				String businessWidth	 = request.getParameter("width");
+				double busLength=	Double.parseDouble(businessLength);
+				double busWidth=	Double.parseDouble(businessWidth);
+				//System.out.println(businessName);
+				DAO.getInstance().addBusiness(new Business(businessName, busLength, busWidth));
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);			
@@ -193,9 +197,18 @@ public class CouponsPlatformController extends HttpServlet {
 		// Update a Business in db - working
 				else if(str.equals("/updateBusiness")) {
 					String businessName = request.getParameter("businessName");
+					
+					// ID
 					String businessId = request.getParameter("businessId");
 					int busId=Integer.parseInt(businessId);
-					DAO.getInstance().updateBusiness(new Business(busId,businessName));
+					
+					//Location
+					String businessLength	 = request.getParameter("length");
+					String businessWidth	 = request.getParameter("width");
+					double busLength=	Double.parseDouble(businessLength);
+					double busWidth=	Double.parseDouble(businessWidth);
+					
+					DAO.getInstance().updateBusiness(new Business(busId,businessName, busLength, busWidth));
 					
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/businesses.jsp");
