@@ -39,7 +39,7 @@ public class CouponsPlatformController extends HttpServlet {
 		
 		 // Log in 
 		if(str.equals("/login")) {
-			System.out.println("/login");
+			//System.out.println("/login");
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			password = MD5.encryptMD5(password);
@@ -52,7 +52,7 @@ public class CouponsPlatformController extends HttpServlet {
 //										System.out.println("user.MD5(pagePasswordInput)"+user.MD5(password));
 				//Check password
 				if (user.getPassword().equals(password) ) {
-										System.out.println("user.checkPassword(password) == true");
+//										System.out.println("user.checkPassword(password) == true");
 					// Pass true
 					if (user.getPrivilige() == 1){
 						// - 1 - UserName login as admin
@@ -62,8 +62,9 @@ public class CouponsPlatformController extends HttpServlet {
 						 */
 						Cookie cookie = new Cookie("connectedWithPrivilige", "1");
 						cookie.setMaxAge(-1);	// till user close browser
-						
 						response.addCookie( cookie );
+						//request.getSession().invalidate();
+						
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/views/adminPanel.jsp");
 						dispatcher.forward(request, response);
