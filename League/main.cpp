@@ -168,7 +168,6 @@ void user_menu(){
 
 int main() {
 	user_menu();
-
 	system("pause");
 	return 0;
 
