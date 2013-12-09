@@ -41,5 +41,10 @@
 	<a href="../controller/help">Help</a> <br>
 	<a href="../controller/contact">Contact Us</a><br>
 	<a href="../controller/about">About</a>
+	
+<%@ taglib uri="/WEB-INF/tlds/mytld.tld" prefix="newTag" %>
+<newTag:example/>
+<newTag:example></newTag:example>
+
 </body>
 </html>

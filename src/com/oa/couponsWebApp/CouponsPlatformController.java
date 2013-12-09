@@ -2,6 +2,7 @@ package com.oa.couponsWebApp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -62,6 +63,8 @@ public class CouponsPlatformController extends HttpServlet {
 						 */
 						Cookie cookie = new Cookie("connectedWithPrivilige", "1");
 						cookie.setMaxAge(-1);	// till user close browser
+						System.out.println( cookie.getMaxAge() );
+						cookie.setPath("/");
 						response.addCookie( cookie );
 						//request.getSession().invalidate();
 						
@@ -266,6 +269,31 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}			
 				
+		// location
+				//.../location&length=100&width=100
+			else if(str.equals("/location")) {
+				String length=request.getParameter("length");
+				String width=request.getParameter("width");
+				
+				double busLength=	Double.parseDouble(length);
+				double busWidth=	Double.parseDouble(width);
+				
+				request.setAttribute("busLength", busLength);
+				request.setAttribute("busWidth", busWidth);
+				
+							System.out.println("length="+busLength+" width="+busWidth);
+				// Business Iterator
+				Iterator businessIterator = DAO.getInstance().getAllBusinesses();
+		        request.setAttribute("businessIterator", businessIterator);
+		        
+		        // Coupons Iterator
+		        Iterator couponsIterator = DAO.getInstance().getAllCoupons();
+		        request.setAttribute("couponsIterator", couponsIterator);
+		        
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/views/businessByLocation.jsp");
+				dispatcher.forward(request, response);			
+						}			
 		// print all coupons - working
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());
