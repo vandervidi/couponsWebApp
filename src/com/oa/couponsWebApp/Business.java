@@ -8,25 +8,32 @@ import javax.persistence.Id;
 public class Business {
 	public int businessId;
 	private String businessName;
+	private double length;
+	private double width;
 	
 	
 	// Constractors
 	
-	public Business(int businessId, String businessName) {
+	public Business(int businessId, String businessName, double length, double width) {
 		super();
 		this.businessId = businessId;
 		this.businessName = businessName;
+		this.length = length;
+		this.width = width;
 	}
-
+	
+	public Business(String businessName, double length, double width) {
+		super();
+		this.businessName = businessName;
+		this.length = length;
+		this.width = width;
+	}
 	
 	public Business() {
 		super();
 	}
 
-	public Business(String businessName) {
-		super();
-		this.businessName = businessName;
-	}
+	
 	
 
 // getters & setters functions
@@ -50,5 +57,25 @@ public class Business {
 	public String toString() {
 		return "Business [businessId=" + businessId + ", businessName="
 				+ businessName + "]";
+	}
+
+
+	public double getLength() {
+		return length;
+	}
+
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+
+	public double getWidth() {
+		return width;
+	}
+
+
+	public void setWidth(double width) {
+		this.width = width;
 	}	
 }

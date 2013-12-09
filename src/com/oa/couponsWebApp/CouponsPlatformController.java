@@ -2,6 +2,7 @@ package com.oa.couponsWebApp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,7 +40,7 @@ public class CouponsPlatformController extends HttpServlet {
 		
 		 // Log in 
 		if(str.equals("/login")) {
-			System.out.println("/login");
+			//System.out.println("/login");
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			password = MD5.encryptMD5(password);
@@ -52,7 +53,7 @@ public class CouponsPlatformController extends HttpServlet {
 //										System.out.println("user.MD5(pagePasswordInput)"+user.MD5(password));
 				//Check password
 				if (user.getPassword().equals(password) ) {
-										System.out.println("user.checkPassword(password) == true");
+//										System.out.println("user.checkPassword(password) == true");
 					// Pass true
 					if (user.getPrivilige() == 1){
 						// - 1 - UserName login as admin
@@ -62,8 +63,11 @@ public class CouponsPlatformController extends HttpServlet {
 						 */
 						Cookie cookie = new Cookie("connectedWithPrivilige", "1");
 						cookie.setMaxAge(-1);	// till user close browser
-						
+						System.out.println( cookie.getMaxAge() );
+						cookie.setPath("/");
 						response.addCookie( cookie );
+						//request.getSession().invalidate();
+						
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/views/adminPanel.jsp");
 						dispatcher.forward(request, response);
@@ -123,23 +127,20 @@ public class CouponsPlatformController extends HttpServlet {
 
 		// Log out 
 			else if(str.equals("/logout")) {
-				if (request.getCookies().equals("connectedWithPrivilige" )){
-					Cookie all [] =request.getCookies();
-					for (Cookie c : all){
-//							if (c.getName().equals( "connectedWithPrivilige")){
+											System.out.println("/logout came in");
+				Cookie all [] =request.getCookies();
+				for (Cookie c : all){
+					if (c.getName().equals("connectedWithPrivilige") ){
 							System.out.println(  "c.getName().equals(connectedWithPrivilige)");
-							c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
-							response.addCookie(c);
-							
-							request.setAttribute("timestamp", new java.util.Date());
-							
-							request.getCookies();
-							
-							RequestDispatcher dispatcher = getServletContext()
-									.getRequestDispatcher("/views/index.jsp");
-							dispatcher.forward(request, response);
-										System.out.println("change Cookie to 0, Cookie="+c);
-//							}
+						c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
+						response.addCookie(c);
+						
+						request.setAttribute("timestamp", new java.util.Date());
+						
+						RequestDispatcher dispatcher = getServletContext()
+								.getRequestDispatcher("/views/index.jsp");
+						dispatcher.forward(request, response);
+									System.out.println("change Cookie to 0, Cookie="+c);
 					}
 				}
 							
@@ -148,10 +149,10 @@ public class CouponsPlatformController extends HttpServlet {
 		//add a coupon to db - working!
 		else if(str.equals("/addCoupon")) {
 
-			String image = request.getParameter("image");
-			String businessId = request.getParameter("businessId");
-			String description = request.getParameter("description");
-			String expireDate = request.getParameter("expDate");
+			String image		 = request.getParameter("image");
+			String businessId	 = request.getParameter("businessId");
+			String description	 = request.getParameter("description");
+			String expireDate	 = request.getParameter("expDate");
 			int busId=Integer.parseInt(businessId);
 			// Check if busId exist
 			if(DAO.getInstance().getBusiness(busId)!=null){
@@ -171,9 +172,13 @@ public class CouponsPlatformController extends HttpServlet {
 		}
 		// add a new business - working!
 		else if(str.equals("/addBusiness")) {
-				String businessName = request.getParameter("businessName");
-				System.out.println(businessName);
-				DAO.getInstance().addBusiness(new Business(businessName));
+				String businessName		 = request.getParameter("businessName");
+				String businessLength	 = request.getParameter("length");
+				String businessWidth	 = request.getParameter("width");
+				double busLength=	Double.parseDouble(businessLength);
+				double busWidth=	Double.parseDouble(businessWidth);
+				//System.out.println(businessName);
+				DAO.getInstance().addBusiness(new Business(businessName, busLength, busWidth));
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);			
@@ -193,9 +198,18 @@ public class CouponsPlatformController extends HttpServlet {
 		// Update a Business in db - working
 				else if(str.equals("/updateBusiness")) {
 					String businessName = request.getParameter("businessName");
+					
+					// ID
 					String businessId = request.getParameter("businessId");
 					int busId=Integer.parseInt(businessId);
-					DAO.getInstance().updateBusiness(new Business(busId,businessName));
+					
+					//Location
+					String businessLength	 = request.getParameter("length");
+					String businessWidth	 = request.getParameter("width");
+					double busLength=	Double.parseDouble(businessLength);
+					double busWidth=	Double.parseDouble(businessWidth);
+					
+					DAO.getInstance().updateBusiness(new Business(busId,businessName, busLength, busWidth));
 					
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/businesses.jsp");
@@ -255,6 +269,31 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}			
 				
+		// location
+				//.../location&length=100&width=100
+			else if(str.equals("/location")) {
+				String length=request.getParameter("length");
+				String width=request.getParameter("width");
+				
+				double busLength=	Double.parseDouble(length);
+				double busWidth=	Double.parseDouble(width);
+				
+				request.setAttribute("busLength", busLength);
+				request.setAttribute("busWidth", busWidth);
+				
+							System.out.println("length="+busLength+" width="+busWidth);
+				// Business Iterator
+				Iterator businessIterator = DAO.getInstance().getAllBusinesses();
+		        request.setAttribute("businessIterator", businessIterator);
+		        
+		        // Coupons Iterator
+		        Iterator couponsIterator = DAO.getInstance().getAllCoupons();
+		        request.setAttribute("couponsIterator", couponsIterator);
+		        
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/views/businessByLocation.jsp");
+				dispatcher.forward(request, response);			
+						}			
 		// print all coupons - working
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());

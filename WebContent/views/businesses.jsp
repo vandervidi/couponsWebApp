@@ -40,7 +40,10 @@
 <h1 style="margin-bottom:0;"><% out.println(((Business)tempOb).getBusinessName()); %></h1></div>
 
 <div id="id" style="background-color:#FFD700;height:200px;width:400px;float:left;">
-Business id: <% out.println(((Business)tempOb).getBusinessId()); %></div>
+	Business id: <% out.println(((Business)tempOb).getBusinessId()); %><br>
+	Location [length]: <% out.println(((Business)tempOb).getLength()); %><br>
+	Location [Width]: <% out.println(((Business)tempOb).getWidth()); %><br>
+</div>
 
 <form action="../controller/updateBusinessPreview" method="get">
 <input type="hidden" name="updateId" value="<% out.print(((Business)tempOb).getBusinessId());%>">
