@@ -12,15 +12,21 @@
         		Object ob = request.getAttribute("coupon");
        			System.out.println("Coupon to be updated=:"+ ob);
                
-         %>
-         		<form action="../controller/updateCoupon" method="get">
-         		<input type="hidden" name="couponId" value=<% out.print(((Coupon)ob).getId()); %>>
-				Image: <input type=text name="image" value="<% out.print(((Coupon)ob).getImage()); %>"><br>
-				Business id: <input type=text name="businessId" value="<% out.print(((Coupon)ob).getBusinessId()); %>"><br>
-				Description: <textarea name="description"><% out.print(((Coupon)ob).getDescription()); %></textarea> <br>
-				Expire date: <input type="date" name="expDate" value="<% out.print(((Coupon)ob).getExpireDate()); %>">
-				<input type=submit value="Udpate">
-				</form>
+      %>
+    <form action="../controller/updateCoupon" method="get">
+    <input type="hidden" name="couponId" value=<% out.print(((Coupon)ob).getId()); %>>
+	Image: <input type=text name="image" value="<% out.print(((Coupon)ob).getImage()); %>"><br>
+	Business id: <input type=text name="businessId" value="<% out.print(((Coupon)ob).getBusinessId()); %>"><br>
+	Description: <textarea name="description"><% out.print(((Coupon)ob).getDescription()); %></textarea> <br>
+	Expire date: <input type="date" name="expDate" value="<% out.print(((Coupon)ob).getExpireDate()); %>">
+	Category: <select>
+	  <option name="category" value="sports" <% if (((Coupon)ob).getCategory().equals("sports")){%> selected <%}%>>Sports</option>
+	  <option name="category" value="toys" <% if (((Coupon)ob).getCategory().equals("toys")){%> selected <%}%>>Toys</option>
+	  <option name="category" value="restaurants" <% if (((Coupon)ob).getCategory().equals("restaurants")){%> selected <%}%>>Restaurants</option>
+	  <option name="category" value="tickets" <% if (((Coupon)ob).getCategory().equals("tickests")){%> selected <%}%>>Tickets</option>
+	  </select>
+	<input type=submit value="Udpate">
+	</form>
 
 </body>
 </html>

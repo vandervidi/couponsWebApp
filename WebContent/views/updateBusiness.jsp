@@ -18,8 +18,9 @@
 					Business name: <input type="text" name="businessName" value="<% out.print(((Business)ob).getBusinessName()); %>"><br>
 					location [Length]: <input type=text name="length" value="<% out.print(((Business)ob).getLength()); %>"><br>
 					location [Width]: <input type=text name="width" value="<% out.print(((Business)ob).getWidth()); %>"><br>
-				<input type=submit value="Udpate">
+				<input type=submit value="Update">
 				</form>
+				<br><br><a href="../views/businesses.jsp">Go back</a>
 
 </body>
 </html>

@@ -4,17 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>Error</title>
 </head>
 <body>
-	<h2>error</h2>
+	<h2>Something went wrong...</h2>
 	<%
-	Object number = request.getAttribute("number");
+	
 	Object msg = request.getAttribute("msg");
 	
 	request.setAttribute("timestamp", new java.util.Date());
-	Object date = request.getAttribute("timestamp");
-	out.println(number+" \n"  +msg+" \n"  +date+" \n");
+	
+	out.println("Error: "+msg);
 	%>
+	<br><br><a href="../controller/">Back to home page</a>
 </body>
 </html>

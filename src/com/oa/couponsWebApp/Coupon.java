@@ -12,26 +12,29 @@ public class Coupon {
 	private String image;
 	private String description;
 	private String expireDate;
+	private String category;
 	
 	//Default Ctor
 	public Coupon(){
 	}
 	
-	public Coupon(int businessId, String image, String description, String expireDate) {
+	public Coupon(int businessId, String image, String description, String expireDate, String category) {
 		super();
 		this.businessId = businessId;
 		this.image = image;
 		this.description=description;
 		this.expireDate=expireDate;
+		this.category=category;
 	}
 	
-	public Coupon(int id,int businessId, String image, String description, String expireDate) {
+	public Coupon(int id,int businessId, String image, String description, String expireDate, String category) {
 		super();
 		this.id=id;
 		this.businessId = businessId;
 		this.image = image;
 		this.description=description;
-		this.setExpireDate(expireDate);
+		this.expireDate=expireDate;
+		this.category=category;
 	}
 	@Id @GeneratedValue
 	public int getId() {
@@ -64,12 +67,20 @@ public class Coupon {
 	public void setExpireDate(String expireDate) {
 		this.expireDate = expireDate;
 	}
-	
-	
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", businessId=" + businessId + ", image="
 				+ image + ", description=" + description + ", expireDate="
-				+ expireDate + "]";
+				+ expireDate + ", category=" + category + "]";
 	}
+	
 }

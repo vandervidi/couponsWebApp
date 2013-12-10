@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 public class CouponsPlatformController extends HttpServlet {
 	
 	// Create db Singleton
-	// Shotcut
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -48,12 +47,10 @@ public class CouponsPlatformController extends HttpServlet {
 			DAO db = DAO.getInstance();
 			User user = db.getUser(username);
 			if (user!=null){
-//										System.out.println("user.toString()="+user.toString());
-//										System.out.println("user.getPassword()="+user.getPassword());
-//										System.out.println("user.MD5(pagePasswordInput)"+user.MD5(password));
+
 				//Check password
 				if (user.getPassword().equals(password) ) {
-//										System.out.println("user.checkPassword(password) == true");
+
 					// Pass true
 					if (user.getPrivilige() == 1){
 						// - 1 - UserName login as admin
@@ -66,7 +63,12 @@ public class CouponsPlatformController extends HttpServlet {
 						System.out.println( cookie.getMaxAge() );
 						cookie.setPath("/");
 						response.addCookie( cookie );
-						//request.getSession().invalidate();
+						
+						Cookie lastUserCookie = new Cookie("lastUser", user.getUsername());
+						cookie.setMaxAge(3600);	// stays alive for 1 hour
+						System.out.println( cookie.getMaxAge());
+						cookie.setPath("/");
+						response.addCookie( lastUserCookie );
 						
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/views/adminPanel.jsp");
@@ -88,12 +90,18 @@ public class CouponsPlatformController extends HttpServlet {
 					}
 						
 				}else{	// Paswword not vaild
-					request.setAttribute("number", "20");
-					request.setAttribute("msg", "password does not vaild.");
+					request.setAttribute("msg", " Wrong password");
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/error.jsp");
 					dispatcher.forward(request, response);
 				}
+			}
+			else
+			{
+				request.setAttribute("msg", "User does not exist");
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/views/error.jsp");
+				dispatcher.forward(request, response);
 			}
 		}
 		else{
@@ -153,18 +161,20 @@ public class CouponsPlatformController extends HttpServlet {
 			String businessId	 = request.getParameter("businessId");
 			String description	 = request.getParameter("description");
 			String expireDate	 = request.getParameter("expDate");
+			String category		 = request.getParameter("category");
+			
+			System.out.println(category);
 			int busId=Integer.parseInt(businessId);
 			// Check if busId exist
 			if(DAO.getInstance().getBusiness(busId)!=null){
 				
-				DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate));
+				DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate,category));
 	
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
 				dispatcher.forward(request, response);
 			}else{
-				request.setAttribute("number", "20");
-				request.setAttribute("msg", "businessId does not exist.");
+				request.setAttribute("msg", "This businiess ID does not wxist");
 				RequestDispatcher dispatcher = getServletContext()
 						.getRequestDispatcher("/views/error.jsp");
 				dispatcher.forward(request, response);
@@ -237,7 +247,9 @@ public class CouponsPlatformController extends HttpServlet {
 					int busId=Integer.parseInt(businessId);
 					String couponId = request.getParameter("couponId");
 					int couponIdInteger = Integer.parseInt(couponId);
-					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate));
+					String category = request.getParameter("category");
+					
+					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate,category));
 					
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/adminPanel.jsp");
@@ -351,6 +363,9 @@ public class CouponsPlatformController extends HttpServlet {
 
 		// Home-page - working!
 		else {
+			Cookie cookies[] = request.getCookies();
+			
+			request.setAttribute("cookies", cookies);
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/index.jsp");

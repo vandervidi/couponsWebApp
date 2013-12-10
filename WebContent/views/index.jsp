@@ -1,10 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
+<%@ page import="javax.servlet.http.Cookie , java.util.Iterator" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="windows-1255">
-<title>Insert title here</title>
+<title>Coupons web store</title>
 </head>
 <body>
+<% 
+	boolean knownUser=false;
+	Cookie cookies[] = (Cookie[])request.getAttribute("cookies");
+if (cookies!=null)
+{
+	for (Cookie cookie:cookies)
+	{
+		if (cookie.getName().equals("lastUser"))
+		{
+			knownUser=true;
+			out.print("<h2>Welcome back "+cookie.getValue()+" !</h2>");
+		}
+	}
+}
+if (knownUser==false)
+{
+%>
 <div style=" background-color: #2E2E2E;font-family: Arial;
      color:#b6ff00;font-size:15px;padding-bottom: 10px;word-break: normal;width: 400px">
     
@@ -35,9 +54,8 @@
 
 </div>
 </div>
+<%} %>
 	<a href="../controller/categories">Coupons-categories</a> <br>
-	<a href="../controller/coupons">All-Coupons</a> <br>
-	<a href="../controller/coupon">Show coupon By ID</a> <br>
 	<a href="../controller/help">Help</a> <br>
 	<a href="../controller/contact">Contact Us</a><br>
 	<a href="../controller/about">About</a>
