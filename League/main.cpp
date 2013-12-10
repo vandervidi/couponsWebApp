@@ -127,6 +127,23 @@ void help(){
 	fileReader.close();
 }
 
+// from "aab. tr, ew, .sdff" => "aab tr ew sdff"
+string delimetersRemover(string str){		
+	size_t found1 = str.find_first_of(", ");
+	while (found1!= string::npos){
+		str[found1]=' ';
+		found1=str.find_first_of(", ",found1+1);
+	}
+	size_t found2 = str.find_first_of(". ");
+	while (found2!= string::npos){
+		str[found2]=' ';
+		found2=str.find_first_of(". ",found2+1);
+	}
+
+	//std::cout << str << '\n';
+	return str;
+}
+
 void user_menu(){
 	string str;
 	int caseNum;
@@ -134,6 +151,7 @@ void user_menu(){
 	do {
 		cout<<"type command or type 'help' for list of valid commands."<<endl;
 		getline(cin,str);
+
 		caseNum = check_input(str);
 		if (caseNum != -1) { // vaild command
 
