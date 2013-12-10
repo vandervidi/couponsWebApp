@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
 <%@ page import="javax.servlet.http.Cookie , java.util.Iterator" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +9,35 @@
 <link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
 
 </head>
+<% 
+        boolean knownUser=false;
+		Cookie tmpCookie=null;
+        Cookie cookies[] = (Cookie[])request.getAttribute("cookies");
+if (cookies!=null)
+{
+        for (Cookie cookie:cookies)
+        {
+            if (cookie.getName().equals("lastUser"))
+             {
+                knownUser=true;
+               tmpCookie=cookie;
+             }
+        }
+}
+%>
+
 <body class="page">
 <div id="wrap">
   <div id="header"> 
      logo
     <div id="nav">
       <ul class="menu">
+<%
+if (knownUser==true)
+{
+	out.print("<li><a href=\"../views/adminPanel.jsp\">Admin-Panel</a></li>");
+}
+%>
         <li class="current_page_item"><a href="../controller/">Home</a></li>
         <li ><a href="../controller/help">Help</a></li>
         <li><a href="../controller/about">About</a></li>
@@ -22,19 +46,10 @@
       </ul>
     </div>
     <!--end nav-->
-     <% 
-	boolean knownUser=false;
-	Cookie cookies[] = (Cookie[])request.getAttribute("cookies");
-if (cookies!=null)
+<% 
+if (knownUser==true)
 {
-	for (Cookie cookie:cookies)
-	{
-		if (cookie.getName().equals("lastUser"))
-		{
-			knownUser=true;
-			out.print("<h2>Welcome back "+cookie.getValue()+" !</h2>");
-		}
-	}
+out.print("<h2>Welcome back "+tmpCookie.getValue()+" !</h2>");
 }
 if (knownUser==false)
 {
@@ -48,7 +63,7 @@ Pass:<input autocomplete="off" type="password" name="password" size="9">
 <input type="hidden" name="login"><input type="submit" value="Log in">   
 </form>
 
-<%} %>
+<% } %>
   </div>
   <!--end header-->
 
