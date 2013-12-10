@@ -117,11 +117,16 @@ public class CouponsPlatformController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String str = request.getPathInfo();
 		
-		// Categories
-				if (str.equals("/categories")) {
-					request.setAttribute("timestamp", new java.util.Date());
+		// Category
+				if (str.equals("/category")) {
+					String categoryName = request.getParameter("category");
+					System.out.println(categoryName);
+					// Coupons Iterator
+			        Iterator couponsIterator = DAO.getInstance().getAllCoupons();
+			        request.setAttribute("couponsIterator", couponsIterator);			   
+				    request.setAttribute("categoryName", categoryName);
 					RequestDispatcher dispatcher = getServletContext()
-							.getRequestDispatcher("/views/categories.jsp");
+					.getRequestDispatcher("/views/categories.jsp");
 					dispatcher.forward(request, response);
 				} 
 		
@@ -216,8 +221,8 @@ public class CouponsPlatformController extends HttpServlet {
 					//Location
 					String businessLength	 = request.getParameter("length");
 					String businessWidth	 = request.getParameter("width");
-					double busLength=	Double.parseDouble(businessLength);
-					double busWidth=	Double.parseDouble(businessWidth);
+					double busLength		 = Double.parseDouble(businessLength);
+					double busWidth          = Double.parseDouble(businessWidth);
 					
 					DAO.getInstance().updateBusiness(new Business(busId,businessName, busLength, busWidth));
 					
