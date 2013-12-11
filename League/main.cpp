@@ -163,6 +163,19 @@ int monthToInt(string month)
 	else if (month.compare("OCT")==0) {return 10;}
 	else if (month.compare("NOV")==0) {return 11;}
 	else if (month.compare("DEC")==0) {return 12;}
+
+	else if (month.compare("jan")==0) {return 1;}
+	else if (month.compare("feb")==0) {return 2;}
+	else if (month.compare("mar")==0) {return 3;}
+	else if (month.compare("apr")==0) {return 4;}
+	else if (month.compare("may")==0) {return 5;}
+	else if (month.compare("jun")==0) {return 6;}
+	else if (month.compare("Jul")==0) {return 7;}
+	else if (month.compare("aug")==0) {return 8;}
+	else if (month.compare("sep")==0) {return 9;}
+	else if (month.compare("oct")==0) {return 10;}
+	else if (month.compare("nov")==0) {return 11;}
+	else if (month.compare("dec")==0) {return 12;}
 	else return -1;
 }
 
@@ -193,23 +206,6 @@ void help(){
 	fileReader.close();
 }
 
-// from "aab. tr, ew, .sdff" => "aab tr ew sdff"
-string delimetersRemover(string str){		
-	size_t found1 = str.find_first_of(", ");
-	while (found1!= string::npos){
-		str[found1]=' ';
-		found1=str.find_first_of(", ",found1+1);
-	}
-	size_t found2 = str.find_first_of(". ");
-	while (found2!= string::npos){
-		str[found2]=' ';
-		found2=str.find_first_of(". ",found2+1);
-	}
-
-	//std::cout << str << '\n';
-	return str;
-}
-
 // create from line "Game x, mon. xx, xxxx" game object
 game saveGameDetailsTemp(vector<string> lineVector){
 	Date roundDate = Date();
@@ -219,7 +215,6 @@ game saveGameDetailsTemp(vector<string> lineVector){
 
 	// Month
 	int month = monthToInt( lineVector[2] );					//change from month(string) to (int)
-	//int month = 9;
 	if (month>=1 && month<=12)
 		roundDate.month = month;
 	
@@ -239,7 +234,9 @@ game saveGameDetailsTemp(vector<string> lineVector){
 	return tempDetails;
 }
 
-game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDetails){
+game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writeToFile){
+	str = delimetersRemover(str, (".,()\0"), ' ' );			//change from "." and "," to=> ' ' (space)
+	vector<string> lineVector = splitStr(str);				//make vector from string
 
 	//save Game temp details
 	game newGame = game();
@@ -263,33 +260,21 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 				teamA_name =lineVector[i];					
 			else teamA_name +=" "+lineVector[i];
 		}
+		delimetersRemover(teamA_name, "-\0", ' ');
 		newGame.setHomeGroup(teamA_name);
 	}
 	//----)
-	
-	////----( Way-1
-	//// Find and create teamB name
-	//string teamB=NULL;
-	//index+=2;	//jump to the index of the first word after "-"
-	//int teamB_nameSize = lineVector.size()-index-4;		///all the words after the "-" (lineVector.size()-index) minus 4 numbers
-	//for (index; index<(index+teamB_nameSize); index++){	//check for valid input
-	//	if (teamB.size()==0)
-	//		teamB =lineVector[index];					
-	//	else teamB +=" "+lineVector[index];
-	//}
-	//newGame.setAwayGroup(teamB);
-	////----)
 
 	//----( Way-2
 	// Find and create teamB name
 	string teamB_name;
 	teamB_name.clear();
-	//index+=2;	//jump to the index of the first word after "-"
+	//index+=2;	
 	
-	//delete the teamA name and "-"
+	// remove from vector teamA name and "-"
 	lineVector.erase( lineVector.begin(),lineVector.begin()+index+2 );
 
-	//romeve all "-"
+	//romeve all "-" from the string and create new string from that and split that to vector with splitStr()
 	string s="";
 	for (index=0; index< lineVector.size(); index++){
 		lineVector.at(index) = delimetersRemover(lineVector.at(index), ("-\0"), ' ' );			//change from "." and "," to=> ' ' (space)	
@@ -298,7 +283,6 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 			else s +=" "+lineVector.at(index);
 	}
 	lineVector = splitStr(s);
-
 
 	//identify the nameB
 	for (index=0; index<lineVector.size(); index++) {
@@ -326,7 +310,10 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 		
 	index++;
 	newGame.setAwayMidScore( atoi(lineVector[index].c_str()) );
-	if (lineVector.size()-1-index!=0){	// thare is extantion
+	
+	// thare is extantion
+	//if (lineVector.size()-1-index!=0){	
+	if (newGame.getHomeFinalScore()==newGame.getAwayFinalScore()) {
 		index++;
 		newGame.setHomeExtensionScore( atoi(lineVector[index].c_str()) );
 		
@@ -339,6 +326,8 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 	newGame.setRoundNum( gameTempDetails.getRoundNum() );
 	newGame.setDate( gameTempDetails.getDate() );
 
+	if (writeToFile==true)
+		writeToGamesDB(str);
 	//..last
 	return newGame;
 }
@@ -349,12 +338,13 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 //system. 										//
 //'typeFile' - to identify witch of function we //
 //need to execute on this line.					//
-// typeFile=1 for initialize at the first		//
-//typeFile=2 for read from db					//
+// typeInput=1  for input from keyboard			//
+// typeInput=2  for read from db				//
 //----------------------------------------------//
-void readGameAtRound(string line, int typeFile) {	
+vector<game> readGameAtRound(string line, int typeInput, bool writeToFile) {	
 	vector<game> v;
-	if (typeFile==1){
+	// type 1 from menu
+	if (typeInput==1){
 		line = delimetersRemover(line, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
 		writeToGamesDB(line);
 		vector<string> lineVector = splitStr(line);		//make vector from string
@@ -371,15 +361,40 @@ void readGameAtRound(string line, int typeFile) {
 				str.clear();
 				getline(cin,str);
 				if (str!= ";"){
-					str = delimetersRemover(str, ("()\0"), ' ' );			//change from "." and "," to=> ' ' (space)
-					vector<string> strVector = splitStr(str);		//make vector from string
-					v.push_back( functionToCreateNewGameObject(strVector, gameTempDetails) );
+					v.push_back( functionToCreateNewGameObject(str, gameTempDetails, writeToFile) );
 				}
 			}
 		}
-	}else if(typeFile==2){
+	}else if(typeInput==2){ // type 2 from file "games.db"
+		ifstream fileReader;
+		string tmp;
+		game gameTempDetails;
+		fileReader.clear();
+		fileReader.open("games.db");
 
+		while(fileReader.good() &&  getline(fileReader,tmp) && tmp!= ";") {
+			if (fileReader!=NULL && tmp.find("session",0) == std::string::npos){
+				//read game round & date
+				if (tmp.find("game",0) != std::string::npos ){
+					tmp = delimetersRemover(tmp, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
+					//writeToGamesDB(tmp);
+					vector<string> lineVector = splitStr(tmp);		//make vector from string
+
+					gameTempDetails = saveGameDetailsTemp( lineVector );		//create gameTemp object with only this Details: game (round, day, month, year)		
+				}
+				//read specific game
+				else if(&gameTempDetails != NULL){
+					//read all games
+					cout<<"create gameTemp\n";
+			
+					// Add game lines here until ";"
+					v.push_back( functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile) );
+				}
+			}
+		}
+		fileReader.close();
 	}
+	return v;
 }
 
 
@@ -390,7 +405,7 @@ void user_menu(){
 	do {
 		cout<<"type command or type 'help' for list of valid commands."<<endl;
 		getline(cin,str);
-		str = delimetersRemover(str, (",",  ".",  "(",  ")"), ' ' );			//delete "."   ","   "("   ")"
+		str = delimetersRemover(str, ",.()\0", ' ' );			//delete "."   ","   "("   ")"
 		caseNum = check_input(str);
 		if (caseNum != -1) { // vaild command
 
@@ -416,7 +431,7 @@ void user_menu(){
 				break;
 
 			case 11:		//read game
-				readGameAtRound(str,1);
+				readGameAtRound(str,1, true);
 				break;
 			}
 
@@ -425,13 +440,16 @@ void user_menu(){
 	}while (caseNum != 777);
 }
 
-
+//int init(){
+//
+//}
 
 
 int main() {
 	vector<team> teams;
 	vector<game> allGames;
-	//allGames= OfirFunction();
+	allGames= readGameAtRound("",2, false);
+	
 	ifstream fileReader;
 	string tmp;
 	team tmpTeam;
@@ -442,13 +460,9 @@ int main() {
 	}
 	fileReader.close();
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
-	league.init(allGames);
-	league.createLeagueTable();
+	//league.init(allGames);
+	//league.createLeagueTable();
 	user_menu();
-	//string str;
-	//getline(cin, str);
-	//str = delimetersRemover(str, ",.()\0", ' ' );			//will delete "."   ","   "("   ")"
-	//cout<< str;
 	system("pause");
 	return 0;
 
