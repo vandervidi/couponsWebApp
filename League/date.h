@@ -12,19 +12,19 @@ using namespace std;
 
 class Date{
 public:
-	int year;
-	int month;
-	int day;
-	Date();
-	//Date(Date& date);
-	Date(int day, int month, int year);
-	void operator+=(int a);
-	Date & operator+=(const Date & Date);
-	Date & operator=(const Date & Date);
-	int operator==(const Date & Date);
-	//dtor				//no needed
-	friend ofstream& operator<<(ofstream & Fout, const Date & d);	
+        int year;
+        int month;
+        int day;
+        Date();
+        //Date(Date& date);
+        Date(int day, int month, int year);
+        void operator+=(int a);
+        Date & operator+=(const Date & Date);
+        Date & operator=(const Date & Date);
+        int operator==(const Date & Date);
+        //dtor                                //no needed
+        friend ofstream& operator<<(ofstream & Fout, const Date & d);        
 };
-ofstream & operator<< (ofstream & Fout, Date & d);		
+ofstream & operator<< (ofstream & Fout, Date & d);                
 
 #endif
