@@ -18,28 +18,22 @@ private:
 	int leaguePoints;
 public:
 	//ctor
-	game getGame(string againstTeam, int round) {
-		int index=0;
-		while(index<games.size())
-		{
-			if (games.at(index).getAwayGroup().compare(againstTeam) && games.at(index).getRoundNum()==round)
-				return games.at(index);
-			else
-				index++;
-		}
-		
-		cout<<"The game "<<name<<"-"<<againstTeam<<" in round "<<round<<" does not exist"<<endl;
-	}
-	//game getGame(string againstTeam, int round) {
-	//	int index=0;
-	//	for each(game g in games)
-	//	{
-	//		if (g.getAwayGroup().compare(againstTeam) && g.getRoundNum()==round)
-	//			return g;
-	//		else
-	//			index++;
-	//	}
-	//	cout<<"The game "<<name<<"-"<<againstTeam<<" in round "<<round<<" does not exist"<<endl;
-	//}
+	team();
+	team(string str);
+	//dtor
+	~team();
+
+	void setGames();
+	vector<game> getGames();
+	void setName(string str);
+	string getName();
+	void setPointsFor(int p);
+	int getPointsFor();
+	void setPointsAgainst(int p);
+	int getPointsAgainst();
+	void setLeaguePoints(int p);
+	int getLeaguePoints();
+	void print();
+
 };
 #endif

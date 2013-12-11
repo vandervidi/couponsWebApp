@@ -3,6 +3,8 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include "team.h"
+#include "league.h"
 #include "game.h"
 using namespace std;
 
@@ -31,6 +33,7 @@ void sort(vector<string> v){
 		cout<<i+1<<". "<<v[i]<<endl;
 	}
 }
+
 
 //------------------------------------------------//
 // before sending to splitStr()					  //
@@ -92,6 +95,7 @@ int check_input(string str)
 	else if (tokenized[0]=="show" && tokenized[1]=="league") {
 		return 2;
 	}
+
 	//In terminal - 'help'
 	else if (tokenized[0]=="help") {
 		return 5;
@@ -101,7 +105,7 @@ int check_input(string str)
 	else if (tokenized[0]=="register" && tokenized[1]=="teams") {
 		return 10;
 	}
-	//
+
 	//In terminal - for ex. 'game 1, oct. 27, 2013'
 	else if (tokenized[0]== "game" && tokenized.size()>=5){		//size of words
 		return 11;
@@ -117,7 +121,7 @@ int check_input(string str)
 
 void addTeam() {
 	//Adds a team. Two things happen next.
-	//(-) The team name is appended to th file teams.db.
+	//(-) The team name is appended to the file teams.db.
 	//(-) The team is appended to the league.db file and all its league
 	//	   parameters are reset to zero.(Points, number of games ..)
 	cout<<"Enter team name:"<<endl;
@@ -133,6 +137,38 @@ void addTeam() {
 	outputToTeamsDb.close();
 }
 
+//A method that writes a string to games.db file//
+void writeToGamesDB(string str)
+{
+	ofstream of;
+	of.open("games.db", ios_base::app);
+	of<<str<<endl;
+	of.close();
+}
+
+// This method converts a string containing a	//
+// a month name in its shorter version, into an //
+// integer type .e.g OCT -> 10					//
+int monthToInt(string month)
+{
+	if (month.compare("JAN")==0) {return 1;}
+	else if (month.compare("FEB")==0) {return 2;}
+	else if (month.compare("MAR")==0) {return 3;}
+	else if (month.compare("APR")==0) {return 4;}
+	else if (month.compare("MAY")==0) {return 5;}
+	else if (month.compare("JUN")==0) {return 6;}
+	else if (month.compare("YUL")==0) {return 7;}
+	else if (month.compare("AUG")==0) {return 8;}
+	else if (month.compare("SEP")==0) {return 9;}
+	else if (month.compare("OCT")==0) {return 10;}
+	else if (month.compare("NOV")==0) {return 11;}
+	else if (month.compare("DEC")==0) {return 12;}
+	else return -1;
+}
+
+//This method reads to teams.db file and outputs //
+//to the screen a list of all registered games	 //
+
 void showTeams(){
 	system("CLS"); // clears the screen before 
 	string teamName;
@@ -147,6 +183,7 @@ void showTeams(){
 }
 
 void help(){
+	system("CLS"); 
 	ifstream fileReader;
 	string tmp;
 	fileReader.open("help.txt");
@@ -154,6 +191,23 @@ void help(){
 		cout<<tmp<<endl;
 	}
 	fileReader.close();
+}
+
+// from "aab. tr, ew, .sdff" => "aab tr ew sdff"
+string delimetersRemover(string str){		
+	size_t found1 = str.find_first_of(", ");
+	while (found1!= string::npos){
+		str[found1]=' ';
+		found1=str.find_first_of(", ",found1+1);
+	}
+	size_t found2 = str.find_first_of(". ");
+	while (found2!= string::npos){
+		str[found2]=' ';
+		found2=str.find_first_of(". ",found2+1);
+	}
+
+	//std::cout << str << '\n';
+	return str;
 }
 
 // create from line "Game x, mon. xx, xxxx" game object
@@ -164,8 +218,8 @@ game saveGameDetailsTemp(vector<string> lineVector){
 	int round = stoi( lineVector[1] ); //convert from string to int
 
 	// Month
-	//int month = chengeMonthToNumber( lineVector[2] );					//change from month(string) to (int)
-	int month = 9;
+	int month = monthToInt( lineVector[2] );					//change from month(string) to (int)
+	//int month = 9;
 	if (month>=1 && month<=12)
 		roundDate.month = month;
 	
@@ -302,7 +356,7 @@ void readGameAtRound(string line, int typeFile) {
 	vector<game> v;
 	if (typeFile==1){
 		line = delimetersRemover(line, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
-		//writeToDbFile(line);
+		writeToGamesDB(line);
 		vector<string> lineVector = splitStr(line);		//make vector from string
 
 		game gameTempDetails = saveGameDetailsTemp( lineVector );		//create gameTemp object with only this Details: game (round, day, month, year)		
@@ -336,7 +390,6 @@ void user_menu(){
 	do {
 		cout<<"type command or type 'help' for list of valid commands."<<endl;
 		getline(cin,str);
-
 		str = delimetersRemover(str, (",",  ".",  "(",  ")"), ' ' );			//delete "."   ","   "("   ")"
 		caseNum = check_input(str);
 		if (caseNum != -1) { // vaild command
@@ -376,6 +429,21 @@ void user_menu(){
 
 
 int main() {
+	vector<team> teams;
+	vector<game> allGames;
+	//allGames= OfirFunction();
+	ifstream fileReader;
+	string tmp;
+	team tmpTeam;
+	fileReader.open("teams.db");
+	while(getline(fileReader,tmp)) {
+		tmpTeam=team(tmp);
+		teams.push_back(tmpTeam);
+	}
+	fileReader.close();
+	league league(teams); //construct a league with teams objects. teams dont have games yet.
+	league.init(allGames);
+	league.createLeagueTable();
 	user_menu();
 	//string str;
 	//getline(cin, str);
