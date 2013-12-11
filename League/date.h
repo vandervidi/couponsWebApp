@@ -16,7 +16,8 @@ public:
 	int month;
 	int day;
 	Date();
-	Date(int year, int month, int day);
+	//Date(Date& date);
+	Date(int day, int month, int year);
 	void operator+=(int a);
 	Date & operator+=(const Date & Date);
 	Date & operator=(const Date & Date);

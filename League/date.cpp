@@ -7,7 +7,13 @@ Date::Date(){
 	day=0;
 }
 
-Date::Date(int y, int m, int d){
+//Date::Date(Date& date){
+//	year=date.year;
+//	month=date.month;
+//	day=date.day;
+//}
+
+Date::Date(int d, int m, int y){
 	year=y;
 	month=m;
 	day=d;

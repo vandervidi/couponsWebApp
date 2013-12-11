@@ -16,64 +16,76 @@ private:
 	int roundNum;
 	int homeMidScore;
 	int homeFinalScore;
+	int homeExtensionScore;
 	int awayMidScore;
 	int awayFinalScore;
+	int awayExtensionScore;
 
 public:
-//ctro
-game()
-{
+	//game (game& g);
+	game (int roundNum, Date date);
+	game();
 
-}
-//Getters and Setters 
- Date getDate() {
+	//Getters and Setters 
+	Date getDate() {
 		return date;
 	}
- void setDate(Date newDate) {
+	void setDate(Date newDate) {
 		date = newDate;
 	}
- string getHomeGroup() {
+	string getHomeGroup() {
 		return homeGroup;
 	}
-void setHomeGroup(string newHomeGroup) {
+	void setHomeGroup(string newHomeGroup) {
 		homeGroup = newHomeGroup;
 	}
-string getAwayGroup() {
+	string getAwayGroup() {
 		return awayGroup;
 	}
-void setAwayGroup(string newAwayGroup) {
+	void setAwayGroup(string newAwayGroup) {
 		awayGroup = newAwayGroup;
 	}
-int getRoundNum() {
+	int getRoundNum() {
 		return roundNum;
 	}
-void setRoundNum(int newRoundNum) {
+	void setRoundNum(int newRoundNum) {
 		roundNum = newRoundNum;
 	}
- int getHomeMidScore() {
+	int getHomeMidScore() {
 		return homeMidScore;
 	}
-void setHomeMidScore(int newHomeMidScore) {
+	void setHomeMidScore(int newHomeMidScore) {
 		homeMidScore = newHomeMidScore;
 	}
-int getHomeFinalScore() {
+	int getHomeFinalScore() {
 		return homeFinalScore;
 	}
-void setHomeFinalScore(int newHomeFinalScore) {
+	void setHomeFinalScore(int newHomeFinalScore) {
 		homeFinalScore = newHomeFinalScore;
 	}
-int getAwayMidScore() {
+	int getHomeExtensionScore() {
+		return homeExtensionScore;
+	}
+	void setHomeExtensionScore(int newHomeExtensionScore) {
+		this->homeExtensionScore = newHomeExtensionScore;
+	}
+	int getAwayMidScore() {
 		return awayMidScore;
 	}
-void setAwayMidScore(int newAwayMidScore) {
+	void setAwayMidScore(int newAwayMidScore) {
 		awayMidScore = newAwayMidScore;
 	}
-int getAwayFinalScore() {
+	int getAwayFinalScore() {
 		return awayFinalScore;
 	}
-void setAwayFinalScore(int newAwayFinalScore) {
+	void setAwayFinalScore(int newAwayFinalScore) {
 		awayFinalScore = newAwayFinalScore;
 	}
-
+	int getAwayExtensionScore() {
+		return awayExtensionScore;
+	}
+	void setAwayExtensionScore(int newAwayExtensionScore) {
+		this->awayExtensionScore = newAwayExtensionScore;
+	}
 };
 #endif

@@ -18,13 +18,6 @@ private:
 	int leaguePoints;
 public:
 	//ctor
-	team()
-	{
-
-	}
-
-	
-
 	game getGame(string againstTeam, int round) {
 		int index=0;
 		while(index<games.size())
@@ -37,6 +30,16 @@ public:
 		
 		cout<<"The game "<<name<<"-"<<againstTeam<<" in round "<<round<<" does not exist"<<endl;
 	}
-
+	//game getGame(string againstTeam, int round) {
+	//	int index=0;
+	//	for each(game g in games)
+	//	{
+	//		if (g.getAwayGroup().compare(againstTeam) && g.getRoundNum()==round)
+	//			return g;
+	//		else
+	//			index++;
+	//	}
+	//	cout<<"The game "<<name<<"-"<<againstTeam<<" in round "<<round<<" does not exist"<<endl;
+	//}
 };
 #endif

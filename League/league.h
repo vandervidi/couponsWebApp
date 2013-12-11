@@ -12,11 +12,9 @@ vector<team> teams;
 
 public:
 	vector<team> getTeams(){return teams;}
-//ctro
-league()
-{
-
-}
-
+	
+	//ctro
+	league();
+	//league(league& l);
 };
 #endif
