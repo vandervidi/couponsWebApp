@@ -35,38 +35,22 @@ void sort(vector<string> v){
 //------------------------------------------------//
 // before sending to splitStr()					  //
 // from "aab. tr, ew, .sdff" => "aab tr ew sdff"  //
+// for ex. delimetersRemover(str, ",.()\0", ' ' );//			
+//will delete "."   ","   "("   ")"				  //
+//we need to write '\0' at the end				  //
 //------------------------------------------------//
-string delimetersRemover(string str){		
-	
-	//change from "," => " "
-	size_t found1 = str.find_first_of(", ");
-	while (found1!= string::npos){
-		str[found1]=' ';
-		found1=str.find_first_of(", ",found1+1);
+string delimetersRemover(string str, string delimitersVector, char to ){		
+	//for (int i=0; i<delimitersVector.size(); i++){
+	int i=0;
+	while (i < delimitersVector.size()){
+		//change from "*" => " "
+		size_t found1 = str.find_first_of(delimitersVector[i]);
+		while (found1!= string::npos){
+			str[found1]=to;
+			found1=str.find_first_of(delimitersVector[i], found1+1);
+		}
+		i++;
 	}
-
-	//change from "." => " "
-	size_t found2 = str.find_first_of(". ");
-	while (found2!= string::npos){
-		str[found2]=' ';
-		found2=str.find_first_of(". ",found2+1);
-	}
-
-	//change from "(" => " "
-	size_t found3 = str.find_first_of("( ");
-	while (found3!= string::npos){
-		str[found3]=' ';
-		found3=str.find_first_of("( ",found3+1);
-	}
-
-	//change from ")" => " "
-	size_t found4 = str.find_first_of(") ");
-	while (found4!= string::npos){
-		str[found4]=' ';
-		found4=str.find_first_of(") ",found4+1);
-	}
-
-	//std::cout << str << '\n';
 	return str;
 }
 
@@ -246,8 +230,24 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 	// Find and create teamB name
 	string teamB_name;
 	teamB_name.clear();
-	index+=2;	//jump to the index of the first word after "-"
-	for (index; index<lineVector.size(); index++) {
+	//index+=2;	//jump to the index of the first word after "-"
+	
+	//delete the teamA name and "-"
+	lineVector.erase( lineVector.begin(),lineVector.begin()+index+2 );
+
+	//romeve all "-"
+	string s="";
+	for (index=0; index< lineVector.size(); index++){
+		lineVector.at(index) = delimetersRemover(lineVector.at(index), ("-\0"), ' ' );			//change from "." and "," to=> ' ' (space)	
+		if (s.size()==0)
+				s =lineVector.at(index);					
+			else s +=" "+lineVector.at(index);
+	}
+	lineVector = splitStr(s);
+
+
+	//identify the nameB
+	for (index=0; index<lineVector.size(); index++) {
 		if ( atoi(lineVector[index].c_str()) ==0 ) {
 			if (teamB_name.size()==0)
 				teamB_name =lineVector[index];					
@@ -301,7 +301,7 @@ game functionToCreateNewGameObject(vector<string> lineVector, game& gameTempDeta
 void readGameAtRound(string line, int typeFile) {	
 	vector<game> v;
 	if (typeFile==1){
-		line = delimetersRemover(line);			//delete "."   ","   "("   ")"
+		line = delimetersRemover(line, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
 		//writeToDbFile(line);
 		vector<string> lineVector = splitStr(line);		//make vector from string
 
@@ -317,7 +317,7 @@ void readGameAtRound(string line, int typeFile) {
 				str.clear();
 				getline(cin,str);
 				if (str!= ";"){
-					str = delimetersRemover(str);			//delete "."   ","   "("   ")"
+					str = delimetersRemover(str, ("()\0"), ' ' );			//change from "." and "," to=> ' ' (space)
 					vector<string> strVector = splitStr(str);		//make vector from string
 					v.push_back( functionToCreateNewGameObject(strVector, gameTempDetails) );
 				}
@@ -337,7 +337,7 @@ void user_menu(){
 		cout<<"type command or type 'help' for list of valid commands."<<endl;
 		getline(cin,str);
 
-		str = delimetersRemover(str);		// delete '.' and ',' from input
+		str = delimetersRemover(str, (",",  ".",  "(",  ")"), ' ' );			//delete "."   ","   "("   ")"
 		caseNum = check_input(str);
 		if (caseNum != -1) { // vaild command
 
@@ -377,6 +377,10 @@ void user_menu(){
 
 int main() {
 	user_menu();
+	//string str;
+	//getline(cin, str);
+	//str = delimetersRemover(str, ",.()\0", ' ' );			//will delete "."   ","   "("   ")"
+	//cout<< str;
 	system("pause");
 	return 0;
 
