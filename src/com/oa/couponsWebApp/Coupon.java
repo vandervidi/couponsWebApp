@@ -9,6 +9,8 @@ public class Coupon {
 	
 	private int id;
 	private int businessId;
+	private String name;
+	private double price;
 	private String image;
 	private String description;
 	private String expireDate;
@@ -18,8 +20,10 @@ public class Coupon {
 	public Coupon(){
 	}
 	
-	public Coupon(int businessId, String image, String description, String expireDate, String category) {
+	public Coupon(String name,int businessId, String image, String description, String expireDate, String category, double price) {
 		super();
+		this.name=name;
+		this.price=price;
 		this.businessId = businessId;
 		this.image = image;
 		this.description=description;
@@ -27,14 +31,16 @@ public class Coupon {
 		this.category=category;
 	}
 	
-	public Coupon(int id,int businessId, String image, String description, String expireDate, String category) {
+	public Coupon(int id,String name,int businessId, String image, String description, String expireDate, String category,double price) {
 		super();
+		this.name=name;
 		this.id=id;
 		this.businessId = businessId;
 		this.image = image;
 		this.description=description;
 		this.expireDate=expireDate;
 		this.category=category;
+		this.price=price;
 	}
 	@Id @GeneratedValue
 	public int getId() {
@@ -78,9 +84,28 @@ public class Coupon {
 
 	@Override
 	public String toString() {
-		return "Coupon [id=" + id + ", businessId=" + businessId + ", image="
-				+ image + ", description=" + description + ", expireDate="
-				+ expireDate + ", category=" + category + "]";
+		return "Coupon [id=" + id + ", businessId=" + businessId + ", name="
+				+ name + ", price=" + price + ", image=" + image
+				+ ", description=" + description + ", expireDate=" + expireDate
+				+ ", category=" + category + "]";
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	
 	
 }

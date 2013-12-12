@@ -65,9 +65,9 @@ public class CouponsPlatformController extends HttpServlet {
 						response.addCookie( cookie );
 						
 						Cookie lastUserCookie = new Cookie("lastUser", user.getUsername());
-						cookie.setMaxAge(3600);	// stays alive for 1 hour
-						System.out.println( cookie.getMaxAge());
-						cookie.setPath("/");
+						lastUserCookie.setMaxAge(3600);	// stays alive for 1 hour
+						System.out.println( lastUserCookie.getMaxAge());
+						lastUserCookie.setPath("/");
 						response.addCookie( lastUserCookie );
 						
 						RequestDispatcher dispatcher = getServletContext()
@@ -140,18 +140,18 @@ public class CouponsPlatformController extends HttpServlet {
 
 		// Log out 
 			else if(str.equals("/logout")) {
-											System.out.println("/logout came in");
+			
 				Cookie all [] =request.getCookies();
 				for (Cookie c : all){
 					if (c.getName().equals("connectedWithPrivilige") ){
-							System.out.println(  "c.getName().equals(connectedWithPrivilige)");
+							
 						c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
 						response.addCookie(c);
 						
 						request.setAttribute("timestamp", new java.util.Date());
 						
 						RequestDispatcher dispatcher = getServletContext()
-								.getRequestDispatcher("/views/index.jsp");
+								.getRequestDispatcher("/controller/");
 						dispatcher.forward(request, response);
 									System.out.println("change Cookie to 0, Cookie="+c);
 					}
@@ -162,18 +162,19 @@ public class CouponsPlatformController extends HttpServlet {
 		//add a coupon to db - working!
 		else if(str.equals("/addCoupon")) {
 
+			String name			 = request.getParameter("name");
 			String image		 = request.getParameter("image");
 			String businessId	 = request.getParameter("businessId");
 			String description	 = request.getParameter("description");
 			String expireDate	 = request.getParameter("expDate");
 			String category		 = request.getParameter("category");
+			String price		 = request.getParameter("price"); 
 			
-			System.out.println(category);
+			double dooublePrice = Double.parseDouble(price);
 			int busId=Integer.parseInt(businessId);
 			// Check if busId exist
 			if(DAO.getInstance().getBusiness(busId)!=null){
-				
-				DAO.getInstance().addCoupon(new Coupon(busId,image,description,expireDate,category));
+				DAO.getInstance().addCoupon(new Coupon(name,busId,image,description,expireDate,category,dooublePrice));
 	
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
@@ -245,16 +246,19 @@ public class CouponsPlatformController extends HttpServlet {
 		
 		// Update a Coupon in db - Working
 				else if(str.equals("/updateCoupon")) {
+					String name= request.getParameter("name");
+					String price = request.getParameter("price");
 					String image = request.getParameter("image");
 					String businessId = request.getParameter("businessId");
 					String description = request.getParameter("description");
 					String expireDate = request.getParameter("expDate");
+					double doublePrice = Double.parseDouble(price);
 					int busId=Integer.parseInt(businessId);
 					String couponId = request.getParameter("couponId");
 					int couponIdInteger = Integer.parseInt(couponId);
 					String category = request.getParameter("category");
 					
-					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,busId,image,description,expireDate,category));
+					DAO.getInstance().updateCoupon(new Coupon(couponIdInteger,name,busId,image,description,expireDate,category,doublePrice));
 					
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/adminPanel.jsp");
@@ -270,7 +274,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}	
 				
-		// Contact
+		// Contact - working!
 		else if(str.equals("/contact")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
@@ -348,8 +352,8 @@ public class CouponsPlatformController extends HttpServlet {
 		
 		// Delete a business by id - working
 				else if(str.equals("/deleteBusiness")) {
-					String couponId = request.getParameter("deleteId");
-					int businessIdTodelete = Integer.parseInt(couponId);
+					String businessId = request.getParameter("deleteId");
+					int businessIdTodelete = Integer.parseInt(businessId);
 					DAO.getInstance().deleteBusiness(businessIdTodelete);
 					
 					RequestDispatcher dispatcher = getServletContext()
@@ -357,6 +361,8 @@ public class CouponsPlatformController extends HttpServlet {
 					dispatcher.forward(request, response);	
 	
 				}
+				
+		
 		// Specific coupon - working
 		else if(str.contains("/coupon")) {
 			request.setAttribute("timestamp", new java.util.Date());

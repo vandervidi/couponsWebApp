@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
-<%@ page import="com.oa.couponsWebApp.Coupon , java.util.Iterator" %>
+<%@ page import="com.oa.couponsWebApp.Coupon,java.util.Iterator,java.text.*,java.util.*;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,19 +32,48 @@ Iterator couponsIterator;
 Coupon coupon;
 String category= (String)request.getAttribute("categoryName");
 couponsIterator = (Iterator)request.getAttribute("couponsIterator");
- if (couponsIterator!=null)
+Date currDate=new Date();
+if (couponsIterator!=null)
 {
 	
-		while(couponsIterator.hasNext())
-		{
-			coupon=(Coupon)couponsIterator.next();
-			if (coupon.getCategory().equals(category))
-			{
-				out.println(coupon.toString());
-			}
-		}
- }
- else
+while(couponsIterator.hasNext()) {
+	coupon=(Coupon)couponsIterator.next();
+
+        String expireDate=coupon.getExpireDate();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+   		Date expDate =  df.parse(expireDate); 
+            if (!(expDate.before(currDate)) && coupon.getCategory().equals(category))
+            {
+%>
+				
+				<br><br>
+<div style="width:600px">
+
+<div style="background-color:#FFA500;height: 30px;">
+<h3 style="margin-bottom:0;"><%
+out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +(coupon.getName()) +"</a>"); %></h3></div>
+
+<div style="background-color:#FFD700;height:200px;width:300px;float:left;">
+<img src="../views/<% out.print(coupon.getImage()); %>" width="300"></div>
+
+<div style="background-color:#EEEEEE;height:200px;width:300px;float:right;">
+<% out.print(coupon.getDescription()); %></div><br>
+
+<div style="background-color:#EEEEEE;height:20px;width:300px;float:left;">
+<% out.print("Price: " + coupon.getPrice()); %></div>
+
+<div style="background-color:#EEEEEE;height:20px;width:300px;float:right;">
+<% out.print("Expire date: " +(coupon.getExpireDate())); %></div>
+<form action="../controller/updateCouponPreview" method="get">
+<input type="hidden" name="updateId" value="<% out.print(coupon.getId());%>">
+<input type="submit" value="Update"></form>
+</div>
+				
+				
+<%
+            }
+	}
+} else
  {
    out.print("<h2>This category is empty!<h2>");
  }

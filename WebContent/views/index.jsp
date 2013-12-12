@@ -10,9 +10,9 @@
 
 </head>
 <% 
-        boolean knownUser=false;
-		Cookie tmpCookie=null;
-        Cookie cookies[] = (Cookie[])request.getAttribute("cookies");
+boolean knownUser=false;
+Cookie tmpCookie=null;
+Cookie cookies[] = (Cookie[])request.getAttribute("cookies");
 if (cookies!=null)
 {
         for (Cookie cookie:cookies)
@@ -32,28 +32,15 @@ if (cookies!=null)
      logo
     <div id="nav">
       <ul class="menu">
-<%
-if (knownUser==true)
-{
-	out.print("<li><a href=\"../views/adminPanel.jsp\">Admin-Panel</a></li>");
-}
-%>
         <li class="current_page_item"><a href="../controller/">Home</a></li>
         <li ><a href="../controller/help">Help</a></li>
         <li><a href="../controller/about">About</a></li>
         <li><a href="../controller/contact">Contact</a></li>
-         <li><a href="../controller/shoppingCart">Cart</a></li>
+         <li><a href="../views/shoppingcart.jsp">Cart</a></li>
       </ul>
     </div>
     <!--end nav-->
-<% 
-if (knownUser==true)
-{
-out.print("<h2>Welcome back "+tmpCookie.getValue()+" !</h2>");
-}
-if (knownUser==false)
-{
-%>
+
 
 <!-- Login -->
 
@@ -62,8 +49,10 @@ User:<input autocomplete="off" type="text" name="username" size="9">
 Pass:<input autocomplete="off" type="password" name="password" size="9">
 <input type="hidden" name="login"><input type="submit" value="Log in">   
 </form>
-
-<% } %>
+<%
+if (knownUser==true)
+out.print("Last login from this browser by: "+tmpCookie.getValue());
+%>
   </div>
   <!--end header-->
 
