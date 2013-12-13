@@ -42,8 +42,12 @@ while(couponsIterator.hasNext()) {
         String expireDate=coupon.getExpireDate();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
    		Date expDate =  df.parse(expireDate); 
-            if (!(expDate.before(currDate)) && coupon.getCategory().equals(category))
+            if (coupon.getCategory().equals(category))
             {
+            	if(( expDate.after(currDate) )
+	        			|| ( expDate.getYear()==currDate.getYear()
+        				&& expDate.getMonth()==currDate.getMonth()
+        				&& expDate.getDay()==currDate.getDay()) ){
 %>
 				
 				<br><br>
@@ -72,8 +76,11 @@ out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +(co
 				
 <%
             }
+
+            }
 	}
-} else
+} 
+else
  {
    out.print("<h2>This category is empty!<h2>");
  }
