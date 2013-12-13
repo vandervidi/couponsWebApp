@@ -48,7 +48,6 @@ out.print("Connected as admin.");
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		   		Date expDate =  df.parse(expireDate);
 		   		
-		   		//out.print("<br> currDate="+currDate +"  expDate="+expDate+"<br>");
 		   		if (( expDate.after(currDate) )
 	        			|| ( expDate.getYear()==currDate.getYear()
 	        				&& expDate.getMonth()==currDate.getMonth()

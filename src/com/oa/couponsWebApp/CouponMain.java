@@ -23,15 +23,11 @@ public class CouponMain {
 		
 		
 		
-//		System.out.println("UserDAO_ClassInstance="+userInstance);
-//		
-//		userInstance.addUser(new User("ofir",	MD5.encryptMD5("1") ,1));
-//		userInstance.addUser(new User("ofir", 	MD5.encryptMD5("1") ,1));
-//		userInstance.addUser(new User("ofir", 	MD5.encryptMD5("1") ,1));
-//		userInstance.addUser(new User("ofir", 	MD5.encryptMD5("1") ,1));
-//		userInstance.addUser(new User("ofir",   MD5.encryptMD5("1") ,1));
-//		userInstance.addUser(new User("vidran", MD5.encryptMD5("a") ,0));
-//		userInstance.addUser(new User("vidran", MD5.encryptMD5("2222") ,0));
+		System.out.println("UserDAO_ClassInstance="+userInstance);
+	
+		userInstance.addUser(new User("ofir",	MD5.encryptMD5("1") ,1));
+		userInstance.addUser(new User("vidran", MD5.encryptMD5("a") ,0));
+
 //		
 //			//System.out.println( userInstance.getUser("ofir").MD5("c4ca4238a0b923820dcc509a6f75849b") );				
 //		//---------------

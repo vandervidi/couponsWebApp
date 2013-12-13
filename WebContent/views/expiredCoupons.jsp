@@ -35,16 +35,19 @@
                 String expireDate=((Coupon)tempOb).getExpireDate();
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		   		Date expDate =  df.parse(expireDate); 
-	                if ((expDate.before(currDate)))
-	                {    
+		   		
+		   		if ( expDate.before(currDate) 
+	        			&& ( /* expDate.getYear()!=currDate.getYear()
+	        				&& expDate.getMonth()!=currDate.getMonth()
+	        				&& */ expDate.getDay()!=currDate.getDay()) ) {    
 %>
 
 
 <br><br><br><br><br>
 <div id="container" style="width:700px">
 
-<div id="header" style="background-color:#FFA500;">
-<h1 style="margin-bottom:0;">Coupon name</h1></div>
+<div style="background-color:#FFA500;height: 30px;">
+<h3 style="margin-bottom:0;"><% out.print(((Coupon)tempOb).getName()); %></h3></div>
 
 <div style="background-color:#FFD700;height:200px;width:400px;float:left;">
 <img src="../views/<% out.print(((Coupon)tempOb).getImage()); %>" width="300"></div>
@@ -64,7 +67,7 @@
 <br>
 <br>
 <% 			}
-	}
+        }
 %>
 </body>
 </html>
