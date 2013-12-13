@@ -34,54 +34,61 @@ out.print("Connected as admin.");
 
     <div id="porfolio-content">
       
-<h2>ADMIN PANEL - all coupons</h2>            
-     <%
+<h2>ADMIN PANEL - all up to date coupons</h2>            
+<% 
+Iterator couponsIterator = DAO.getInstance().getAllCoupons();
+Coupon coupon;
+Date currDate=new Date();
+if (couponsIterator!=null)
+{
+	
+while(couponsIterator.hasNext()) {
+	coupon=(Coupon)couponsIterator.next();
 
-//Iterator of Coupons - printing only up to date Coupons. Today's day=EXPIRED!
-        Iterator iterator = DAO.getInstance().getAllCoupons();
-        Object tempOb;
-        Date currDate=new Date();
-        
-        while(iterator.hasNext()) {
-                tempOb=iterator.next();
-                String expireDate=((Coupon)tempOb).getExpireDate();
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		   		Date expDate =  df.parse(expireDate);
-		   		
-		   		if (( expDate.after(currDate) )
-	        			|| ( expDate.getYear()==currDate.getYear()
-	        				&& expDate.getMonth()==currDate.getMonth()
-	        				&& expDate.getDay()==currDate.getDay()) )
-	            {   
-%>
-<br><br>
-<div style="width:600px">
+        String expireDate=coupon.getExpireDate();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+   		Date expDate =  df.parse(expireDate); 
+            
+   		if (( expDate.after(currDate) )
+    			|| ( expDate.getYear()==currDate.getYear()
+    				&& expDate.getMonth()==currDate.getMonth()
+    				&& expDate.getDay()==currDate.getDay()) )
+        {   
+%>			
+<div style="width:600px" display: inline-block; margin: 0 auto;>
 
-<div style="background-color:#FFA500;height: 30px;">
-<h3 style="margin-bottom:0;"><% out.print(((Coupon)tempOb).getName()); %></h3></div>
+<div style="background-color:#B0E0E6;height: 30px;">
+<h3 style="margin-bottom:0;">
+<% out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +(coupon.getName()) +"</a>"); %></h3></div>
 
-<div style="background-color:#FFD700;height:200px;width:300px;float:left;">
-<img src="../views/<% out.print(((Coupon)tempOb).getImage()); %>" width="300"></div>
+<div style="background-color:#EEEEEE;height:180px;width:300px;float:left;">
+<img src="../views/<% out.print(coupon.getImage()); %>" width="300"></div>
 
-<div style="background-color:#EEEEEE;height:200px;width:300px;float:right;">
-<% out.print(((Coupon)tempOb).getDescription()); %></div><br>
+<div style="background-color:#EEEEEE;height:180px;width:300px;float:right;">
+<% out.print(coupon.getDescription()); %></div><br>
 
-<div style="background-color:#EEEEEE;height:20px;width:300px;float:left;">
-<% out.print("Price: " +((Coupon)tempOb).getPrice()); %></div>
+<div style="background-color:#B0E0E6;height:20px;width:300px;float:right;">
+<% out.print("Expire date: " +(coupon.getExpireDate())); %></div>
 
-<div style="background-color:#EEEEEE;height:20px;width:300px;float:right;">
-<% out.print("Expire date: " +((Coupon)tempOb).getExpireDate()); %></div>
+<div style="background-color:#B0E0E6;height:20px;width:300px;float:left;">
+<% out.print("Price: " + coupon.getPrice()); %></div>
+
 <form action="../controller/updateCouponPreview" method="get">
-<input type="hidden" name="updateId" value="<% out.print(((Coupon)tempOb).getId());%>">
+<input type="hidden" name="updateId" value="<% out.print(coupon.getId());%>">
 <input type="submit" value="Update"></form>
 
 <form action="../controller/deleteCoupon" method="get">
-<input type="hidden" name="deleteId" value="<% out.print(((Coupon)tempOb).getId());%>"><input type="submit" value="Delete"></form>
+<input type="hidden" name="deleteId" value="<% out.print(coupon.getId());%>"><input type="submit" value="Delete"></form>
+
 </div>
+		
+				
+<%
+            }
 
-
-<% 			}
+           
 	}
+} 
 %>
         
     </div>

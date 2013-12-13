@@ -35,11 +35,9 @@ public class CouponsPlatformController extends HttpServlet {
 			 throws ServletException, IOException
 	 {
 		 String str = request.getPathInfo();
-		 System.out.println(str);
-		
 		 // Log in 
 		if(str.equals("/login")) {
-			//System.out.println("/login");
+			
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			password = MD5.encryptMD5(password);
@@ -60,13 +58,13 @@ public class CouponsPlatformController extends HttpServlet {
 						 */
 						Cookie cookie = new Cookie("connectedWithPrivilige", "1");
 						cookie.setMaxAge(-1);	// till user close browser
-						System.out.println( cookie.getMaxAge() );
+						
 						cookie.setPath("/");
 						response.addCookie( cookie );
 						
 						Cookie lastUserCookie = new Cookie("lastUser", user.getUsername());
 						lastUserCookie.setMaxAge(3600);	// stays alive for 1 hour
-						System.out.println( lastUserCookie.getMaxAge());
+						
 						lastUserCookie.setPath("/");
 						response.addCookie( lastUserCookie );
 						
@@ -103,10 +101,7 @@ public class CouponsPlatformController extends HttpServlet {
 						.getRequestDispatcher("/views/error.jsp");
 				dispatcher.forward(request, response);
 			}
-		}
-		else{
-			System.out.println("2222");
-		}
+		}		
 	 }
 	 
 	/**
@@ -119,8 +114,7 @@ public class CouponsPlatformController extends HttpServlet {
 		
 		// Category
 				if (str.equals("/category")) {
-					String categoryName = request.getParameter("category");
-					System.out.println(categoryName);
+					String categoryName = request.getParameter("category");				
 					// Coupons Iterator
 			        Iterator couponsIterator = DAO.getInstance().getAllCoupons();
 			        request.setAttribute("couponsIterator", couponsIterator);			   
@@ -153,7 +147,7 @@ public class CouponsPlatformController extends HttpServlet {
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/controller/");
 						dispatcher.forward(request, response);
-									System.out.println("change Cookie to 0, Cookie="+c);
+								
 					}
 				}
 							
@@ -193,7 +187,6 @@ public class CouponsPlatformController extends HttpServlet {
 				String businessWidth	 = request.getParameter("width");
 				double busLength=	Double.parseDouble(businessLength);
 				double busWidth=	Double.parseDouble(businessWidth);
-				//System.out.println(businessName);
 				DAO.getInstance().addBusiness(new Business(businessName, busLength, busWidth));
 				RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
@@ -302,7 +295,7 @@ public class CouponsPlatformController extends HttpServlet {
 				request.setAttribute("busLength", busLength);
 				request.setAttribute("busWidth", busWidth);
 				
-							System.out.println("length="+busLength+" width="+busWidth);
+				System.out.println("length="+busLength+" width="+busWidth);
 				// Business Iterator
 				Iterator businessIterator = DAO.getInstance().getAllBusinesses();
 		        request.setAttribute("businessIterator", businessIterator);

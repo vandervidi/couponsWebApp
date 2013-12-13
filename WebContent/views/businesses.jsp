@@ -3,27 +3,38 @@
 <%@page import="com.oa.couponsWebApp.Coupon"%>
 <%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
 <%@ page import="com.oa.couponsWebApp.DAO , java.util.Iterator" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Admin Panel</title>
+<title>List of all businesses</title>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
+
 </head>
-<body>
-	<h2>Admin Panel - List of all businesses registered</h2>
-<br>
-<div style="color: white; background-color:#151515;text-align: center; margin:0 auto; padding-top: 2px;padding-bottom: 1px;">
-        <a href="../views/addCoupon.html">
-        <div>ADD COUPON</div></a>
-        <a href="../views/addBusiness.html">
-        <div>ADD BUSINESS</div></a>
-         <a href="../controller/coupons">
-        <div>SHOW COUPONS</div></a>   
-        <a href="../controller/logOut">
-        <div>LOG OUT</div></a>      
-        </div>
 
+<body class="page">
+<div id="wrap">
+  <div id="header"> 
+     logo
+    <div id="nav">
+      <ul class="menu">
+        <li><a href="../views/addCoupon.html">Add coupon</a></li>
+        <li><a href="../views/addBusiness.html">Add business</a></li>
+        <li><a href="../controller/businesses">Show businesses</a></li>
+        <li><a href="../controller/expiredCoupons">Show expired coupons</a></li>
+         <li><a href="../controller/logout">logout</a></li>
+      </ul>
+    </div>
+    <!--end nav-->
+<%
+out.print("Connected as admin.");
+%>
+  </div>
+  <!--end header-->
 
+    <div id="porfolio-content">
+      
+<h2>Registered businesses</h2>            
 <%
 //Iterator of businesses
 	Iterator iterator = DAO.getInstance().getAllBusinesses();
@@ -31,16 +42,14 @@
 	while(iterator.hasNext()) {
 		tempOb=iterator.next();
 	
-%>
+%>		
+<div style="width:400px" display: inline-block; margin: 0 auto;>
 
-<br><br><br><br><br>
-<div id="container" style="width:400px">
+<div  style="background-color:#B0E0E6;height: 30px;">
+<h3 style="margin-bottom:0;"><% out.println(((Business)tempOb).getBusinessName()); %></h3></div>
 
-<div id="header" style="background-color:#FFA500;">
-<h1 style="margin-bottom:0;"><% out.println(((Business)tempOb).getBusinessName()); %></h1></div>
-
-<div id="id" style="background-color:#FFD700;height:200px;width:400px;float:left;">
-	Business id: <% out.println(((Business)tempOb).getBusinessId()); %><br>
+<div style="background-color:#EEEEEE;height:	180px;width:400px;float:left;">
+Business id: <% out.println(((Business)tempOb).getBusinessId()); %><br>
 	Location [length]: <% out.println(((Business)tempOb).getLength()); %><br>
 	Location [Width]: <% out.println(((Business)tempOb).getWidth()); %><br>
 </div>
@@ -53,9 +62,11 @@
 <input type="hidden" name="deleteId" value="<% out.print(((Business)tempOb).getBusinessId());%>">
 <input type="submit" value="Delete"></form>
 </div>
-<br><br>
-<br>
-<br>
+		
+				
 <% } %>
-</body>
+        
+    </div>
+</div>
+<!--end wrap-->
 </html>

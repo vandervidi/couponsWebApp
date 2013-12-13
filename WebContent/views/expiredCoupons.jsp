@@ -1,73 +1,94 @@
-<%@page import="com.oa.couponsWebApp.Coupon"%>
 <%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
-<%@ page import="com.oa.couponsWebApp.DAO , java.util.Iterator,java.text.*,java.util.*;" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page import="javax.servlet.http.Cookie" %>
+<%@ page import="com.oa.couponsWebApp.DAO , java.util.Iterator,java.text.* ,java.util.*" %>
+
+<%@page import="com.oa.couponsWebApp.Coupon"%>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Admin Panel</title>
+<title>Admin-Panel</title>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
+
 </head>
-<body>
-        <h2>Admin Panel - list of all #EXPIRED# coupons </h2>
-<br>
-<div style="color: white; background-color:#151515;text-align: center; margin:0 auto; padding-top: 2px;padding-bottom: 1px;">
-        <a href="../views/addCoupon.html">
-        <div>ADD COUPON</div></a>
-        <a href="../views/addBusiness.html">
-        <div>ADD BUSINESS</div></a>
-         <a href="../controller/businesses">
-        <div>SHOW BUSINESSES</div></a>  
-         <a href="../controller/coupons">
-        <div>SHOW UP TO DATE COUPONS</div></a>  
-         <a href="../controller/logout">
-        <div>LOG OUT</div></a>      
-        </div>
 
-
+<body class="page">
+<div id="wrap">
+  <div id="header"> 
+     logo
+    <div id="nav">
+      <ul class="menu">
+        <li><a href="../views/addCoupon.html">Add coupon</a></li>
+        <li><a href="../views/addBusiness.html">Add business</a></li>
+        <li><a href="../controller/businesses">Show businesses</a></li>
+        <li><a href="../controller/expiredCoupons">Show expired coupons</a></li>
+         <li><a href="../controller/logout">logout</a></li>
+      </ul>
+    </div>
+    <!--end nav-->
 <%
-
-//Iterator of Coupons - printing only up to date Coupons. Today's day=EXPIRED!
-        Iterator iterator = DAO.getInstance().getAllCoupons();
-        Object tempOb;
-        Date currDate=new Date();
-        while(iterator.hasNext()) {
-                tempOb=iterator.next();
-                String expireDate=((Coupon)tempOb).getExpireDate();
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		   		Date expDate =  df.parse(expireDate); 
-		   		
-		   		if ( expDate.before(currDate) 
-	        			&& ( /* expDate.getYear()!=currDate.getYear()
-	        				&& expDate.getMonth()!=currDate.getMonth()
-	        				&& */ expDate.getDay()!=currDate.getDay()) ) {    
+out.print("Connected as admin.");
 %>
+  </div>
+  <!--end header-->
 
+    <div id="porfolio-content">
+      
+<h2>List of all <span style="color:red;">EXPIRED</span> coupons</h2>            
+<% 
+Iterator couponsIterator = DAO.getInstance().getAllCoupons();
+Coupon coupon;
+Date currDate=new Date();
+if (couponsIterator!=null)
+{
+	
+while(couponsIterator.hasNext()) {
+	coupon=(Coupon)couponsIterator.next();
 
-<br><br><br><br><br>
-<div id="container" style="width:700px">
+        String expireDate=coupon.getExpireDate();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+   		Date expDate =  df.parse(expireDate); 
+            
+   		if ( expDate.before(currDate) 
+        		&& ( expDate.getDay()!=currDate.getDay()) ) {  
+%>			
+<div style="width:600px" display: inline-block; margin: 0 auto;>
 
-<div style="background-color:#FFA500;height: 30px;">
-<h3 style="margin-bottom:0;"><% out.print(((Coupon)tempOb).getName()); %></h3></div>
+<div style="background-color:#B0E0E6;height: 30px;">
+<h3 style="margin-bottom:0;">
+<% out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +(coupon.getName()) +"</a>"); %></h3></div>
 
-<div style="background-color:#FFD700;height:200px;width:400px;float:left;">
-<img src="../views/<% out.print(((Coupon)tempOb).getImage()); %>" width="300"></div>
+<div style="background-color:#EEEEEE;height:180px;width:300px;float:left;">
+<img src="../views/<% out.print(coupon.getImage()); %>" width="300"></div>
 
-<div id="content" style="background-color:#EEEEEE;height:200px;width:300px;float:right;">
-<% out.print(((Coupon)tempOb).getDescription()); %></div>
+<div style="background-color:#EEEEEE;height:180px;width:300px;float:right;">
+<% out.print(coupon.getDescription()); %></div><br>
+
+<div style="background-color:#B0E0E6;height:20px;width:300px;float:right;">
+<% out.print("Expire date: " +(coupon.getExpireDate())); %></div>
+
+<div style="background-color:#B0E0E6;height:20px;width:300px;float:left;">
+<% out.print("Price: " + coupon.getPrice()); %></div>
 
 <form action="../controller/updateCouponPreview" method="get">
-<input type="hidden" name="updateId" value="<% out.print(((Coupon)tempOb).getId());%>">
+<input type="hidden" name="updateId" value="<% out.print(coupon.getId());%>">
 <input type="submit" value="Update"></form>
 
 <form action="../controller/deleteCoupon" method="get">
-<input type="hidden" name="deleteId" value="<% out.print(((Coupon)tempOb).getId());%>">
-<input type="submit" value="Delete"></form>
+<input type="hidden" name="deleteId" value="<% out.print(coupon.getId());%>"><input type="submit" value="Delete"></form>
+
 </div>
-<br><br>
-<br>
-<br>
-<% 			}
-        }
+		
+				
+<%
+            }
+
+           
+	}
+} 
 %>
-</body>
+        
+    </div>
+</div>
+<!--end wrap-->
 </html>
