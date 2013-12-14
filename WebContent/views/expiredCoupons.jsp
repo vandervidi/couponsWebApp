@@ -22,14 +22,11 @@
         <li><a href="../views/addCoupon.html">Add coupon</a></li>
         <li><a href="../views/addBusiness.html">Add business</a></li>
         <li><a href="../controller/businesses">Businesses</a></li>
-        <li><a href="../controller/expiredCoupons">Expired coupons</a></li>
+        <li class="current_page_item"><a href="../controller/expiredCoupons">Expired coupons</a></li>
          <li><a href="../controller/logout">logout</a></li>
       </ul>
     </div>
     <!--end nav-->
-<%
-out.print("Connected as admin.");
-%>
   </div>
   <!--end header-->
 

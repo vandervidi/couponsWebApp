@@ -18,7 +18,7 @@
    
     <div id="nav">
       <ul class="menu">
-      <li><a href="../views/adminPanel.jsp">Panel</a></li>
+      <li class="current_page_item"><a href="../views/adminPanel.jsp">Panel</a></li>
         <li><a href="../views/addCoupon.html">Add coupon</a></li>
         <li><a href="../views/addBusiness.html">Add business</a></li>
         <li><a href="../controller/businesses">Businesses</a></li>
@@ -35,7 +35,7 @@ out.print("Connected as admin.");
 
     <div id="porfolio-content">
       
-<h2>ADMIN PANEL - all up to date coupons</h2>            
+<h3>ADMIN PANEL - all up to date coupons</h3>            
 <% 
 Iterator couponsIterator = DAO.getInstance().getAllCoupons();
 Coupon coupon;

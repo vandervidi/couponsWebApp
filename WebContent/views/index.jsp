@@ -47,10 +47,7 @@ Pass:<input autocomplete="off" type="password" name="password" size="9">
 if (knownUser==true)
 out.print("Last login from this browser by: "+tmpCookie.getValue());
 %>
-    <!--end nav-->
-  <!--end header-->
 
-  
   </div>
 
      <div style=" margin:0 auto;"> 
@@ -59,10 +56,6 @@ out.print("Last login from this browser by: "+tmpCookie.getValue());
 <a href="../controller/category?category=tickets"><img src="../views/images/circle-orange.png"/></a>
 <a href="../controller/category?category=sports"><img src="../views/images/circle-yellow.png"/></a> 
     </div>
-  
-  <!--end main-->  
 
 </div>
-<!--end wrap-->
-<!--end cache-images-->
 </html>
