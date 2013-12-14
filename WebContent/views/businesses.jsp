@@ -15,20 +15,19 @@
 <body class="page">
 <div id="wrap">
   <div id="header"> 
-     logo
+    
     <div id="nav">
-      <ul class="menu">
+            <ul class="menu">
+      <li><a href="../views/adminPanel.jsp">Panel</a></li>
         <li><a href="../views/addCoupon.html">Add coupon</a></li>
         <li><a href="../views/addBusiness.html">Add business</a></li>
-        <li><a href="../controller/businesses">Show businesses</a></li>
-        <li><a href="../controller/expiredCoupons">Show expired coupons</a></li>
+        <li><a href="../controller/businesses">Businesses</a></li>
+        <li><a href="../controller/expiredCoupons">Expired coupons</a></li>
          <li><a href="../controller/logout">logout</a></li>
       </ul>
     </div>
     <!--end nav-->
-<%
-out.print("Connected as admin.");
-%>
+
   </div>
   <!--end header-->
 
@@ -43,7 +42,7 @@ out.print("Connected as admin.");
 		tempOb=iterator.next();
 	
 %>		
-<div style="width:400px" display: inline-block; margin: 0 auto;>
+<div style="width:400px; display:inline-block; margin: 0 auto;">
 
 <div  style="background-color:#B0E0E6;height: 30px;">
 <h3 style="margin-bottom:0;"><% out.println(((Business)tempOb).getBusinessName()); %></h3></div>
