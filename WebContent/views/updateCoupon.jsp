@@ -16,7 +16,7 @@
     <form action="../controller/updateCoupon" method="get">
     <input type="hidden" name="couponId" value=<% out.print(((Coupon)ob).getId()); %>>
     Name:  <input type=text name="name" value="<% out.print(((Coupon)ob).getName()); %>"><br>
-    Price: <input type=text name="p" value="<% out.print(((Coupon)ob).getPrice()); %>"><br>
+    Price: <input type=text name="price" value="<% out.print(((Coupon)ob).getPrice()); %>"><br>
 	Image: <input type=text name="image" value="<% out.print(((Coupon)ob).getImage()); %>"><br>
 	Business id: <input type=text name="businessId" value="<% out.print(((Coupon)ob).getBusinessId()); %>"><br>
 	Description: <textarea name="description"><% out.print(((Coupon)ob).getDescription()); %></textarea> <br>

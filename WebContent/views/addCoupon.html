@@ -1,25 +1,53 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="windows-1255">
-<title>Add new Coupon</title>
+<title>Add Business</title>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
+
 </head>
-<body>
-<h3>Add Coupon..</h3><br>
+
+<body class="page">
+<div id="wrap">
+  <div id="header"> 
+   
+    <div id="nav">
+      <ul class="menu">
+      <li><a href="../views/adminPanel.jsp">Panel</a></li>
+        <li class="current_page_item"><a href="../views/addCoupon.html">Add coupon</a></li>
+        <li><a href="../views/addBusiness.html">Add business</a></li>
+        <li><a href="../controller/businesses">Businesses</a></li>
+        <li><a href="../controller/expiredCoupons">Expired coupons</a></li>
+         <li><a href="../controller/logout">logout</a></li>
+      </ul>
+    </div>
+    <!--end nav-->
+
+  </div>
+  <!--end header-->
+
+    <div id="porfolio-content">
+      
+		<h3>Add Coupon:</h3><br>
+<table>
 <form action="../controller/addCoupon" method="get">
-Name:        <input type=text name="name"><br>
-Price:		 <input type=text name="price"><br>
-Image:       <input type=text name="image"><br>
-Business Id: <input type=text name="businessId"><br>
-Description: <textarea name="description"></textarea> <br>
-Expire date: <input type="date" name="expDate"><br>
-Category:    <select name="category">
-			 <option value="sports">Sports</option>
+<tr><td>Name:</td> <td>       <input type=text name="name" required></td></tr>
+<tr><td>Price:</td>	<td>	 <input type=text name="price" required></td></tr>
+<tr><td>Image:</td> <td>      <input type=text name="image" required></td></tr>
+<tr><td>Business Id:</td><td> <input type=text name="businessId" required></td></tr>
+<tr><td>Description:</td><td> <textarea name="description" required></textarea> </td></tr>
+<tr><td>Expire date:</td><td> <input type="date" name="expDate" required></td></tr>
+<tr><td>Category:</td> <td>   <select name="category">
+			 <option value="sports" selected>Sports</option>
 			 <option value="toys">Toys</option>
 			 <option value="restaurants">Restaurants</option>
 			 <option value="tickets">Tickets</option>
-			 </select><br>
-			 <input type=submit value="submit">
-</form>
-</body>
+			 </select><br></td></tr>
+			<tr><td> <input type=submit value="submit"></form></td></tr>
+</table>
+        
+    </div>
+</div>
+<!--end wrap-->
 </html>
