@@ -431,7 +431,7 @@ void user_menu(){
 				break;
 
 			case 11:		//read game
-				readGameAtRound(str,1, true);
+				readGameAtRound(str,1, true);	//true- write to file
 				break;
 			}
 
@@ -444,21 +444,27 @@ void user_menu(){
 //
 //}
 
-
-int main() {
+vector<team> readTeamsFile(){
 	vector<team> teams;
-	vector<game> allGames;
-	allGames= readGameAtRound("",2, false);
-	
 	ifstream fileReader;
 	string tmp;
 	team tmpTeam;
+
 	fileReader.open("teams.db");
 	while(getline(fileReader,tmp)) {
-		tmpTeam=team(tmp);
-		teams.push_back(tmpTeam);
+			tmpTeam=team(tmp);
+		if ( tmpTeam.getName()!="\n" && tmpTeam.getName() !="" && tmpTeam.getName() !=" ")
+			teams.push_back(tmpTeam);
 	}
 	fileReader.close();
+
+	return teams;
+}
+
+int main() {
+	vector<team> teams = readTeamsFile();
+	vector<game> allGames = readGameAtRound("",2, false);
+
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
 	//league.init(allGames);
 	//league.createLeagueTable();
