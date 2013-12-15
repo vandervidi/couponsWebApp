@@ -341,7 +341,7 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 // typeInput=1  for input from keyboard			//
 // typeInput=2  for read from db				//
 //----------------------------------------------//
-vector<game> readGameAtRound(string line, int typeInput, bool writeToFile) {	
+vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* session) {	
 	vector<game> v;
 	// type 1 from menu
 	if (typeInput==1){
@@ -372,23 +372,26 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile) {
 		fileReader.clear();
 		fileReader.open("games.db");
 
-		while(fileReader.good() &&  getline(fileReader,tmp) && tmp!= ";") {
-			if (fileReader!=NULL && tmp.find("session",0) == std::string::npos){
-				//read game round & date
-				if (tmp.find("game",0) != std::string::npos ){
-					tmp = delimetersRemover(tmp, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
-					//writeToGamesDB(tmp);
-					vector<string> lineVector = splitStr(tmp);		//make vector from string
-
-					gameTempDetails = saveGameDetailsTemp( lineVector );		//create gameTemp object with only this Details: game (round, day, month, year)		
-				}
-				//read specific game
-				else if(&gameTempDetails != NULL){
-					//read all games
-					//cout<<"create gameTemp\n";
+		while (fileReader.good() ){		
+			while(fileReader.good() &&	getline(fileReader,tmp) && splitStr(tmp).at(0)!= ";") {			//delete all spaces in tmp
+				if (fileReader!=NULL && tmp.find("session",0) == std::string::npos){
+					//read game round & date
+					if (tmp.find("game",0) != std::string::npos ){
+						tmp = delimetersRemover(tmp, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
+						//writeToGamesDB(tmp);
+						vector<string> lineVector = splitStr(tmp);		//make vector from string
+						gameTempDetails = saveGameDetailsTemp( lineVector );		//create gameTemp object with only this Details: game (round, day, month, year)		
+						if ( *session < gameTempDetails.getRoundNum())
+							*session = gameTempDetails.getRoundNum();
+					}
+					//read specific game
+					else if(&gameTempDetails != NULL){
+						//read all games
+						//cout<<"create gameTemp\n";
 			
-					// Add game lines here until ";"
-					v.push_back( functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile) );
+						// Add game lines here until ";"
+						v.push_back( functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile) );
+					}
 				}
 			}
 		}
@@ -431,7 +434,7 @@ void user_menu(){
 				break;
 
 			case 11:		//read game
-				readGameAtRound(str,1, true);	//true- write to file
+				readGameAtRound(str,1, true, NULL);	//true- write to file
 				break;
 			}
 
@@ -464,11 +467,13 @@ vector<team> readTeamsFile(){
 int main() {
 	cout<<"\t\t\t-welcome to League tool -"<<endl;
 	vector<team> teams = readTeamsFile();
-	vector<game> allGames = readGameAtRound("",2, false);	//check the team.name from teamsVector source that created.
+	int lastSession= 0;
+	int* lastSessionPTR = &lastSession;
+	vector<game> allGames = readGameAtRound("",2, false, lastSessionPTR);	//check the team.name from teamsVector source that created.
 
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
-	league.init(allGames);			//?
-	league.createLeagueTable();		//?
+	league.init(allGames);			//? add to every team in the league it's games from vector games?
+	league.createLeagueTable();		//? print out league in table?
 	user_menu();
 	system("pause");
 	return 0;

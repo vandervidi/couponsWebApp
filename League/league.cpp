@@ -39,7 +39,7 @@ void league::createLeagueTable(){
 	int totalLeaguePoints;
 	vector<team> tmpVectorOfTeams= getTeams();
 
-	// Create table
+	// Create table head
 	cout<<"\nTeams"<<"\t\t\tGames"<<"\tTotal"<<"\tHome"<<"\tAway"<<endl;
 	for(int g=1; g<=53; g++) cout<<"-";
 	cout<<endl;
