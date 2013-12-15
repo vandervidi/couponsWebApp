@@ -353,7 +353,7 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile) {
 		
 		if (&gameTempDetails != NULL){
 			//read all games
-			cout<<"create gameTemp\n";
+			//cout<<"create gameTemp\n";
 			
 			// Add game lines here until ";"
 			string str;
@@ -385,7 +385,7 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile) {
 				//read specific game
 				else if(&gameTempDetails != NULL){
 					//read all games
-					cout<<"create gameTemp\n";
+					//cout<<"create gameTemp\n";
 			
 					// Add game lines here until ";"
 					v.push_back( functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile) );
@@ -462,12 +462,13 @@ vector<team> readTeamsFile(){
 }
 
 int main() {
+	cout<<"\t\t\t-welcome to League tool -"<<endl;
 	vector<team> teams = readTeamsFile();
-	vector<game> allGames = readGameAtRound("",2, false);
+	vector<game> allGames = readGameAtRound("",2, false);	//check the team.name from teamsVector source that created.
 
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
-	//league.init(allGames);
-	//league.createLeagueTable();
+	league.init(allGames);			//?
+	league.createLeagueTable();		//?
 	user_menu();
 	system("pause");
 	return 0;

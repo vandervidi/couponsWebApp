@@ -23,16 +23,16 @@ public:
 	//dtor
 	~team();
 
-	void setGames();
-	vector<game> getGames();
-	void setName(string str);
-	string getName();
-	void setPointsFor(int p);
-	int getPointsFor();
-	void setPointsAgainst(int p);
-	int getPointsAgainst();
-	void setLeaguePoints(int p);
-	int getLeaguePoints();
+	void setGames(vector<game> gamesVector) {games=gamesVector;}
+	vector<game> getGames()						{return games;}
+	void setName(string str)				{name=str;}
+	string getName()							 {return name;}
+	void setPointsFor(int p)				{pointsFor=p;}
+	int getPointsFor()							 {return pointsFor;}
+	void setPointsAgainst(int p)			{pointsAgainst=p;}
+	int getPointsAgainst()						 {return pointsAgainst;}
+	void setLeaguePoints(int p)				{leaguePoints=p;}
+	int getLeaguePoints()						 {return leaguePoints;}
 	void print();
 
 };

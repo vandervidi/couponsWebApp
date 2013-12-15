@@ -7,22 +7,21 @@
 
 using namespace std;
 
-class league
-{
-private:
-vector<team> teams;
+class league {
+	private:
+		vector<team> teams;
 
-public:
-vector<team> getTeams(){return teams;}
+	public:
+		vector<team> getTeams(){return teams;}
 
-//ctro
-league(vector<team> teamsToRegister);		
-//dtor
-~league();
+		//ctor
+		league(vector<team> teamsToRegister);		
+		//dtor
+		~league();
 
-void init(vector<game> allGames);
-void createLeagueTable();
-void setTeams(vector<team> teamsToSet);
+		void init(vector<game> allGames);
+		void createLeagueTable();
+		void setTeams(vector<team> teamsToSet);
 };
 
 
