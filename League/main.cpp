@@ -401,7 +401,7 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 }
 
 
-void user_menu(){
+void user_menu(league & league){
 	string str;
 	int caseNum;
 
@@ -465,7 +465,7 @@ vector<team> readTeamsFile(){
 }
 
 int main() {
-	cout<<"\t\t\t-welcome to League tool -"<<endl;
+	cout<<"\t\t\t- welcome to League tool -"<<endl;
 	vector<team> teams = readTeamsFile();
 	int lastSession= 0;
 	int* lastSessionPTR = &lastSession;
@@ -474,7 +474,7 @@ int main() {
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
 	league.init(allGames);			//? add to every team in the league it's games from vector games?
 	league.createLeagueTable();		//? print out league in table?
-	user_menu();
+	user_menu( league );
 	system("pause");
 	return 0;
 

@@ -19,7 +19,28 @@ class league {
 		//dtor
 		~league();
 
-		void init(vector<game> allGames);
+
+
+		void league::init(vector<game> &allGames)
+		{
+			vector<team> tmpVectorOfTeams = getTeams(); 
+			for(int i=0; i < tmpVectorOfTeams.size() ; i++)
+			{
+				for (int j=0; j < allGames.size(); j++)
+				{
+					if (tmpVectorOfTeams[i].getName().compare( allGames[j].getHomeGroup())==0 
+						|| tmpVectorOfTeams[i].getName().compare(allGames[j].getAwayGroup())==0)
+					{
+						tmpVectorOfTeams[i].getGames().push_back(&allGames[j]);
+					}
+				}
+		
+			}
+		}
+
+
+
+
 		void createLeagueTable();
 		void setTeams(vector<team> teamsToSet);
 };
