@@ -9,19 +9,19 @@ using namespace std;
 
 class league {
 	private:
-		vector<team> teams;
+		vector<team>* teams;
 
 	public:
-		vector<team> getTeams(){return teams;}
+		vector<team>* getTeams(){return teams;}
 
 		//ctor
-		league(vector<team> teamsToRegister);		
+		league(vector<team>* teamsToRegister);		
 		//dtor
 		~league();
 
-		void init(vector<game> allGames);
+		void init(vector<game>* allGames);
 		void createLeagueTable();
-		void setTeams(vector<team> teamsToSet);
+		//void setTeams(vector<team> teamsToSet);
 };
 
 

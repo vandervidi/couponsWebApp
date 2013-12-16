@@ -11,7 +11,7 @@ using namespace std;
 class team
 {
 private:
-	vector<game> games;
+	vector<game*> games;
 	string name;
 	int pointsFor;
 	int pointsAgainst;
@@ -23,8 +23,8 @@ public:
 	//dtor
 	~team();
 
-	void setGames(vector<game> gamesVector) {games=gamesVector;}
-	vector<game> getGames()						{return games;}
+	void setGames(vector<game*> gamesVector) {games=gamesVector;}
+	vector<game*>* getGames()						{return &games;}
 	void setName(string str)				{name=str;}
 	string getName()							 {return name;}
 	void setPointsFor(int p)				{pointsFor=p;}
