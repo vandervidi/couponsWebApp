@@ -418,7 +418,7 @@ void user_menu(league & league){
 				break;
 
 			case 2: 
-				cout<<"case 2";
+				league.createLeagueTable();		//? print out league in table?
 				break;
 
 			case 3: 
@@ -470,9 +470,10 @@ int main() {
 	int lastSession= 0;
 	int* lastSessionPTR = &lastSession;
 	vector<game> allGames = readGameAtRound("",2, false, lastSessionPTR);	//check the team.name from teamsVector source that created.
+	vector<game>* allGamesPTR = &allGames;
 
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
-	league.init(allGames);			//? add to every team in the league it's games from vector games?
+	league.init(allGamesPTR);			//? add to every team in the league it's games from vector games?
 	league.createLeagueTable();		//? print out league in table?
 	user_menu( league );
 	system("pause");

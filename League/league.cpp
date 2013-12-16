@@ -16,22 +16,21 @@ void league::setTeams(vector<team> teamsToSet)
 teams=teamsToSet;
 }
 
-//void league::init(vector<game*> allGames)
-//{
-//	vector<team> tmpVectorOfTeams = getTeams(); 
-//	for(int i=0; i < tmpVectorOfTeams.size() ; i++)
-//	{
-//		for (int j=0; j < allGames.size(); j++)
-//		{
-//			if (tmpVectorOfTeams[i].getName().compare(allGames[j].getHomeGroup())==0 
-//				|| tmpVectorOfTeams[i].getName().compare(allGames[j].getAwayGroup())==0)
-//			{
-//				tmpVectorOfTeams[i].getGames().push_back(allGames[j]);
-//			}
-//		}
-//
-//	}
-//}
+void league::init(vector<game> *allGames) {
+	vector<team> tmpVectorOfTeams = getTeams(); 
+	for(int i=0; i < tmpVectorOfTeams.size() ; i++)
+	{
+		for (int j=0; j < allGames->size(); j++)
+		{
+			if (tmpVectorOfTeams[i].getName().compare( allGames->at(j). getHomeGroup())==0 
+				|| tmpVectorOfTeams[i].getName().compare( allGames->at(j).getAwayGroup())==0)
+			{
+				tmpVectorOfTeams.at(i).getGames().push_back( &allGames->at(j) );
+			}
+		}
+		
+	}
+}
 
 void league::createLeagueTable(){
 	int totalHomePoints;
