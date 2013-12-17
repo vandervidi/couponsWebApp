@@ -183,7 +183,6 @@ int monthToInt(string month)
 //to the screen a list of all registered games	 //
 
 void showTeams(){
-	system("CLS"); // clears the screen before 
 	string teamName;
 	ifstream fileReader;
 	fileReader.open("teams.db");
@@ -196,7 +195,6 @@ void showTeams(){
 }
 
 void help(){
-	system("CLS"); 
 	ifstream fileReader;
 	string tmp;
 	fileReader.open("help.txt");
@@ -472,10 +470,17 @@ int main() {
 	vector<game> allGames = readGameAtRound("",2, false, lastSessionPTR);	//check the team.name from teamsVector source that created.
 	//vector<game>* allGamesPTR = &allGames;	//it's shortcut
 
+<<<<<<< HEAD
 	league league(teams); //construct a league with teams objects. teams dont have games yet.
 	league.init( &allGames );			// add to every team in the league it's games from vector games
 	league.createLeagueTable();		// print out league in table
 	user_menu( league );
+=======
+	league league(&teams); //construct a league with teams objects. teams dont have games yet.
+	league.init(&allGames);			//? add to every team in the league it's games from vector games?
+	league.createLeagueTable();		//? print out league in table?
+	user_menu();
+>>>>>>> 982f6c383a05e9917033a650584dfb26cc2bd170
 	system("pause");
 	return 0;
 

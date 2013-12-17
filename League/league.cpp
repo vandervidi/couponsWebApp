@@ -2,7 +2,7 @@
 
 using namespace std;
 
-league::league(vector<team> teamsToRegister)
+league::league(vector<team>* teamsToRegister)
 {
 	teams=teamsToRegister;
 
@@ -11,11 +11,8 @@ league::league(vector<team> teamsToRegister)
 league::~league(){}
 
 
-void league::setTeams(vector<team> teamsToSet)
-{
-teams=teamsToSet;
-}
 
+<<<<<<< HEAD
 void league::init(vector<game> *allGames) {
 	vector<team> tmpVectorOfTeams = getTeams(); 
 	for(int i=0; i < tmpVectorOfTeams.size() ; i++)
@@ -26,6 +23,70 @@ void league::init(vector<game> *allGames) {
 				|| tmpVectorOfTeams[i].getName().compare( allGames->at(j).getAwayGroup())==0)
 			{
 				tmpVectorOfTeams.at(i).getGames().push_back( &allGames->at(j) );
+=======
+
+void league::init(vector<game>* allGames)
+{
+	int tmp;
+	vector<team>* tmpVectorOfTeams = getTeams(); 
+	for(int i=0; i < tmpVectorOfTeams->size() ; i++)
+	{
+		for (int j=0; j < allGames->size(); j++)
+		{
+			if (tmpVectorOfTeams->at(i).getName().compare(allGames->at(j).getHomeGroup())==0 
+				|| tmpVectorOfTeams->at(i).getName().compare(allGames->at(j).getAwayGroup())==0)
+			{
+				tmpVectorOfTeams->at(i).getGames()->push_back(&allGames->at(j));
+				//if this team is the host
+				if (tmpVectorOfTeams->at(i).getName().compare(allGames->at(j).getHomeGroup())==0 )
+				{   
+					//updating points For this team:
+					tmp=tmpVectorOfTeams->at(i).getPointsFor();
+					tmp+=allGames->at(j).getHomeFinalScore();
+					tmpVectorOfTeams->at(i).setPointsFor(tmp);
+					//updating points agains this team:
+					tmp=tmpVectorOfTeams->at(i).getPointsAgainst();
+					tmp+=allGames->at(j).getAwayFinalScore();
+					tmpVectorOfTeams->at(i).setPointsAgainst(tmp);
+					if(allGames->at(j).getHomeFinalScore() > allGames->at(j).getAwayFinalScore())
+					{
+						tmp=tmpVectorOfTeams->at(i).getLeaguePoints();
+						tmp+=2;
+						tmpVectorOfTeams->at(i).setLeaguePoints(tmp);
+					}
+					else
+					{
+						tmp=tmpVectorOfTeams->at(i).getLeaguePoints();
+						tmp+=0;
+						tmpVectorOfTeams->at(i).setLeaguePoints(tmp);
+					}
+				}
+				else
+				{
+				// in cas this team is the away team:
+					//updating points For this team:
+					tmp=tmpVectorOfTeams->at(i).getPointsFor();
+					tmp+=allGames->at(j).getAwayFinalScore();
+					tmpVectorOfTeams->at(i).setPointsFor(tmp);
+					//updating points agains this team:
+					tmp=tmpVectorOfTeams->at(i).getPointsAgainst();
+					tmp+=allGames->at(j).getHomeFinalScore();
+					tmpVectorOfTeams->at(i).setPointsAgainst(tmp);
+					if(allGames->at(j).getHomeFinalScore() < allGames->at(j).getAwayFinalScore())
+					{
+						tmp=tmpVectorOfTeams->at(i).getLeaguePoints();
+						tmp+=2;
+						tmpVectorOfTeams->at(i).setLeaguePoints(tmp);
+					}
+					else
+					{
+						tmp=tmpVectorOfTeams->at(i).getLeaguePoints();
+						tmp+=0;
+						tmpVectorOfTeams->at(i).setLeaguePoints(tmp);
+					}
+
+				}
+>>>>>>> 982f6c383a05e9917033a650584dfb26cc2bd170
 			}
 		}
 		
@@ -33,13 +94,10 @@ void league::init(vector<game> *allGames) {
 }
 
 void league::createLeagueTable(){
-	int totalHomePoints;
-	int totalAwayPoints;
-	int totalLeaguePoints;
-	vector<team> tmpVectorOfTeams= getTeams();
-
+	vector<team>* tmpVectorOfTeams = getTeams(); 
 	// Create table head
 	cout<<"\nTeams"<<"\t\t\tGames"<<"\tTotal"<<"\tHome"<<"\tAway"<<endl;
+<<<<<<< HEAD
 	for(int g=1; g<=53; g++) cout<<"-";
 	cout<<endl;
 
@@ -74,9 +132,14 @@ void league::createLeagueTable(){
 		
 		cout<<tmpVectorOfTeams[i].getName()<<"\t\t\t"<<numberOfGames<<"\t"
 			<<totalLeaguePoints<<"\t"<<totalHomePoints<<"\t"<<totalAwayPoints<<endl;
+=======
+	//for(int g=1; g<=53; g++) cout<<"-";
+	//cout<<endl;
+	for(int i=0; i < tmpVectorOfTeams->size(); i++) {
+		cout<<tmpVectorOfTeams->at(i).getName()<<"\t\t\t"<<tmpVectorOfTeams->at(i).getGames()->size()<<"\t"
+			<<tmpVectorOfTeams->at(i).getLeaguePoints()<<"\t"<<tmpVectorOfTeams->at(i).getPointsFor()
+			<<"\t"<<tmpVectorOfTeams->at(i).getPointsAgainst()<<endl;
+>>>>>>> 982f6c383a05e9917033a650584dfb26cc2bd170
 	}
-	for(int g=1; g<=53; g++) cout<<"-";
-	cout<<endl<<endl;
-
 }
 
