@@ -160,7 +160,7 @@ int monthToInt(string month)
 	else if (month.compare("apr")==0) {return 4;}
 	else if (month.compare("may")==0) {return 5;}
 	else if (month.compare("june")==0) {return 6;}
-	else if (month.compare("jule")==0) {return 7;}
+	else if (month.compare("july")==0) {return 7;}
 	else if (month.compare("aug")==0) {return 8;}
 	else if (month.compare("sep")==0) {return 9;}
 	else if (month.compare("oct")==0) {return 10;}
@@ -341,7 +341,6 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 		
 		if (&gameTempDetails != NULL){
 			//read all games
-			//cout<<"create gameTemp\n";
 			
 			// Add game lines here until ";"
 			string str;
