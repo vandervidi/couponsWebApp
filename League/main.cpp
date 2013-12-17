@@ -222,7 +222,7 @@ game saveGameDetailsTemp(vector<string> lineVector){
 	return tempDetails;
 }
 
-game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writeToFile){
+game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writeToFile, vector<team> teams, league* leaguePtr){
 	str = delimetersRemover(str, (".,()\0"), ' ' );			//change from "." and "," to=> ' ' (space)
 	vector<string> lineVector = splitStr(str);				//make vector from string
 
@@ -250,6 +250,18 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 		}
 		delimetersRemover(teamA_name, "-\0", ' ');
 		newGame.setHomeGroup(teamA_name);
+
+		//check groupA-name
+		bool b= false;
+		for each (team t in teams){
+			if (newGame.getHomeGroup().compare(t.getName() )==0){
+				b=true;
+				break;
+			}
+		}
+		if (b==false)
+			cout<<"error: "<<newGame.getHomeGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
+		//	return null;
 	}
 	//----)
 
@@ -284,6 +296,18 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 		}
 	}
 	newGame.setAwayGroup(teamB_name);
+
+	//check groupB-name
+	bool b= false;
+	for each (team t in teams){
+		if (newGame.getAwayGroup().compare(t.getName() )==0){
+			b=true;
+			break;
+		}
+	}
+	if (b==false)
+		cout<<"error: "<<newGame.getAwayGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
+		//return null;
 	//----)
 
 	//----(
@@ -314,6 +338,7 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 	newGame.setRoundNum( gameTempDetails.getRoundNum() );
 	newGame.setDate( gameTempDetails.getDate() );
 
+
 	if (writeToFile==true)
 		writeToGamesDB(str);
 	//..last
@@ -329,27 +354,31 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 // typeInput=1  for input from keyboard			//
 // typeInput=2  for read from db				//
 //----------------------------------------------//
-vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* session) {	
+vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* session, vector<team> teamsPtr, league* leaguePtr) {	
 	vector<game> v;
 	// type 1 from menu
 	if (typeInput==1){
 		line = delimetersRemover(line, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
-		writeToGamesDB(line);
 		vector<string> lineVector = splitStr(line);		//make vector from string
-
 		game gameTempDetails = saveGameDetailsTemp( lineVector );		//create gameTemp object with only this Details: game (round, day, month, year)		
 		
 		if (&gameTempDetails != NULL){
 			//read all games
 			
-			// Add game lines here until ";"
-			string str;
-			while(str!= ";"){
-				str.clear();
-				getline(cin,str);
-				if (str!= ";"){
-					v.push_back( functionToCreateNewGameObject(str, gameTempDetails, writeToFile) );
+			if (gameTempDetails.getRoundNum()<= *session+1){
+				writeToGamesDB(line);
+				
+				// Add game lines here until ";"
+				string str;
+				while(str!= ";"){
+					str.clear();
+					getline(cin,str);
+					if (str!= ";"){
+						v.push_back( functionToCreateNewGameObject(str, gameTempDetails, writeToFile, teamsPtr, leaguePtr) );
+					}
 				}
+			}else{
+				cout<<"error: you try to insert a game round muche higher. \nlast round was "<<*session<<" (change in the code to return null)"<<endl;
 			}
 		}
 	}else if(typeInput==2){ // type 2 from file "games.db"
@@ -377,7 +406,9 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 						//cout<<"create gameTemp\n";
 			
 						// Add game lines here until ";"
-						v.push_back( functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile) );
+						game newGame= functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile, teamsPtr, leaguePtr);
+						//check if (game == NULL) because one of the teams does not apear in 'teams vector'
+						v.push_back( newGame );
 					}
 				}
 			}
@@ -388,7 +419,8 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 }
 
 
-void user_menu(league* league, const int session, const vector<game>* games){
+void user_menu(league* league, const int session, const vector<game>* games, int* lastSession){
+
 	string str;
 	int caseNum;
 
@@ -424,7 +456,8 @@ void user_menu(league* league, const int session, const vector<game>* games){
 				break;
 
 			case 11:		//read game
-				readGameAtRound(str,1, true, NULL);	//true- write to file
+				vector<team> t;// this line is just because we need to send vector as parameter, but we dont use with it here
+				readGameAtRound(str,1, true, lastSession, t, league);	//true- write to file
 				break;
 			}
 
@@ -450,6 +483,7 @@ vector<team> readTeamsFile(){
 
 	return teams;
 }
+
 
 int incrementSession()
 {
@@ -483,17 +517,21 @@ int incrementSession()
 	}
 	return session;
 }
+
+
+
 int main() {
 	int session = incrementSession();
 	cout<<"\t\t\t-welcome to League tool -"<<endl;
-	vector<team> teams = readTeamsFile();
+	
 	int lastSession= 0;
-	int* lastSessionPTR = &lastSession;
-	vector<game> allGames = readGameAtRound("",2, false, lastSessionPTR);	//check the team.name from teamsVector source that created.
-
+	vector<team> teams = readTeamsFile();
+	vector<game> allGames= readGameAtRound("dont need to send here string because send 2 as parameter",2, false, &lastSession, teams, NULL);	//check the team.name from teamsVector source that created.
+	
 	league league(&teams); //construct a league with teams objects. teams dont have games yet.
 	league.init(&allGames);			//? add to every team in the league it's games from vector games?
-	user_menu(&league, session, &allGames);
+	user_menu(&league, session, &allGames,&lastSession);
+
 	system("pause");
 	return 0;
 
