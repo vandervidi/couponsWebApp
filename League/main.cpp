@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "team.h"
 #include "league.h"
 #include "game.h"
@@ -151,26 +152,15 @@ void writeToGamesDB(string str)
 // integer type .e.g OCT -> 10					//
 int monthToInt(string month)
 {
-	if (month.compare("JAN")==0) {return 1;}
-	else if (month.compare("FEB")==0) {return 2;}
-	else if (month.compare("MAR")==0) {return 3;}
-	else if (month.compare("APR")==0) {return 4;}
-	else if (month.compare("MAY")==0) {return 5;}
-	else if (month.compare("JUN")==0) {return 6;}
-	else if (month.compare("YUL")==0) {return 7;}
-	else if (month.compare("AUG")==0) {return 8;}
-	else if (month.compare("SEP")==0) {return 9;}
-	else if (month.compare("OCT")==0) {return 10;}
-	else if (month.compare("NOV")==0) {return 11;}
-	else if (month.compare("DEC")==0) {return 12;}
+	std::transform(month.begin(), month.end(), month.begin(), ::tolower);
 
-	else if (month.compare("jan")==0) {return 1;}
+	if (month.compare("jan")==0) {return 1;}
 	else if (month.compare("feb")==0) {return 2;}
 	else if (month.compare("mar")==0) {return 3;}
 	else if (month.compare("apr")==0) {return 4;}
 	else if (month.compare("may")==0) {return 5;}
-	else if (month.compare("jun")==0) {return 6;}
-	else if (month.compare("Jul")==0) {return 7;}
+	else if (month.compare("june")==0) {return 6;}
+	else if (month.compare("jule")==0) {return 7;}
 	else if (month.compare("aug")==0) {return 8;}
 	else if (month.compare("sep")==0) {return 9;}
 	else if (month.compare("oct")==0) {return 10;}
@@ -399,7 +389,7 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 }
 
 
-void user_menu(){
+void user_menu(league* league, const int session, const vector<game>* games){
 	string str;
 	int caseNum;
 
@@ -416,7 +406,7 @@ void user_menu(){
 				break;
 
 			case 2: 
-				cout<<"case 2";
+				league->createLeagueTable();
 				break;
 
 			case 3: 
@@ -428,7 +418,10 @@ void user_menu(){
 				break;
 
 			case 10:
+				if (session == 1 && games->size()==0)
 				addTeam();
+				else
+					cout<<"Error : Teams list is sealed."<<endl;
 				break;
 
 			case 11:		//read game
@@ -441,9 +434,6 @@ void user_menu(){
 	}while (caseNum != 777);
 }
 
-//int init(){
-//
-//}
 
 vector<team> readTeamsFile(){
 	vector<team> teams;
@@ -462,7 +452,40 @@ vector<team> readTeamsFile(){
 	return teams;
 }
 
+int incrementSession()
+{
+	int session=-1;
+	ifstream fileReader;
+	ofstream fileWriter;
+	string tmp;
+	fileReader.open("session.db");
+	if (fileReader.fail())
+	{
+		fileWriter.open("session.db");
+		fileWriter<<1;
+		session=1;
+		fileWriter.close();
+	}
+	else
+	{
+		getline(fileReader, tmp);
+		if (tmp.empty())
+		{
+			session=0;
+			session++;
+		}
+		else
+		{
+			session = stoi(tmp) + 1;
+		}
+		fileWriter.open("session.db");
+		fileWriter<<session;
+		fileWriter.close();
+	}
+	return session;
+}
 int main() {
+	int session = incrementSession();
 	cout<<"\t\t\t-welcome to League tool -"<<endl;
 	vector<team> teams = readTeamsFile();
 	int lastSession= 0;
@@ -471,8 +494,7 @@ int main() {
 
 	league league(&teams); //construct a league with teams objects. teams dont have games yet.
 	league.init(&allGames);			//? add to every team in the league it's games from vector games?
-	league.createLeagueTable();		//? print out league in table?
-	user_menu();
+	user_menu(&league, session, &allGames);
 	system("pause");
 	return 0;
 
