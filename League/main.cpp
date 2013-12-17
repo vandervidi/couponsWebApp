@@ -232,7 +232,7 @@ game saveGameDetailsTemp(vector<string> lineVector){
 	return tempDetails;
 }
 
-game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writeToFile){
+game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writeToFile, vector<team> teams, league* leaguePtr){
 	str = delimetersRemover(str, (".,()\0"), ' ' );			//change from "." and "," to=> ' ' (space)
 	vector<string> lineVector = splitStr(str);				//make vector from string
 
@@ -260,6 +260,18 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 		}
 		delimetersRemover(teamA_name, "-\0", ' ');
 		newGame.setHomeGroup(teamA_name);
+
+		//check groupA-name
+		bool b= false;
+		for each (team t in teams){
+			if (newGame.getHomeGroup().compare(t.getName() )==0){
+				b=true;
+				break;
+			}
+		}
+		if (b==false)
+			cout<<"error: "<<newGame.getHomeGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
+		//	return null;
 	}
 	//----)
 
@@ -294,6 +306,18 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 		}
 	}
 	newGame.setAwayGroup(teamB_name);
+
+	//check groupB-name
+	bool b= false;
+	for each (team t in teams){
+		if (newGame.getAwayGroup().compare(t.getName() )==0){
+			b=true;
+			break;
+		}
+	}
+	if (b==false)
+		cout<<"error: "<<newGame.getAwayGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
+		//return null;
 	//----)
 
 	//----(
@@ -324,6 +348,7 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 	newGame.setRoundNum( gameTempDetails.getRoundNum() );
 	newGame.setDate( gameTempDetails.getDate() );
 
+
 	if (writeToFile==true)
 		writeToGamesDB(str);
 	//..last
@@ -339,28 +364,32 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 // typeInput=1  for input from keyboard			//
 // typeInput=2  for read from db				//
 //----------------------------------------------//
-vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* session) {	
+vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* session, vector<team> teamsPtr, league* leaguePtr) {	
 	vector<game> v;
 	// type 1 from menu
 	if (typeInput==1){
 		line = delimetersRemover(line, (",.\0"), ' ' );			//change from "." and "," to=> ' ' (space)
-		writeToGamesDB(line);
 		vector<string> lineVector = splitStr(line);		//make vector from string
-
 		game gameTempDetails = saveGameDetailsTemp( lineVector );		//create gameTemp object with only this Details: game (round, day, month, year)		
 		
 		if (&gameTempDetails != NULL){
 			//read all games
 			//cout<<"create gameTemp\n";
 			
-			// Add game lines here until ";"
-			string str;
-			while(str!= ";"){
-				str.clear();
-				getline(cin,str);
-				if (str!= ";"){
-					v.push_back( functionToCreateNewGameObject(str, gameTempDetails, writeToFile) );
+			if (gameTempDetails.getRoundNum()<= *session+1){
+				writeToGamesDB(line);
+				
+				// Add game lines here until ";"
+				string str;
+				while(str!= ";"){
+					str.clear();
+					getline(cin,str);
+					if (str!= ";"){
+						v.push_back( functionToCreateNewGameObject(str, gameTempDetails, writeToFile, teamsPtr, leaguePtr) );
+					}
 				}
+			}else{
+				cout<<"error: you try to insert a game round muche higher. \nlast round was "<<*session<<" (change in the code to return null)"<<endl;
 			}
 		}
 	}else if(typeInput==2){ // type 2 from file "games.db"
@@ -388,7 +417,9 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 						//cout<<"create gameTemp\n";
 			
 						// Add game lines here until ";"
-						v.push_back( functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile) );
+						game newGame= functionToCreateNewGameObject(tmp, gameTempDetails, writeToFile, teamsPtr, leaguePtr);
+						//check if (game == NULL) because one of the teams does not apear in 'teams vector'
+						v.push_back( newGame );
 					}
 				}
 			}
@@ -399,7 +430,7 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 }
 
 
-void user_menu(league & league){
+void user_menu(int* lastSession, league* league){
 	string str;
 	int caseNum;
 
@@ -416,7 +447,7 @@ void user_menu(league & league){
 				break;
 
 			case 2: 
-				league.createLeagueTable();		//? print out league in table?
+				league->createLeagueTable();
 				break;
 
 			case 3: 
@@ -432,7 +463,8 @@ void user_menu(league & league){
 				break;
 
 			case 11:		//read game
-				readGameAtRound(str,1, true, NULL);	//true- write to file
+				vector<team> t;// this line is just because we need to send vector as parameter, but we dont use with it here
+				readGameAtRound(str,1, true, lastSession, t, league);	//true- write to file
 				break;
 			}
 
@@ -440,10 +472,6 @@ void user_menu(league & league){
 			cout<<"wrong command."<<endl;
 	}while (caseNum != 777);
 }
-
-//int init(){
-//
-//}
 
 vector<team> readTeamsFile(){
 	vector<team> teams;
@@ -462,25 +490,29 @@ vector<team> readTeamsFile(){
 	return teams;
 }
 
-int main() {
-	cout<<"\t\t\t- welcome to League tool -"<<endl;
-	vector<team> teams = readTeamsFile();
-	int lastSession= 0;
-	int* lastSessionPTR = &lastSession;
-	vector<game> allGames = readGameAtRound("",2, false, lastSessionPTR);	//check the team.name from teamsVector source that created.
-	//vector<game>* allGamesPTR = &allGames;	//it's shortcut
+//int init(int* lastSession, league* leaguePtr){
+//	try {
+//		
+//	}catch (...){
+//		return 0;
+//	}
+//	return 1;
+//}
 
-<<<<<<< HEAD
-	league league(teams); //construct a league with teams objects. teams dont have games yet.
-	league.init( &allGames );			// add to every team in the league it's games from vector games
+int main() {
+	cout<<"\t\t\t-welcome to League tool -"<<endl;
+	
+	int lastSession= 0;
+	vector<team> teams = readTeamsFile();
+	vector<game> allGames= readGameAtRound("dont need to send here string because send 2 as parameter",2, false, &lastSession, teams, NULL);	//check the team.name from teamsVector source that created.
+	league league( &teams );
+
+	league.init( &allGames);			// add to every team in the league it's games from vector games
 	league.createLeagueTable();		// print out league in table
-	user_menu( league );
-=======
-	league league(&teams); //construct a league with teams objects. teams dont have games yet.
-	league.init(&allGames);			//? add to every team in the league it's games from vector games?
-	league.createLeagueTable();		//? print out league in table?
-	user_menu();
->>>>>>> 982f6c383a05e9917033a650584dfb26cc2bd170
+
+	//if ( init(&lastSession, &league) !=1 ) return -1;
+
+	user_menu(&lastSession, &league);
 	system("pause");
 	return 0;
 
