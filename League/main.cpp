@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "team.h"
 #include "league.h"
 #include "game.h"
@@ -151,26 +152,15 @@ void writeToGamesDB(string str)
 // integer type .e.g OCT -> 10					//
 int monthToInt(string month)
 {
-	if (month.compare("JAN")==0) {return 1;}
-	else if (month.compare("FEB")==0) {return 2;}
-	else if (month.compare("MAR")==0) {return 3;}
-	else if (month.compare("APR")==0) {return 4;}
-	else if (month.compare("MAY")==0) {return 5;}
-	else if (month.compare("JUN")==0) {return 6;}
-	else if (month.compare("YUL")==0) {return 7;}
-	else if (month.compare("AUG")==0) {return 8;}
-	else if (month.compare("SEP")==0) {return 9;}
-	else if (month.compare("OCT")==0) {return 10;}
-	else if (month.compare("NOV")==0) {return 11;}
-	else if (month.compare("DEC")==0) {return 12;}
+	std::transform(month.begin(), month.end(), month.begin(), ::tolower);
 
-	else if (month.compare("jan")==0) {return 1;}
+	if (month.compare("jan")==0) {return 1;}
 	else if (month.compare("feb")==0) {return 2;}
 	else if (month.compare("mar")==0) {return 3;}
 	else if (month.compare("apr")==0) {return 4;}
 	else if (month.compare("may")==0) {return 5;}
-	else if (month.compare("jun")==0) {return 6;}
-	else if (month.compare("Jul")==0) {return 7;}
+	else if (month.compare("june")==0) {return 6;}
+	else if (month.compare("july")==0) {return 7;}
 	else if (month.compare("aug")==0) {return 8;}
 	else if (month.compare("sep")==0) {return 9;}
 	else if (month.compare("oct")==0) {return 10;}
@@ -374,7 +364,6 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 		
 		if (&gameTempDetails != NULL){
 			//read all games
-			//cout<<"create gameTemp\n";
 			
 			if (gameTempDetails.getRoundNum()<= *session+1){
 				writeToGamesDB(line);
@@ -430,7 +419,8 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 }
 
 
-void user_menu(int* lastSession, league* league){
+void user_menu(league* league, const int session, const vector<game>* games, int* lastSession){
+
 	string str;
 	int caseNum;
 
@@ -459,7 +449,10 @@ void user_menu(int* lastSession, league* league){
 				break;
 
 			case 10:
+				if (session == 1 && games->size()==0)
 				addTeam();
+				else
+					cout<<"Error : Teams list is sealed."<<endl;
 				break;
 
 			case 11:		//read game
@@ -472,6 +465,7 @@ void user_menu(int* lastSession, league* league){
 			cout<<"wrong command."<<endl;
 	}while (caseNum != 777);
 }
+
 
 vector<team> readTeamsFile(){
 	vector<team> teams;
@@ -490,29 +484,54 @@ vector<team> readTeamsFile(){
 	return teams;
 }
 
-//int init(int* lastSession, league* leaguePtr){
-//	try {
-//		
-//	}catch (...){
-//		return 0;
-//	}
-//	return 1;
-//}
+
+int incrementSession()
+{
+	int session=-1;
+	ifstream fileReader;
+	ofstream fileWriter;
+	string tmp;
+	fileReader.open("session.db");
+	if (fileReader.fail())
+	{
+		fileWriter.open("session.db");
+		fileWriter<<1;
+		session=1;
+		fileWriter.close();
+	}
+	else
+	{
+		getline(fileReader, tmp);
+		if (tmp.empty())
+		{
+			session=0;
+			session++;
+		}
+		else
+		{
+			session = stoi(tmp) + 1;
+		}
+		fileWriter.open("session.db");
+		fileWriter<<session;
+		fileWriter.close();
+	}
+	return session;
+}
+
+
 
 int main() {
+	int session = incrementSession();
 	cout<<"\t\t\t-welcome to League tool -"<<endl;
 	
 	int lastSession= 0;
 	vector<team> teams = readTeamsFile();
 	vector<game> allGames= readGameAtRound("dont need to send here string because send 2 as parameter",2, false, &lastSession, teams, NULL);	//check the team.name from teamsVector source that created.
-	league league( &teams );
+	
+	league league(&teams); //construct a league with teams objects. teams dont have games yet.
+	league.init(&allGames);			//? add to every team in the league it's games from vector games?
+	user_menu(&league, session, &allGames,&lastSession);
 
-	league.init( &allGames);			// add to every team in the league it's games from vector games
-	league.createLeagueTable();		// print out league in table
-
-	//if ( init(&lastSession, &league) !=1 ) return -1;
-
-	user_menu(&lastSession, &league);
 	system("pause");
 	return 0;
 

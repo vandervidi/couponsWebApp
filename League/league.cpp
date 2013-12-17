@@ -1,16 +1,14 @@
 #include "league.h"
 
 using namespace std;
-
+//ctor
 league::league(vector<team>* teamsToRegister)
 {
 	teams=teamsToRegister;
 
 }
-
+//dtor
 league::~league(){}
-
-
 
 
 void league::init(vector<game>* allGames)
