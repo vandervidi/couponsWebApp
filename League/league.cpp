@@ -80,6 +80,19 @@ void league::init(vector<game>* allGames)
 
 void league::createLeagueTable(){
 	vector<team>* tmpVectorOfTeams = getTeams(); 
+
+	//sort teams vector
+	int sz = tmpVectorOfTeams->size();
+	for (int i = 0; i < sz; i++){
+		for (int j = i+1; j < sz; j++){
+			if (tmpVectorOfTeams->at(i).getLeaguePoints() < tmpVectorOfTeams->at(j).getLeaguePoints()){
+				team tmp;
+				tmp = tmpVectorOfTeams->at(i);
+				tmpVectorOfTeams->at(i) = tmpVectorOfTeams->at(j);
+				tmpVectorOfTeams->at(j) = tmp;
+			}
+		}
+	}
 	// Create table head
 	cout<<"\nTeams"<<"\t\t\tGames"<<"\tTotal"<<"\tHome"<<"\tAway"<<endl;
 	//for(int g=1; g<=53; g++) cout<<"-";
