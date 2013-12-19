@@ -55,6 +55,31 @@ int Date::operator==(const Date & ddd){
         else
                 return 0;
 }
+
+bool Date::operator>(const Date &d) const
+{
+	
+		if (year>d.year)
+		{
+			return true;
+		}
+
+		else if((year>d.year && month>d.month)|| (year==d.year && month>d.month))
+		{
+			return true;
+		}
+
+		else if((year>d.year && month>d.month && day>d.day)||((year==d.year && month==d.month && day>d.day)))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
 bool Date::operator>=(const Date &d) const
 {
 	if (year==d.year && month==d.month && day==d.day )

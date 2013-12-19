@@ -97,7 +97,7 @@ void league::createLeagueTable(){
 	//cout<<"\nTeams"<<"\t\t\tGames"<<"\tTotal"<<"\tHome"<<"\tAway"<<endl;
 	//for(int g=1; g<=53; g++) cout<<"-";
 	//cout<<endl;
-	cout<<left<<setw(20)<<"Team"<<setw(10)<<"Games"<<setw(10)<<"Total"<<setw(10)<<"Home"<<setw(10)<<"Away"<<endl;
+	cout<<left<<setw(20)<<"Team"<<setw(10)<<"Games"<<setw(10)<<"Points"<<setw(10)<<"Total"<<setw(10)<<"Score"<<endl;
 	cout<<setfill('-')<<setw(60)<<'-'<<setfill(' ')<<endl;
 	for(int i=0; i < tmpVectorOfTeams->size(); i++) {
 		cout << left << setw(20) <<tmpVectorOfTeams->at(i).getName()

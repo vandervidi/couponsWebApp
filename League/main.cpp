@@ -258,8 +258,8 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 			}
 		}
 		if (b==false){
-		cout<<"error: "<<newGame.getHomeGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
-		return game();
+			cout<<"error: "<<newGame.getHomeGroup()+ " is not vaild (change in the code for dont push this game to vector at the end)"<<endl;
+			return game();
 		}
 	}
 	//----)
@@ -304,13 +304,20 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 			break;
 		}
 	}
-	if (b==false)
+	if (b==false){
 		cout<<"error: "<<newGame.getAwayGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
-		//return null;
+		return game();
+	}
 	//----)
 
+	// check if 2 groups names are the same
+	if (newGame.getHomeGroup().compare( newGame.getAwayGroup() )==0) {
+		cout<<"error: "<<newGame.getAwayGroup()+ " does not vaild (change in the code for dont push this game to vector at the end)"<<endl;
+		return game();
+	}
+
 	//----(
-	// check teams scores & extensions
+	// check teams scores
 	if (b==true){
 	newGame.setHomeFinalScore( atoi(lineVector[index].c_str()) );
 		
@@ -322,16 +329,6 @@ game functionToCreateNewGameObject(string str , game& gameTempDetails, bool writ
 		
 	index++;
 	newGame.setAwayMidScore( atoi(lineVector[index].c_str()) );
-	
-	// thare is extantion
-	//if (lineVector.size()-1-index!=0){	
-	if (newGame.getHomeFinalScore()==newGame.getAwayFinalScore()) {
-		index++;
-		newGame.setHomeExtensionScore( atoi(lineVector[index].c_str()) );
-		
-		index++;
-		newGame.setAwayExtensionScore( atoi(lineVector[index].c_str()) );
-	}
 	//----)
 
 	// Get Round & Date from temp_game_object (that save the date and round)
@@ -374,13 +371,11 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 		//scan all teams vector in league object
 		for (int i=0; i<teams->size(); i++)
 		{
-			/*if (teams->at(i).getGames()->size()!=0)
-			{*/
 				//scan all games in a specifig team.
 				for (int j=0; j<teams->at(i).getGames()->size() ; j++)
 				{
 					//check if 
-					if (teams->at(i).getGames()->at(j)->getRoundNum() + 1 == gameTempDetails.getRoundNum())
+					if (teams->at(i).getGames()->at(j)->getRoundNum() + 1 == gameTempDetails.getRoundNum()  && breakLoop==false)
 					{
 						if (teams->at(i).getGames()->at(j)->getDate() >= gameTempDetails.getDate())
 						{
@@ -390,9 +385,9 @@ vector<game> readGameAtRound(string line, int typeInput, bool writeToFile, int* 
 						}
 						
 					}
-					else if (teams->at(i).getGames()->at(j)->getRoundNum() == gameTempDetails.getRoundNum())
+					else if (teams->at(i).getGames()->at(j)->getRoundNum() == gameTempDetails.getRoundNum() && breakLoop==false)
 					{
-						if (!(teams->at(i).getGames()->at(j)->getDate() == gameTempDetails.getDate()))
+						if ((teams->at(i).getGames()->at(j)->getDate() > gameTempDetails.getDate()))
 						{
 							breakLoop=true;
 							cout<< "Error: This round date is not after the previous round date."<<endl;
@@ -526,7 +521,7 @@ void user_menu(league* league, const int session, const vector<game>* games, int
 			}
 
 		}else
-			cout<<"wrong command."<<endl;
+			cout<<"Invalid action"<<endl;
 	}while (caseNum != 777);
 }
 
