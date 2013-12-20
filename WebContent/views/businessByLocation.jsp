@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Locator</title>
+<title>Insert title here</title>
 </head>
 <body>
 <h1>businessByLocation <h1>

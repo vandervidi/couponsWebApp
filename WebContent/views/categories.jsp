@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Categorie</title>
+<title>WebCouponsApp</title>
 <meta charset="utf-8">
 <link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
 

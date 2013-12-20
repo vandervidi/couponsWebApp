@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Register</title>
+<title>about</title>
 </head>
 <body>
 	<h2>register</h2>

@@ -3,19 +3,11 @@ package com.oa.couponsWebApp;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-/**
- * This is the class that encrypts a string to MD5.
- * @author Vidran & Ofir
- *
- */
+
 public class MD5 {
-	/**
-	 * This method recieves a string type and returns 
-	 * encrypted MD5 string.
-	 * 
-	 * @param input		The string that will be encrypted.
-	 * @return			Encrypted string.
-	 */
+	
+	
+	// Using MD5
 	public static String encryptMD5(String input) {
 		String md5 = null;
 		
