@@ -10,9 +10,7 @@ public class BasicShoppingCart implements IShoppingCart{
 
 	Vector<ShoppingCartRow> rows = new Vector<ShoppingCartRow>(); 
 	
-	/**
-	 *  
-	 */
+	
 	@Override
 	public void addCoupon(Coupon coupon) throws CouponsPlatformException {
 		/*check if there is already a row with this product
@@ -43,6 +41,7 @@ public class BasicShoppingCart implements IShoppingCart{
 		}
 		
 	}
+
 
 	@Override
 	public Collection<ShoppingCartRow> getShoppingCartRows()

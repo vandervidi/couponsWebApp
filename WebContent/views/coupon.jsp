@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>Coupon</title>
 </head>
 <body>
 	<h2>Show coupon by id</h2>
