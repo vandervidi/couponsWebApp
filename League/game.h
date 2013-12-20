@@ -22,7 +22,6 @@ private:
         int awayExtensionScore;
 
 public:
-        //game (game& g);
         game (int roundNum, Date date);
         game();
 

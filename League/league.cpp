@@ -80,14 +80,37 @@ void league::init(vector<game>* allGames)
 
 void league::createLeagueTable(){
 	vector<team>* tmpVectorOfTeams = getTeams(); 
+
+	//sort teams vector
+	int sz = tmpVectorOfTeams->size();
+	for (int i = 0; i < sz; i++){
+		for (int j = i+1; j < sz; j++){
+			if (tmpVectorOfTeams->at(i).getLeaguePoints() < tmpVectorOfTeams->at(j).getLeaguePoints()){
+				team tmp;
+				tmp = tmpVectorOfTeams->at(i);
+				tmpVectorOfTeams->at(i) = tmpVectorOfTeams->at(j);
+				tmpVectorOfTeams->at(j) = tmp;
+			}
+		}
+	}
 	// Create table head
-	cout<<"\nTeams"<<"\t\t\tGames"<<"\tTotal"<<"\tHome"<<"\tAway"<<endl;
+	//cout<<"\nTeams"<<"\t\t\tGames"<<"\tTotal"<<"\tHome"<<"\tAway"<<endl;
 	//for(int g=1; g<=53; g++) cout<<"-";
 	//cout<<endl;
+	cout<<left<<setw(20)<<"Team"<<setw(10)<<"Games"<<setw(10)<<"Points"<<setw(10)<<"Total"<<setw(10)<<"Score"<<endl;
+	cout<<setfill('-')<<setw(60)<<'-'<<setfill(' ')<<endl;
 	for(int i=0; i < tmpVectorOfTeams->size(); i++) {
-		cout<<tmpVectorOfTeams->at(i).getName()<<"\t\t\t"<<tmpVectorOfTeams->at(i).getGames()->size()<<"\t"
+		cout << left << setw(20) <<tmpVectorOfTeams->at(i).getName()
+					 << setw(10) <<tmpVectorOfTeams->at(i).getGames()->size()
+					 << setw(10) <<tmpVectorOfTeams->at(i).getLeaguePoints()
+					 << setw(10) <<tmpVectorOfTeams->at(i).getPointsFor()
+					 << setw(10) <<tmpVectorOfTeams->at(i).getPointsAgainst()<<endl;
+
+
+
+		/*cout<<tmpVectorOfTeams->at(i).getName()<<"\t\t\t"<<tmpVectorOfTeams->at(i).getGames()->size()<<"\t"
 			<<tmpVectorOfTeams->at(i).getLeaguePoints()<<"\t"<<tmpVectorOfTeams->at(i).getPointsFor()
-			<<"\t"<<tmpVectorOfTeams->at(i).getPointsAgainst()<<endl;
+			<<"\t"<<tmpVectorOfTeams->at(i).getPointsAgainst()<<endl;*/
 	}
 }
 
