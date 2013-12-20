@@ -21,7 +21,7 @@
       <li><a href="../views/adminPanel.jsp">Panel</a></li>
         <li><a href="../views/addCoupon.html">Add coupon</a></li>
         <li><a href="../views/addBusiness.html">Add business</a></li>
-        <li class="current_page_item"><a href="../controller/businesses">Businesses</a></li>
+        <li><a href="../controller/businesses">Businesses</a></li>
         <li><a href="../controller/expiredCoupons">Expired coupons</a></li>
          <li><a href="../controller/logout">logout</a></li>
       </ul>
@@ -33,7 +33,7 @@
 
     <div id="porfolio-content">
       
-<h3>Registered businesses:</h3>            
+<h2>Registered businesses</h2>            
 <%
 //Iterator of businesses
 	Iterator iterator = DAO.getInstance().getAllBusinesses();
