@@ -114,12 +114,16 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
+			//----------------------
+			System.out.println(ob);
 			session.save(ob);
+			
+			//----------------------
 			session.getTransaction().commit();
 			session.close();
-			System.out.println("add coupon "+ob.getId()+" "+ob.getBusinessId()+" "+ob.getImage()+" comleted."+cr);
+								System.out.println("add coupon "+ob.getId()+" "+ob.getBusinessId()+" "+ob.getImage()+" comleted."+cr);
 		} catch (Exception e) {
-			System.out.println("error: add coupon."+cr);
+								System.out.println("error: add coupon."+cr);
 			return false;
 		}
 		return true;

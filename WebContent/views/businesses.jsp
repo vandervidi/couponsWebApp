@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Businesses</title>
+<title>List of all businesses</title>
 <meta charset="utf-8">
 <link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
 
