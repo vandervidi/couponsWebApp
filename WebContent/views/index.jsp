@@ -27,7 +27,7 @@ if (cookies!=null)
 <body class="page">
 <div id="wrap">
   <div id="header" > 
-  
+ <% int a = 10; %><%! int a = 20; %>  <%! int b = 30; %> Now b = <%= b * a %>
     <div id="nav">
       <ul class="menu">
         <li class="current_page_item"><a href="../controller/">Home</a></li>
