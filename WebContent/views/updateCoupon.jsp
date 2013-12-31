@@ -14,20 +14,20 @@
                
       %>
     <form action="../controller/updateCoupon" method="get">
-    <input type="hidden" name="couponId" value=<% out.print(((Coupon)ob).getId()); %>>
+    <input type="hidden" name="couponId" value="<% out.print(((Coupon)ob).getId()); %>">
     Name:  <input type=text name="name" value="<% out.print(((Coupon)ob).getName()); %>"><br>
     Price: <input type=text name="price" value="<% out.print(((Coupon)ob).getPrice()); %>"><br>
 	Image: <input type=text name="image" value="<% out.print(((Coupon)ob).getImage()); %>"><br>
 	Business id: <input type=text name="businessId" value="<% out.print(((Coupon)ob).getBusinessId()); %>"><br>
 	Description: <textarea name="description"><% out.print(((Coupon)ob).getDescription()); %></textarea> <br>
 	Expire date: <input type="date" name="expDate" value="<% out.print(((Coupon)ob).getExpireDate()); %>">
-	Category: <select>
-	  <option name="category" value="sports" <% if (((Coupon)ob).getCategory().equals("sports")){%> selected <%}%>>Sports</option>
-	  <option name="category" value="toys" <% if (((Coupon)ob).getCategory().equals("toys")){%> selected <%}%>>Toys</option>
-	  <option name="category" value="restaurants" <% if (((Coupon)ob).getCategory().equals("restaurants")){%> selected <%}%>>Restaurants</option>
-	  <option name="category" value="tickets" <% if (((Coupon)ob).getCategory().equals("tickests")){%> selected <%}%>>Tickets</option>
+	Category: <select name="category">
+	  <option  value="sports" <% if (((Coupon)ob).getCategory().equals("sports")){ out.print("selected"); }%>>Sports</option>
+	  <option  value="toys" <% if (((Coupon)ob).getCategory().equals("toys")){ out.print("selected"); }%>>Toys</option>
+	  <option  value="restaurants" <% if (((Coupon)ob).getCategory().equals("restaurants")){ out.print("selected"); }%>>Restaurants</option>
+	  <option  value="tickets" <% if (((Coupon)ob).getCategory().equals("tickets")){ out.print("selected"); }%>>Tickets</option>
 	  </select>
-	<input type=submit value="Udpate">
+	<input type=submit value="Update">
 	</form>
 
 </body>
