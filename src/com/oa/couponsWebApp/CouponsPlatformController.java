@@ -135,15 +135,12 @@ public class CouponsPlatformController extends HttpServlet {
 		// Log out 
 			else if(str.equals("/logout")) {
 			
-				Cookie all [] =request.getCookies();
+				Cookie all [] = request.getCookies();
 				for (Cookie c : all){
-					if (c.getName().equals("connectedWithPrivilige") ){
-							
-						c.setMaxAge(0);		// 0 to delete cookie immediately from user browser
+					if (c.getName().equals("connectedWithPrivilige") ){	
+						c.setMaxAge(0);		// 0  =  delete cookie immediately from user browser
 						response.addCookie(c);
-						
-						request.setAttribute("timestamp", new java.util.Date());
-						
+
 						RequestDispatcher dispatcher = getServletContext()
 								.getRequestDispatcher("/controller/");
 						dispatcher.forward(request, response);
@@ -189,7 +186,7 @@ public class CouponsPlatformController extends HttpServlet {
 				double busWidth=	Double.parseDouble(businessWidth);
 				DAO.getInstance().addBusiness(new Business(businessName, busLength, busWidth));
 				RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/views/adminPanel.jsp");
+					.getRequestDispatcher("/views/businesses.jsp");
 				dispatcher.forward(request, response);			
 			}
 

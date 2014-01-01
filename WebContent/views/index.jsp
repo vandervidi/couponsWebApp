@@ -16,53 +16,70 @@ if (cookies!=null)
         }
 }
 %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>CouponsWebApp</title>
-<meta charset="utf-8">
-<link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
 
-</head>
-<body class="page">
-<div id="wrap">
-  <div id="header" > 
-  
-    <div id="nav">
-      <ul class="menu">
-        <li class="current_page_item"><a href="../controller/">Home</a></li>
-        <li><a href="../controller/help">Help</a></li>
-        <li ><a href="../controller/about">About</a></li>
-        <li><a href="../controller/contact">Contact</a></li>
-         <li><a href="../views/shoppingcart.jsp">Cart</a></li>
-      </ul>
-    </div>
-      <div >
-  <form method="post" action="../controller/login">
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>Coupons Web-App</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href = "../views/css/bootstrap.min.css" rel = "stylesheet">
+                <link href = "../views/css/styles.css" rel = "stylesheet">
+        </head>
+        <body>
+ 
+                <div class = "navbar navbar-inverse navbar-static-top">
+                        <div class = "container">
+                               
+                                <a href = "../controller/" class = "navbar-brand">Coupons Web-App</a>
+                               
+                                <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                                        <span class = "icon-bar"></span>
+                                        <span class = "icon-bar"></span>
+                                        <span class = "icon-bar"></span>
+                                </button>
+                               
+                                <div class = "collapse navbar-collapse navHeaderCollapse">
+                               
+                                        <ul class = "nav navbar-nav navbar-right">
+                                       
+                                                <li class = "active"><a href="../controller/">Home</a></li>
+												<li><a href="../controller/help">Help</a></li>
+												<li ><a href="../controller/about">About</a></li>
+												<li><a href="../controller/contact">Contact</a></li>
+												 <li><a href="../views/shoppingcart.jsp">Cart</a></li>
+                                       
+                                        </ul>
+                               
+                                </div>
+                               
+                        </div>
+                </div>
+
+
+<div style="text-align: center;"> 
+<a href="../controller/category?category=restaurants"><img src="../views/images/circle-red.png"  style="witdh:100px;"/></a> 
+<a href="../controller/category?category=toys"><img src="../views/images/circle-pink.png"  style="witdh:100px;"/></a> 
+<a href="../controller/category?category=tickets"><img src="../views/images/circle-orange.png" style="witdh:100px;"/></a>
+<a href="../controller/category?category=sports"><img src="../views/images/circle-yellow.png" style="witdh:100px;"/></a> 
+</div>
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+<div style="text-align: center; color:white;">
+    <form method="post" action="../controller/login">
 User:<input autocomplete="off" type="text" name="username" size="9">
 Pass:<input autocomplete="off" type="password" name="password" size="9">
-<input type="hidden" name="login"><input type="submit" value="Log in">   
-</form></div>
-<%
+<input type="hidden" name="login">
+<button type="submit" class="btn btn-primary">Login</button> 
+</form>
+  </div>
+  <%
 if (knownUser==true)
 out.print("Last login from this browser by: "+tmpCookie.getValue());
 %>
-    <!--end nav-->
-  <!--end header-->
-
-  
-  </div>
-
-     <div style=" margin:0 auto;"> 
-<a href="../controller/category?category=restaurants"><img src="../views/images/circle-red.png"/></a> 
-<a href="../controller/category?category=toys"><img src="../views/images/circle-pink.png"/></a> 
-<a href="../controller/category?category=tickets"><img src="../views/images/circle-orange.png"/></a>
-<a href="../controller/category?category=sports"><img src="../views/images/circle-yellow.png"/></a> 
-    </div>
-  
-  <!--end main-->  
-
 </div>
-<!--end wrap-->
-<!--end cache-images-->
+</nav>
+                <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <script src = "../views/js/bootstrap.js"></script>
+               
+        </body>
 </html>

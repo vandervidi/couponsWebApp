@@ -1,36 +1,44 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Add Business</title>
-<meta charset="utf-8">
-<link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
+<html>
+        <head>
+                <title>Coupons Web-App</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href = "../views/css/bootstrap.min.css" rel = "stylesheet">
+                <link href = "../views/css/styles.css" rel = "stylesheet">
+        </head>
+        <body>
+ 
+                <div class = "navbar navbar-inverse navbar-static-top">
+                        <div class = "container">
+                               
+                                <a href = "#" class = "navbar-brand">Admin Panel</a>
+                               
+                                <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                                        <span class = "icon-bar"></span>
+                                        <span class = "icon-bar"></span>
+                                        <span class = "icon-bar"></span>
+                                </button>
+                               
+                                <div class = "collapse navbar-collapse navHeaderCollapse">
+                               
+                                        <ul class = "nav navbar-nav navbar-right">
+                                       
+                                      			 <li><a href="../views/adminPanel.jsp">Panel</a></li>
+                                                <li ><a href="../views/addCoupon.html">Add coupon</a></li>
+												<li class="active"><a href="../views/addBusiness.html">Add business</a></li>
+												<li ><a href="../controller/businesses">Businesses</a></li>
+												<li><a href="../controller/expiredCoupons">Expired coupons</a></li>
+												<li><a href="../controller/logout">logout</a></li>
+                                       
+                                        </ul>
+                               
+                                </div>
+                               
+                        </div>
+                </div>
+<div class="container"><h2>Add a business <small>Create a new busineess </small></h2></div>
 
-</head>
-
-<body class="page">
-<div id="wrap">
-  <div id="header"> 
-   
-    <div id="nav">
-      <ul class="menu">
-      <li><a href="../views/adminPanel.jsp">Panel</a></li>
-        <li><a href="../views/addCoupon.html">Add coupon</a></li>
-        <li><a href="../views/addBusiness.html">Add business</a></li>
-        <li><a href="../controller/businesses">Businesses</a></li>
-        <li><a href="../controller/expiredCoupons">Expired coupons</a></li>
-         <li><a href="../controller/logout">logout</a></li>
-      </ul>
-    </div>
-    <!--end nav-->
-
-  </div>
-  <!--end header-->
-
-    <div id="porfolio-content">
-      
-		<h3>Add business:</h3><br>
-		<table>
+		<table class="table table-responsive">
 		<form action="../controller/addBusiness" method="get">
 			<tr><td>Business name:</td><td> <input type=text name="businessName" required><br></td></tr>
 			<tr><td>location [Length]:</td><td> <input type=text name="length" required><br></td></tr>
@@ -38,7 +46,10 @@
 			<tr><td><input type=submit></td></tr>
 		</form>
         </table>
-    </div>
-</div>
-<!--end wrap-->
+
+
+                <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <script src = "../views/js/bootstrap.js"></script>
+               
+        </body>
 </html>
