@@ -67,7 +67,7 @@ while(couponsIterator.hasNext()) {
   <div class="col-sm-6 col-md-4">
 
 <div style="background-color:#B0E0E6;width:300px; ">
-<% out.print((coupon.getName())); %></div>
+<% out.print((coupon.getName())); %>  <span class="label label-danger" style="float: right;"><% out.print((coupon.getCategory())); %></span> </div>
 
 <div style="background-color:#EEEEEE;width:300px">
 <img src="../views/<% out.print(coupon.getImage()); %>" style="height: auto; width: inherit;"></div>
