@@ -81,13 +81,6 @@ while(couponsIterator.hasNext()) {
 
 <div style="background-color:#B0E0E6;height:20px;width:300px;">
 <% out.print("Price: " + coupon.getPrice()); %></div>
-
-<form action="../controller/updateCouponPreview" method="get">
-<input type="hidden" name="updateId" value="<% out.print(coupon.getId());%>">
-<input type="submit" value="Update"></form>
-
-<form action="../controller/deleteCoupon" method="get">
-<input type="hidden" name="deleteId" value="<% out.print(coupon.getId());%>"><input type="submit" value="Delete"></form>
 <br><br>
 </div>	
 	</div>	

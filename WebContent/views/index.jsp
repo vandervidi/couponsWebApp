@@ -63,15 +63,15 @@ if (cookies!=null)
 <a href="../controller/category?category=sports"><img src="../views/images/circle-yellow.png" style="witdh:100px;"/></a> 
 </div>
 
-<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-<div style="text-align: center; color:white;">
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" style="text-align: center; color:white;">
+
     <form method="post" action="../controller/login">
 User:<input autocomplete="off" type="text" name="username" size="9">
 Pass:<input autocomplete="off" type="password" name="password" size="9">
 <input type="hidden" name="login">
 <button type="submit" class="btn btn-primary">Login</button> 
 </form>
-  </div>
+ 
   <%
 if (knownUser==true)
 out.print("Last login from this browser by: "+tmpCookie.getValue());
