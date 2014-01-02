@@ -45,6 +45,7 @@
 <% 
 Iterator couponsIterator;
 Coupon coupon;
+int tmpCounter=0;
 couponsIterator = (Iterator)request.getAttribute("couponsIterator");
 Date currDate=new Date();
 if (couponsIterator!=null)
@@ -62,6 +63,7 @@ while(couponsIterator.hasNext()) {
 	        			|| ( expDate.getYear()==currDate.getYear()
         				&& expDate.getMonth()==currDate.getMonth()
         				&& expDate.getDay()==currDate.getDay()) ){
+          				 tmpCounter++;
 %>
 
 <div class="column">
@@ -91,9 +93,9 @@ while(couponsIterator.hasNext()) {
             }
 	}
 } 
-else
+if(tmpCounter==0)
  {
-   out.print("<h2>This category is empty!<h2>");
+   out.print("<div class=\"alert alert-info\">This category is empty for now ..</div>");
  }
 
 %> 
