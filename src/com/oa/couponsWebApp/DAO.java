@@ -319,12 +319,10 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			//----------------------
-			System.out.println(ob);
 			session.save(ob);
-			//----------------------
 			session.getTransaction().commit();
 			session.close();
+
 			System.out.println("add User "+ob.getUsername()+" "+ob.getPassword()+" comleted."+cr);
 		} catch (Exception e) {
 			System.out.println("error: add User."+cr);

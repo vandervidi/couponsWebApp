@@ -8,6 +8,9 @@ import javax.persistence.*;
  * @author Vidran & Ofir
  *
  */
+
+
+
 @Entity
 public class Coupon {
 	

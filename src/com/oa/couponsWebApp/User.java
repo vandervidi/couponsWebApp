@@ -1,8 +1,5 @@
 package com.oa.couponsWebApp;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -11,6 +8,7 @@ import javax.persistence.*;
  * @author Vidran & Ofir
  *
  */
+
 @Entity
 public class User {
 

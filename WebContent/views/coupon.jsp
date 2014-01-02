@@ -17,11 +17,11 @@
 	<input type=submit>
 	</form>
 	
-	<%-- <%
+<%--	
 		//CouponDAO couponInstance = null;
 		Object couponFound = request.getAttribute("couponFound");
 		//String couponFoundString = ((String)couponFound);
-		Entity_Coupon coupon = (Entity_Coupon) couponFound;
+		Coupon coupon = (Coupon) couponFound;
 		if (coupon!=null){
 			out.println("Your coupon id request is: "+ coupon.getCouponId() +"<br/>\n"+ coupon +"<br/>\n");
 		}else{
@@ -31,6 +31,6 @@
 			
 		Object ob = request.getAttribute("timestamp");
 		out.println("<br/>\n" + ob);
-	%> --%>
+	--%>
 </body>
 </html>

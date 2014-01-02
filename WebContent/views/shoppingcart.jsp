@@ -2,41 +2,46 @@
     pageEncoding="windows-1255" import="com.oa.couponsWebApp.*,java.util.*" %>
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Help</title>
-<meta charset="utf-8">
-<link type="text/css" rel="stylesheet" href="../views/styles/style.css" />
+<html>
+        <head>
+                <title>Coupons Web-App</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href = "../views/css/bootstrap.min.css" rel = "stylesheet">
+                <link href = "../views/css/styles.css" rel = "stylesheet">
+        </head>
+        <body>
+ 
+                <div class = "navbar navbar-inverse navbar-static-top">
+                        <div class = "container">
+                               
+                                <a href = "../controller/" class = "navbar-brand">Coupons Web-App</a>
+                               
+                                <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                                        <span class = "icon-bar"></span>
+                                        <span class = "icon-bar"></span>
+                                        <span class = "icon-bar"></span>
+                                </button>
+                               
+                                <div class = "collapse navbar-collapse navHeaderCollapse">
+                               
+                                        <ul class = "nav navbar-nav navbar-right">
+                                       
+                                                <li><a href="../controller/">Home</a></li>
+												<li><a href="../controller/help">Help</a></li>
+												<li ><a href="../controller/about">About</a></li>
+												<li><a href="../controller/contact">Contact</a></li>
+												 <li class = "active"><a href="../views/shoppingcart.jsp">Cart</a></li>
+                                       
+                                        </ul>
+                               
+                                </div>
+                               
+                        </div>
+                </div>
+<div class="container"><h2>Cart and payment</h2></div>
 
-</head>
-<body class="page">
-<div id="wrap">
-  <div id="header"> 
-     <div width="100%" style=" margin: 0 auto; "> 
-<a href="../controller/category?category=restaurants"><img src="../views/images/circle-red.png" height="100px"/></a> 
-<a href="../controller/category?category=toys"><img src="../views/images/circle-pink.png" height="100px"/></a> 
-<a href="../controller/category?category=tickets"><img src="../views/images/circle-orange.png" height="100px"/></a>
-<a href="../controller/category?category=sports"><img src="../views/images/circle-yellow.png" height="100px"/></a> 
-    </div>
-    <div id="nav">
-      <ul class="menu">
-        <li ><a href="../controller/">Home</a></li>
-        <li ><a href="../controller/help">Help</a></li>
-        <li ><a href="../controller/about">About</a></li>
-        <li ><a href="../controller/contact">Contact</a></li>
-         <li class="current_page_item"><a href="../views/shoppingcart.jsp">Cart</a></li>
-      </ul>
-    </div>
-    <!--end nav-->
-
-  </div>
-  <!--end header-->
-
-  
-  <div style=" margin: 0 auto;" >
-  
-<div width="100%" style=" margin: 0 auto;"> 
 <%
+		double totalPrice=0.00;
 		//getting our dao
 		DAO dao = DAO.getInstance();
 
@@ -58,7 +63,7 @@
 		}
 		
 		//printing out the content of the shopping cart
-		out.println("<table>");
+		out.println("<table class=\"table table-striped table-hover table-responsive\">");
 		out.println("<tr>");
 		out.println("<th>Coupon name</th><th>quantity</th><th>price</th><th>total</th></tr>");
 		Collection<ShoppingCartRow> rows = cart.getShoppingCartRows();
@@ -67,6 +72,7 @@
 		{
 			ShoppingCartRow current = iterator.next();
 			double price = current.getCoupon().getPrice();
+			totalPrice+=price;
 			int quantity = current.getQuantity();
 			out.println("<tr>");
 			out.println("<td>"+current.getCoupon().getName()+"</td>");
@@ -76,15 +82,12 @@
 			out.println("</tr>");
 		}
 	%>
-    </div>
-    <div id="porfolio-content">
-      
-    </div>
-    <!--portfolio-content-->
-  
-  <!--end main-->  
-</div>
-</div>
-<!--end wrap-->
-<!--end cache-images-->
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+<h3 style="color:white;" >Total Price: <%out.print(totalPrice); %></h3>
+</nav>
+                <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                <script src = "../views/js/bootstrap.js"></script>
+               
+        </body>
 </html>
