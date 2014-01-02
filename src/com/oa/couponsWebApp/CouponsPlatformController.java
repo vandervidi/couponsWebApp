@@ -1,7 +1,6 @@
 package com.oa.couponsWebApp;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
@@ -377,13 +376,4 @@ public class CouponsPlatformController extends HttpServlet {
 		}
 		
 	}
-
-//	void sendError(HttpServletRequest request, HttpServletResponse response, int nm, String msg) throws IOException, ServletException{
-//		request.setAttribute("number", nm);
-//		request.setAttribute("msg", msg);
-//		request.setAttribute("timestamp", new java.util.Date());
-//		RequestDispatcher dispatcher = getServletContext()
-//				.getRequestDispatcher("/views/error.jsp");
-//		dispatcher.forward(request, response);	
-//	}
 }
