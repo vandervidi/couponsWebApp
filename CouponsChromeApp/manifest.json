@@ -1,0 +1,21 @@
+ {
+"manifest_version": 2,
+"name": "Coupons",
+"description": "Coupon Web App - Course project.",
+"version": "1.0",
+"icons": {
+"128": "128.png"
+},
+"app": {
+"urls": [
+"http://couponswebapp.vandervidi.cloudbees.net/controller/"
+],
+"launch": {
+"web_url": "http://couponswebapp.vandervidi.cloudbees.net/controller/"
+}
+},
+"permissions": [
+"unlimitedStorage",
+"notifications"
+]
+}
