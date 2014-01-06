@@ -25,12 +25,34 @@ if (cookies!=null)
     <!-- Bootstrap -->
     <link href="../views/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+
+
+	<!-- ajax -->
+	    <script type="text/javascript">
+		function loadXMLDoc(url)//the parameter url for our resource
+		{
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();//creating a new object for ajax
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");//creating a new object for ajax
+		  }
+		xmlhttp.onreadystatechange=function()//Stores a function (or the name of a function) to be called //automatically each time the readyState property changes
+		  {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200)//if status is succes and request is processed
+		    {
+		    document.getElementById('p1').innerHTML=new Date();//getting all response data
+		//alert(xmlhttp.getResponseHeader('Content-Type'));//getting specific response data
+		//alert(xmlhttp.responseText);
+		    }
+		  }
+		xmlhttp.open("GET",url,true);//it is making a get request with our url asynchronously
+		xmlhttp.send();
+		}
+		</script>
+	<!-- ajax -->
 
         </head>
         <body>
@@ -86,6 +108,12 @@ if (cookies!=null)
 if (knownUser==true)
 out.print("Last login from this browser by: "+tmpCookie.getValue());
 %>
+
+		<!-- ajax -->
+			<p id="p1">  </p>
+        	<button onclick="loadXMLDoc('xmlhttp_info.txt')">Get Date</button>
+        <!-- ajax -->
+        
 </div>
 </nav>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
