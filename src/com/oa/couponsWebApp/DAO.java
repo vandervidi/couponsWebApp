@@ -28,6 +28,12 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		  return instance;
 	  }
 	  
+	  public static SessionFactory getSessionFactory(){
+		  if (instance==null)
+			  instance=new DAO();
+		  return sessionFactory;
+	  }
+	  
 	@Override
 	public Coupon getCoupon(int id) {
 		Coupon coupon = null;
