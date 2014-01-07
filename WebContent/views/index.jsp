@@ -72,15 +72,13 @@ if (cookies!=null)
 </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" style="text-align: center; color:white;">
-<form class="navbar-form navbar-center" role="form" method="post" action="../controller/login">
-            <div class="form-group">
-              <input autocomplete="off" type="text" name="username" placeholder="Username" class="form-control">
-            </div>
-            <div class="form-group">
-              <input autocomplete="off" type="password" name="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
+<form method="post" action="../controller/login">
+ User:<input autocomplete="off" type="text" name="username" size="9">
+ Pass:<input autocomplete="off" type="password" name="password" size="9">
+ <input type="hidden" name="login">
+ <button type="submit" class="btn btn-primary">Login</button> 
+ </form>
+
 
   <%
 if (knownUser==true)
