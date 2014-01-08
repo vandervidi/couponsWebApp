@@ -25,33 +25,57 @@ if (cookies!=null)
     <!-- Bootstrap -->
     <link href="../views/css/bootstrap.min.css" rel="stylesheet">
 
-
+	<script src="file.js"></script>
 
 	<!-- ajax -->
-	    <script type="text/javascript">
+	<script type="text/javascript">
 		function loadXMLDoc(url)//the parameter url for our resource
 		{
-		if (window.XMLHttpRequest)
-		  {// code for IE7+, Firefox, Chrome, Opera, Safari
-		  xmlhttp=new XMLHttpRequest();//creating a new object for ajax
-		  }
-		else
-		  {// code for IE6, IE5
-		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");//creating a new object for ajax
-		  }
-		xmlhttp.onreadystatechange=function()//Stores a function (or the name of a function) to be called //automatically each time the readyState property changes
-		  {
-		  if (xmlhttp.readyState==4 && xmlhttp.status==200)//if status is succes and request is processed
-		    {
-		    document.getElementById('p1').innerHTML=new Date();//getting all response data
-		//alert(xmlhttp.getResponseHeader('Content-Type'));//getting specific response data
-		//alert(xmlhttp.responseText);
-		    }
-		  }
-		xmlhttp.open("GET",url,true);//it is making a get request with our url asynchronously
-		xmlhttp.send();
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();//creating a new object for ajax
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");//creating a new object for ajax
+			}
+			xmlhttp.onreadystatechange = function()//Stores a function (or the name of a function) to be called //automatically each time the readyState property changes
+			{
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)//if status is succes and request is processed
+				{
+					document.getElementById('showTime').innerHTML = new Date();//getting all response data
+					//alert(xmlhttp.getResponseHeader('Content-Type'));//getting specific response data
+					//alert(xmlhttp.responseText);
+				}
+			}
+			xmlhttp.open("GET", url, true);//it is making a get request with our url asynchronously
+			xmlhttp.send();
 		}
-		</script>
+	</script>
+	
+	<script type="text/javascript">
+		function check_username(username)
+		{
+			// Create variable
+			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();//creating a new object for ajax
+			} else {// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");//creating a new object for ajax
+			}
+			
+			xmlhttp.abort();
+			//-----2 options---------------------------------------------------------------
+			xmlhttp.open("GET","../views/showUsername.jsp?username="+username, true);		// Working
+			//xmlhttp.open("GET", "../controller/showUsername?username="+username, true);		// Working (if uncomment this, uncomment from controller "/showUsername" too)
+			//-----------------------------------------------------------------------------
+			xmlhttp.onreadystatechange= function()
+			{
+				if (xmlhttp.readyState == 4) 
+				{
+					document.getElementById('msg').innerHTML =
+						xmlhttp.responseText;
+				}
+			};
+			xmlhttp.send(null);
+		} 
+	</script>
 	<!-- ajax -->
 
         </head>
@@ -96,7 +120,7 @@ if (cookies!=null)
 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" style="text-align: center; color:white;">
 <form class="navbar-form navbar-center" role="form" method="post" action="../controller/login">
             <div class="form-group">
-              <input autocomplete="off" type="text" name="username" placeholder="Username" class="form-control">
+              <input autocomplete="off" type="text" name="username" placeholder="Username" class="form-control" onkeyup="check_username(this.value)" >
             </div>
             <div class="form-group">
               <input autocomplete="off" type="password" name="password" placeholder="Password" class="form-control">
@@ -104,15 +128,19 @@ if (cookies!=null)
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
 
+	<!-- ajax -->
+	<div id='msg'></div>
+	<!-- ajax /-->
+	
   <%
 if (knownUser==true)
 out.print("Last login from this browser by: "+tmpCookie.getValue());
 %>
 
 		<!-- ajax -->
-			<p id="p1">  </p>
+			<p id="showTime">  </p>
         	<button onclick="loadXMLDoc('xmlhttp_info.txt')">Get Date</button>
-        <!-- ajax -->
+        <!-- ajax /-->
         
 </div>
 </nav>

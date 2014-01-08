@@ -2,6 +2,7 @@ package com.oa.couponsWebApp;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 
@@ -123,68 +124,28 @@ public class CouponsPlatformController extends HttpServlet {
 			        request.setAttribute("couponsIterator", couponsIterator);			   
 				    request.setAttribute("categoryName", categoryName);
 					RequestDispatcher dispatcher = getServletContext()
-					.getRequestDispatcher("/views/categories.jsp");
+							.getRequestDispatcher("/views/categories.jsp");
 					dispatcher.forward(request, response);
 				} 
-		
-//				else if (str.equals("/create")){
-//					String createTripTable = "CREATE TABLE trip ("
-//				            +"        tripId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-//				            +"        name VARCHAR(30), "
-//				            +"        startDate VARCHAR(30), "
-//				            +"        endDate VARCHAR(30), "
-//				            +"        numOfTravelers INT(4), "
-//				            +"        ratePerTraveler FLOAT(4) "
-//				            +"        )";
-//					
-//					try {
-//						//DAO.getSessionFactory().openSession().createSQLQuery(createTripTable).executeUpdate();
-//						DAO.getSessionFactory().openSession().createSQLQuery(
-//								"INSERT INTO `jaja`.`trip` (`name`, `startDate`, `endDate`, `numOfTravelers`, `ratePerTraveler`) "
-//								+ "VALUES (`1`, `2`, `3`, `4`, `5`)"
-//								).executeUpdate();
-//
-//					}catch(Exception e){
-//						e.printStackTrace();
+
+				
+				// Working but very slow  -- use in index.jsp from Ajax
+//				else if(str.equals("/showUsername")){
+//									System.out.println("showUsername");
+//					String username = request.getParameter("username");
+//					User tempForCheck = DAO.getInstance().getUser(username);
+//					if (tempForCheck!=null) {
+//						RequestDispatcher dispatcher = getServletContext()
+//								.getRequestDispatcher("/views/usernameExist.jsp?username="+username);
+//						dispatcher.forward(request, response);
+//					}else{
+//						RequestDispatcher dispatcher = getServletContext()
+//								.getRequestDispatcher("/views/usernameNotExist.jsp?username="+username);
+//						dispatcher.forward(request, response);
 //					}
 //				}
-//				
-//				else if (str.equals("/create")){
-//					String createTripTable = "CREATE TABLE trip ("
-//                            +"        tripId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-//                            +"        name VARCHAR(30), "
-//                            +"        numOfTravelers INT(4)"
-//                            +"        )";
-//					try {
-//						DAO.getSessionFactory().openSession().connection().createStatement().executeUpdate(createTripTable);
-//						System.out.println("success!");
-//					} catch (HibernateException e) {
-//						// TODO Auto-generated catch block
-//						System.out.println("faild");
-//						e.printStackTrace();
-//					} catch (SQLException e) {
-//						System.out.println("faild!");
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-				else if (str.equals("/tripInsert")){
-					System.out.println("find trip insert");
-					String tripInsert = "INSERT INTO trip(tripId, name, numOfTravelers)"
-							+ "VALUES (13, 'ofir', 55)";
-					try {
-						DAO.getSessionFactory().openSession().connection().createStatement().executeUpdate(tripInsert);
-						System.out.println("success!");
-					} catch (HibernateException e) {
-						// TODO Auto-generated catch block
-						System.out.println("faild");
-						e.printStackTrace();
-					} catch (SQLException e) {
-						System.out.println("faild!");
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				
+				
 		// Register
 				else if(str.equals("/register")) {					
 					RequestDispatcher dispatcher = getServletContext()
