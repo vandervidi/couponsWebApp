@@ -45,6 +45,17 @@ public class User {
 		this.dateOfRegistration = new Date();
 	}
 	/**
+	 * User class constructor
+	 * 
+	 * @param userName		User's Username.
+	 */
+	public User(String userName) {
+		super();
+		this.userName = userName;
+		this.dateOfRegistration = new Date();
+	}
+	
+	/**
 	 * User default constructor
 	 */
 	public User() {
