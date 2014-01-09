@@ -25,7 +25,7 @@ if (cookies!=null)
     <!-- Bootstrap -->
     <link href="../views/css/bootstrap.min.css" rel="stylesheet">
 
-	<script src="file.js"></script>
+	<script type="text/javascript" src="../views/file.js"/>
 
 	<!-- ajax -->
 	<script type="text/javascript">
@@ -50,38 +50,11 @@ if (cookies!=null)
 		}
 	</script>
 	
-	<script type="text/javascript">
-		function check_username(username)
-		{
-			// Create variable
-			if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-				xmlhttp = new XMLHttpRequest();//creating a new object for ajax
-			} else {// code for IE6, IE5
-				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");//creating a new object for ajax
-			}
-			
-			xmlhttp.abort();
-			//-----2 options---------------------------------------------------------------
-			xmlhttp.open("GET","../views/showUsername.jsp?username="+username, true);		// Working
-			//xmlhttp.open("GET", "../controller/showUsername?username="+username, true);		// Working (if uncomment this, uncomment from controller "/showUsername" too)
-			//-----------------------------------------------------------------------------
-			xmlhttp.onreadystatechange= function()
-			{
-				if (xmlhttp.readyState == 4) 
-				{
-					document.getElementById('msg').innerHTML =
-						xmlhttp.responseText;
-				}
-			};
-			xmlhttp.send(null);
-		} 
-	</script>
-	<!-- ajax -->
 
         </head>
         <body>
  
-                <div class = "navbar navbar-inverse navbar-static-top">
+                <div class = "navbar navbar-inverse navbar-fixed-top">
                         <div class = "container">
                                
                                 <a href = "../controller/" class = "navbar-brand">Coupons Web-App</a>
@@ -111,13 +84,17 @@ if (cookies!=null)
 
 
 <div style="text-align: center;"> 
+<br><br><br><br>
 <a href="../controller/category?category=restaurants"><img src="../views/images/circle-red.png"  style="witdh:100px;"/></a> 
 <a href="../controller/category?category=toys"><img src="../views/images/circle-pink.png"  style="witdh:100px;"/></a> 
 <a href="../controller/category?category=tickets"><img src="../views/images/circle-orange.png" style="witdh:100px;"/></a>
 <a href="../controller/category?category=sports"><img src="../views/images/circle-yellow.png" style="witdh:100px;"/></a> 
+<br><br><br><br><br><br><br><br><br><br>
+
 </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation" style="text-align: center; color:white;">
+
 <form class="navbar-form navbar-center" role="form" method="post" action="../controller/login">
             <div class="form-group">
               <input autocomplete="off" type="text" name="username" placeholder="Username" class="form-control" onkeyup="check_username(this.value)" >
@@ -126,22 +103,19 @@ if (cookies!=null)
               <input autocomplete="off" type="password" name="password" placeholder="Password" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
+            	<!-- ajax -->
+				<span id='msg'></span>
+				<!-- ajax /-->
           </form>
 
-	<!-- ajax -->
-	<div id='msg'></div>
-	<!-- ajax /-->
+
 	
   <%
 if (knownUser==true)
 out.print("Last login from this browser by: "+tmpCookie.getValue());
 %>
 
-		<!-- ajax -->
-			<p id="showTime">  </p>
-        	<button onclick="loadXMLDoc('xmlhttp_info.txt')">Get Date</button>
-        <!-- ajax /-->
-        
+
 </div>
 </nav>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

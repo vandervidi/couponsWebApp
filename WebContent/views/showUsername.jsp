@@ -14,7 +14,7 @@
 	if (DAO.getInstance().getUser(username)!=null)
 		out.print("<font color='green'>"+username+" exists</font>");
 	else
-		out.print("<font color='red'>"+username+" is not exit</font>");
+		out.print("<font color='red'>"+username+" Doesn't exist</font>");
 %>
 </body>
 </html>

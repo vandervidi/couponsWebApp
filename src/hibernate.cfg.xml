@@ -3,29 +3,21 @@
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 <session-factory>
-		<property name="hibernate.connection.driver_class">
-			com.mysql.jdbc.Driver
-		</property>
-		
-		<!-- online -->
-		<property name="hibernate.connection.url">
- 			jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/jaja3
-		</property>
-		<property name="hibernate.connection.username">jaja3</property>
-		
-		<!-- for testing -->
-		<!-- <property name="hibernate.connection.url">
- 			jdbc:mysql://localhost:3306/jaja
-		</property>
-		<property name="hibernate.connection.username">jaja</property> -->
-		
-		<property name="hibernate.connection.password">gaga</property>
-		<property name="show_sql">true</property>
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
-		<!-- Mapping files -->
-		<mapping class="com.oa.couponsWebApp.Business"/>
-		<mapping class="com.oa.couponsWebApp.Coupon"/>
-		<mapping class="com.oa.couponsWebApp.User"/>
+                <property name="hibernate.connection.driver_class">
+                        com.mysql.jdbc.Driver
+                </property>
+                <property name="hibernate.connection.url">
+                 jdbc:mysql://ec2-50-19-213-178.compute-1.amazonaws.com:3306/jaja
+                        <!-- jdbc:mysql://localhost:3306/jaja -->
+                </property>
+                <property name="hibernate.connection.username">jaja1</property>
+                <property name="hibernate.connection.password">gaga</property>
+                <property name="show_sql">true</property>
+                <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+                <property name="hibernate.hbm2ddl.auto">update</property>
+                <!-- Mapping files -->
+                <mapping class="com.oa.couponsWebApp.Business"/>
+                <mapping class="com.oa.couponsWebApp.Coupon"/>
+                <mapping class="com.oa.couponsWebApp.User"/>
 </session-factory>
 </hibernate-configuration>
