@@ -45,9 +45,9 @@
          <table class="table table-stripped">
          		<form action="../controller/updateBusiness" method="get">
          		<input type="hidden" name="businessId" value=<% out.print(((Business)ob).getBusinessId()); %>>
-					<tr><td>Business name:     </td><td> <input type="text" name="businessName" value="<% out.print(((Business)ob).getBusinessName()); %>"></td></tr>
-					<tr><td>location [Length]: </td><td><input type=text name="length" value="<% out.print(((Business)ob).getLength()); %>"></td></tr>
-					<tr><td>location [Width]:  </td><td><input type=text name="width" value="<% out.print(((Business)ob).getWidth()); %>"></td></tr>
+					<tr><td>Business name:     </td><td> <input type="text" name="businessName" value="<% out.print(((Business)ob).getBusinessName()); %>" ></td></tr>
+					<tr><td>location [Length]: </td><td><input type="number" name="length" value="<% out.print(((Business)ob).getLength()); %>" min="0"  step="0.01"></td></tr>
+					<tr><td>location [Width]:  </td><td><input type="number" name="width" value="<% out.print(((Business)ob).getWidth()); %>" min="0"  step="0.01"></td></tr>
 				<tr><td><button type="submit" class="btn btn-success btn-sm">Update</button></td></tr>
 				</form>
 		</table>

@@ -47,9 +47,9 @@
     <form action="../controller/updateCoupon" method="get">
     <input type="hidden" name="couponId" value="<% out.print(((Coupon)ob).getId()); %>">
     <tr><td>Name: </td><td> <input type=text name="name" value="<% out.print(((Coupon)ob).getName()); %>"></td></tr>
-    <tr><td>Price:</td><td> <input type=text name="price" value="<% out.print(((Coupon)ob).getPrice()); %>"></td></tr>
+    <tr><td>Price:</td><td> <input type="number" name="price" value="<% out.print(((Coupon)ob).getPrice()); %>" min="0"  step="0.01"></td></tr>
 	<tr><td>Image:</td><td> <input type=text name="image" value="<% out.print(((Coupon)ob).getImage()); %>"></td></tr>
-	<tr><td>Business id:</td><td> <input type=text name="businessId" value="<% out.print(((Coupon)ob).getBusinessId()); %>"></td></tr>
+	<tr><td>Business id:</td><td> <input type="number" name="businessId" value="<% out.print(((Coupon)ob).getBusinessId()); %>" min="0" ></td></tr>
 	<tr><td>Description:</td><td> <textarea name="description"><% out.print(((Coupon)ob).getDescription()); %></textarea> </td></tr>
 	<tr><td>Expire date: </td><td><input type="date" name="expDate" value="<% out.print(((Coupon)ob).getExpireDate()); %>"></td></tr>
 	<tr><td>Category:</td><td> <select name="category">
