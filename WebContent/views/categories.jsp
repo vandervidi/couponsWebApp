@@ -70,7 +70,7 @@ while(couponsIterator.hasNext()) {
   <div class="col-sm-6 col-md-4">
 
 <div style="background-color:#B0E0E6;width:300px; ">
-<% out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +(coupon.getName()) +"</a>"); %></div>
+<% out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +"<span style=\"font-size:20px \">"+(coupon.getName()) +"</span></a>"); %></div>
 
 <div style="background-color:#EEEEEE;width:300px">
 <img src="../views/<% out.print(coupon.getImage()); %>" style="height: auto; width: inherit;"></div>
@@ -81,8 +81,10 @@ while(couponsIterator.hasNext()) {
 <div style="background-color:#B0E0E6;height:20px;width:300px;">
 <% out.print("Expire date: " +(coupon.getExpireDate())); %></div>
 
-<div style="background-color:#B0E0E6;height:20px;width:300px;">
-<% out.print("Price: " + coupon.getPrice()); %></div>
+<div style="background-color:#B0E0E6;height:30px;width:300px;">
+<% out.print("Price: " + coupon.getPrice()); %>
+<% out.print("<a href=\"../views/shoppingcart.jsp?id=" + coupon.getId() +"\">" +"<button class=\"btn btn-success btn-sm\" style=\"float: right;\">Add to cart</button></a>"); %>
+</div>
 <br><br>
 </div>	
 	</div>	

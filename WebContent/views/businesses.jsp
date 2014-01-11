@@ -67,14 +67,15 @@ Business id: <% out.println(((Business)tempOb).getBusinessId()); %><br>
 	Location [length]: <% out.println(((Business)tempOb).getLength()); %><br>
 	Location [Width]: <% out.println(((Business)tempOb).getWidth()); %><br>
 </div>
-
-<form action="../controller/updateBusinessPreview" method="get">
+<div  style="background-color:#B0E0E6;">
+<form action="../controller/updateBusinessPreview" method="get" style="display: inline;">
 <input type="hidden" name="updateId" value="<% out.print(((Business)tempOb).getBusinessId());%>">
-<input type="submit" value="Update"></form>
+<button type="submit" class="btn btn-primary btn-sm">Update</button></form>
 
-<form action="../controller/deleteBusiness" method="get">
+<form action="../controller/deleteBusiness" method="get" style="display: inline;">
 <input type="hidden" name="deleteId" value="<% out.print(((Business)tempOb).getBusinessId());%>">
-<input type="submit" value="Delete"></form>
+<button type="submit" class="btn btn-danger btn-sm">Delete</button></form>
+</div>
 </div>
 	</div>
 	</div>	
