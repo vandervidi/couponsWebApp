@@ -62,7 +62,7 @@
 <div  style="background-color:#B0E0E6;height: 30px;">
 <h3 style="margin-bottom:0;"><% out.println(((Business)tempOb).getBusinessName()); %></h3></div>
 
-<div style="background-color:#EEEEEE;height:	180px;width:300px;float:left;">
+<div style="background-color:#EEEEEE;height:100px;width:300px;float:left;">
 Business id: <% out.println(((Business)tempOb).getBusinessId()); %><br>
 	Location [length]: <% out.println(((Business)tempOb).getLength()); %><br>
 	Location [Width]: <% out.println(((Business)tempOb).getWidth()); %><br>
