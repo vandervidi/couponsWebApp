@@ -14,7 +14,7 @@
 DAO userInstance = DAO.getInstance();
 	
 		userInstance.addUser(new User("ofir",	MD5.encryptMD5("1") ,1));
-		userInstance.addUser(new User("vidran", MD5.encryptMD5("a") ,0));
+		userInstance.addUser(new User("vidran", MD5.encryptMD5("a") ,1));
 %>
 </body>
 </html>

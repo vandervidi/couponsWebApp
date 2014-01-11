@@ -21,11 +21,7 @@ import org.hibernate.HibernateException;
  */
 @WebServlet("/controller/*")
 public class CouponsPlatformController extends HttpServlet {
-	
-	// Create db Singleton
 	private static final long serialVersionUID = 1L;
-	
-	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -76,7 +72,8 @@ public class CouponsPlatformController extends HttpServlet {
 								.getRequestDispatcher("/views/adminPanel.jsp");
 						dispatcher.forward(request, response);
 					}
-					else{// - 0 - userName login as Regular user
+					else{
+						// - 0 - userName login as Regular user
 						/* Create session & coockie
 						 * 
 						 * 
@@ -91,7 +88,8 @@ public class CouponsPlatformController extends HttpServlet {
 						dispatcher.forward(request, response);
 					}
 						
-				}else{	// Paswword not vaild
+				}else{	
+					// in case the password is not vaild - redirect to error page
 					request.setAttribute("msg", " Wrong password");
 					RequestDispatcher dispatcher = getServletContext()
 							.getRequestDispatcher("/views/error.jsp");
@@ -100,6 +98,7 @@ public class CouponsPlatformController extends HttpServlet {
 			}
 			else
 			{
+				// in case the username is not vaild - redirect to error page
 				request.setAttribute("msg", "User does not exist");
 				RequestDispatcher dispatcher = getServletContext()
 						.getRequestDispatcher("/views/error.jsp");
@@ -127,24 +126,6 @@ public class CouponsPlatformController extends HttpServlet {
 							.getRequestDispatcher("/views/categories.jsp");
 					dispatcher.forward(request, response);
 				} 
-
-				
-				// Working but very slow  -- use in index.jsp from Ajax
-//				else if(str.equals("/showUsername")){
-//									System.out.println("showUsername");
-//					String username = request.getParameter("username");
-//					User tempForCheck = DAO.getInstance().getUser(username);
-//					if (tempForCheck!=null) {
-//						RequestDispatcher dispatcher = getServletContext()
-//								.getRequestDispatcher("/views/usernameExist.jsp?username="+username);
-//						dispatcher.forward(request, response);
-//					}else{
-//						RequestDispatcher dispatcher = getServletContext()
-//								.getRequestDispatcher("/views/usernameNotExist.jsp?username="+username);
-//						dispatcher.forward(request, response);
-//					}
-//				}
-				
 				
 		// Register
 				else if(str.equals("/register")) {					
@@ -160,16 +141,17 @@ public class CouponsPlatformController extends HttpServlet {
 				Cookie all [] = request.getCookies();
 				for (Cookie c : all){
 					if (c.getName().equals("connectedWithPrivilige") ){	
+						c.setValue("");
+			            c.setPath("/");
 						c.setMaxAge(0);		// 0  =  delete cookie immediately from user browser
 						response.addCookie(c);
-
-						RequestDispatcher dispatcher = getServletContext()
-								.getRequestDispatcher("/controller/");
-						dispatcher.forward(request, response);
+						break;
 								
 					}
 				}
-							
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/controller/");
+				dispatcher.forward(request, response);			
 			}
 		
 		//add a coupon to db - working!
@@ -302,12 +284,21 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}			
 				
-		// location
-				//.../location&length=100&width=100
+		// Show location of a business
+		//example : .../location&length=100&width=100
 			else if(str.equals("/location")) {
+				
 				String length=request.getParameter("length");
 				String width=request.getParameter("width");
-				
+				if (length==null || width==null)
+				{
+					request.setAttribute("msg", " You used wrong parameters for 'location'! try using 'width' and 'length'");
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/error.jsp");
+					dispatcher.forward(request, response);
+				}	
+				else{
+
 				double busLength=	Double.parseDouble(length);
 				double busWidth=	Double.parseDouble(width);
 				
@@ -325,16 +316,17 @@ public class CouponsPlatformController extends HttpServlet {
 		        
 				RequestDispatcher dispatcher = getServletContext()
 						.getRequestDispatcher("/views/businessByLocation.jsp");
-				dispatcher.forward(request, response);			
-						}			
-		// print all coupons - working
+				dispatcher.forward(request, response);	
+				}
+			}			
+		// show all ACTIVE coupons - working
 		else if(str.equals("/coupons")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()
 					.getRequestDispatcher("/views/adminPanel.jsp");
 			dispatcher.forward(request, response);			
 		}
-				// print all EXPIRED coupons - working
+		// show all EXPIRED coupons - working
 			else if(str.equals("/expiredCoupons")) {
 				request.setAttribute("timestamp", new java.util.Date());
 				RequestDispatcher dispatcher = getServletContext()
@@ -375,7 +367,7 @@ public class CouponsPlatformController extends HttpServlet {
 				}
 				
 		
-		// Specific coupon - working
+		// show a Specific coupon - working
 		else if(str.contains("/coupon")) {
 			request.setAttribute("timestamp", new java.util.Date());
 			RequestDispatcher dispatcher = getServletContext()

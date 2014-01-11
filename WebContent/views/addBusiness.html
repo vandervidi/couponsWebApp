@@ -40,10 +40,10 @@
 
 		<table class="table table-responsive">
 		<form action="../controller/addBusiness" method="get">
-			<tr><td>Business name:</td><td> <input type=text name="businessName" required><br></td></tr>
-			<tr><td>location [Length]:</td><td> <input type=text name="length" required><br></td></tr>
-			<tr><td>location [Width]:</td><td> <input type=text name="width" required><br></td></tr>
-			<tr><td><input type=submit></td></tr>
+			<tr><td>Business name:</td><td> <input type="text" name="businessName" required><br></td></tr>
+			<tr><td>location [Length]:</td><td> <input type="number" name="length" required min="0"  step="0.01"><br></td></tr>
+			<tr><td>location [Width]:</td><td> <input type="number" name="width" required min="0"  step="0.01"><br></td></tr>
+			<tr><td><button type="submit" class="btn btn-success btn-sm">Create!</button></td></tr>
 		</form>
         </table>
 

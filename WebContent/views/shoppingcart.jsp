@@ -84,7 +84,8 @@
 	%>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-<h3 style="color:white;" >Total Price: <%out.print(totalPrice); %></h3>
+<span style="color:white; font-size: 40px" >Total Price: <%out.print(totalPrice); %></span>
+<button class="btn btn-success btn-lg" style="float: right;">Checkout!</button>
 </nav>
                 <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
                 <script src = "../views/js/bootstrap.js"></script>
