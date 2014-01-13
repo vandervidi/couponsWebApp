@@ -6,10 +6,24 @@ http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
 version="2.0">
 <tlib-version>1.0</tlib-version>
 <short-name>mytaglib</short-name>
-<tag>
-<description>My Example tag</description>
-<name>example</name>
-<tag-class>com.oa.couponsWebApp.MyTag</tag-class>
-<body-content>empty</body-content>
-</tag>
+	<tag>
+		<!-- tag `name` is the name of the tag -->
+		<description>My Example tag</description>
+		<name>example</name>
+		<tag-class>com.oa.couponsWebApp.MyTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<!-- tag `name` is the name of the tag -->
+		<description>My Loop tag</description>
+		<name>myloop</name>
+		<tag-class>com.oa.couponsWebApp.MyLoopTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>number of iterations</description>
+			<name>count</name>
+			<required>false</required>
+		</attribute>
+	</tag>
 </taglib>

@@ -16,6 +16,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+/**
+ * main class & function - not using
+ */
 public class CouponMain {	
 	public static void main(String [] args){
 		

@@ -8,6 +8,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.classic.Session;
 
+/**
+ * class DAO that implements 3 interfaces of: 
+ * Coupon
+ * Business
+ * User
+ * of every one there is function of add/update/delete
+ * 
+ * as a Singleton
+ */
 public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 {
 	private static SessionFactory sessionFactory = null;
@@ -18,22 +27,34 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 	static String  HTMLcr = "<br/>\n";
 	
 // Private constructor prevents instantiation from other classes
+	/**
+	 * Private constructor prevents instantiation from other classes
+	 */
 	  private DAO() {
 		  sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 	  }
 
+	  /**
+		 * get Instance of class
+		 */
 	  public static DAO getInstance() {
 		  if (instance==null)
 			  instance=new DAO();
 		  return instance;
 	  }
 	  
+	  /**
+		 * get the sessionFuctory
+		 */
 	  public static SessionFactory getSessionFactory(){
 		  if (instance==null)
 			  instance=new DAO();
 		  return sessionFactory;
 	  }
 	  
+	  /**
+		 * get Coupon
+		 */
 	@Override
 	public Coupon getCoupon(int id) {
 		Coupon coupon = null;
@@ -54,6 +75,10 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return coupon;
 	}
 
+	
+	/**
+	 * update coupon
+	 */
 	@Override
 	public boolean updateCoupon(Coupon ob) {
 		try {
@@ -73,6 +98,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return true;
 	}
 
+	/**
+	 * get all coupon
+	 */
 	@Override
 	public Iterator<Coupon> getAllCoupons() {
 		Iterator iterator = null;
@@ -92,6 +120,10 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return iterator;
 	}
 
+	/**
+	 * delete a coupon
+	 */
+	@Override
 	public boolean deleteCoupon(int id) {
 		Coupon couponToDel = null;
 		try {
@@ -114,6 +146,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return true;
 	}
 
+	/**
+	 * add coupon
+	 */
 	@Override
 	public boolean addCoupon(Coupon ob) {
 
@@ -131,6 +166,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return true;
 	}
 
+	/**
+	 * get a business
+	 */
 	@Override
 	public Business getBusiness(int id) {
 		Business business = null;
@@ -151,8 +189,10 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return business;
 	}
 
+	/**
+	 * update a business
+	 */
 	@Override
-	// Not Working
 		public boolean updateBusiness(Business ob) {
 			try {
 				session = sessionFactory.openSession();
@@ -171,6 +211,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 			return true;
 		}
 
+	/**
+	 * get iterator of all business
+	 */
 	@Override
 	public Iterator<Business> getAllBusinesses() {
 		Iterator iterator = null;
@@ -190,6 +233,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return iterator;
 	}
 
+	/**
+	 * delete a business
+	 */
 	@Override
 	public boolean deleteBusiness(int id) {
 		Business businessToDelete  = null;
@@ -213,6 +259,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return true;
 	}
 
+	/**
+	 * add business
+	 */
 	@Override
 	public boolean addBusiness(Business ob) {
 
@@ -233,6 +282,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return true;
 	}
 
+	/**
+	 * get user
+	 */
 	@Override
 	public User getUser(String username) {
 		User user = null;
@@ -253,8 +305,10 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return user;
 	}
 
+	/**
+	 * update user
+	 */
 	@Override
-	// Not Working
 		public boolean updateUser(User ob) {
 			try {
 				session = sessionFactory.openSession();
@@ -274,6 +328,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		}
 
 
+	/**
+	 * get all users
+	 */
 	@Override
 	public Iterator<User> getAllUsers() {
 		Iterator iterator = null;
@@ -295,6 +352,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return iterator;
 	}
 
+	/**
+	 * delete a user
+	 */
 	@Override
 	public boolean deleteUser(String username) {
 		User UserToDel = null;
@@ -318,7 +378,9 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		return true;
 	}
 
-
+	/**
+	 * add user
+	 */
 	@Override
 	public boolean addUser(User ob) {
 

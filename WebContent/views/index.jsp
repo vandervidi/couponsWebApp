@@ -53,7 +53,9 @@ if (cookies!=null)
 
         </head>
         <body>
- 
+ 		<!-- for Show all coupons by location of theyier businesses
+		write in url for example : 
+		"/location&length=100&width=100" -->
                 <div class = "navbar navbar-inverse navbar-fixed-top">
                         <div class = "container">
                                

@@ -5,12 +5,16 @@ package com.oa.couponsWebApp;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
-
+/**
+ * cart for show user buy activity
+ */
 public class BasicShoppingCart implements IShoppingCart{
 
 	Vector<ShoppingCartRow> rows = new Vector<ShoppingCartRow>(); 
 	
-	
+	/**
+	 * add coupon to cart list
+	 */
 	@Override
 	public void addCoupon(Coupon coupon) throws CouponsPlatformException {
 		/*check if there is already a row with this product
@@ -42,7 +46,9 @@ public class BasicShoppingCart implements IShoppingCart{
 		
 	}
 
-
+	/**
+	 * get all shoping cart buy rows
+	 */
 	@Override
 	public Collection<ShoppingCartRow> getShoppingCartRows()
 			throws CouponsPlatformException {

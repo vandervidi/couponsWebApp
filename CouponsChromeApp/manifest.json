@@ -8,10 +8,10 @@
 },
 "app": {
 "urls": [
-"http://couponswebapp.vandervidi.cloudbees.net/controller/"
+"http://couponswebapp.vandervidi.cloudbees.net"
 ],
 "launch": {
-"web_url": "http://couponswebapp.vandervidi.cloudbees.net/controller/"
+"web_url": "http://couponswebapp.vandervidi.cloudbees.net"
 }
 },
 "permissions": [
