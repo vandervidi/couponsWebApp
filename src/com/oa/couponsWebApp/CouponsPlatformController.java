@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 /**
@@ -23,12 +24,20 @@ import org.hibernate.HibernateException;
 @WebServlet("/controller/*")
 public class CouponsPlatformController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	* Log4j logger
+	*/
+	private static Logger logger = Logger.getLogger("CouponsPlatformController");
+	
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public CouponsPlatformController() {
 		super();
 		// TODO Auto-generated constructor stub
+		logger.error("CouponsPlatformController constructor");
 	}
 
 	/**
@@ -160,6 +169,7 @@ public class CouponsPlatformController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String str = request.getPathInfo();
 		
+		logger.error("errorrrrrrrrrr logged");
 		// Category
 				if (str.equals("/category")) {
 					String categoryName = request.getParameter("category");				

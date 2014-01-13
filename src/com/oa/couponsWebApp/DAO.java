@@ -3,6 +3,7 @@ package com.oa.couponsWebApp;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -26,6 +27,12 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 	static String  cr = "\n----------------";
 	static String  HTMLcr = "<br/>\n";
 	
+	
+	/**
+	* Log4j logger
+	*/
+	static Logger log4j = Logger.getLogger(DAO.class);
+	
 // Private constructor prevents instantiation from other classes
 	/**
 	 * Private constructor prevents instantiation from other classes
@@ -40,6 +47,7 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 	  public static DAO getInstance() {
 		  if (instance==null)
 			  instance=new DAO();
+		  log4j.trace("DAO getInstance");
 		  return instance;
 	  }
 	  
@@ -49,6 +57,7 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 	  public static SessionFactory getSessionFactory(){
 		  if (instance==null)
 			  instance=new DAO();
+		  log4j.debug("DAO getSessionFactory");
 		  return sessionFactory;
 	  }
 	  
@@ -70,6 +79,7 @@ public class DAO implements ICouponsDAO ,IBusinessDAO ,IUsersDAO
 		} catch (Exception e) {
 									System.out.println("error: get coupon."+cr);
 			e.printStackTrace();
+			log4j.error("getCoupon error.");
 			return null;
 		}
 		return coupon;

@@ -34,4 +34,11 @@
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>log4j</name>
+			<type>2</type>
+			<location>C:/Users/joe/Documents/GitHub/couponsWebApp/log4j</location>
+		</link>
+	</linkedResources>
 </projectDescription>
