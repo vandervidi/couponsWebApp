@@ -3,8 +3,15 @@ package com.oa.couponsWebApp;
 import org.apache.log4j.Logger;
 import java.io.*;
 
+/**
+ * Log4j class example
+ */
 public class LoggingSample {
 	 private static Logger logger=Logger.getLogger("LoggingExample");
+	 
+	 /**
+	  * main function
+	  */
 	  public static void main(String[] args){
 	   try{
 	      FileInputStream fstream = 

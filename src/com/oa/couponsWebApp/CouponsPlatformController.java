@@ -43,7 +43,7 @@ public class CouponsPlatformController extends HttpServlet {
 	/**
 	 * DoPost()
 	 * login - for login page (POST)
-	 * send cookies with
+	 * send cookies with request
 	 */
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			 throws ServletException, IOException
@@ -169,7 +169,6 @@ public class CouponsPlatformController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String str = request.getPathInfo();
 		
-		logger.error("errorrrrrrrrrr logged");
 		// Category
 				if (str.equals("/category")) {
 					String categoryName = request.getParameter("category");				

@@ -4,11 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-
+/**
+ * MD5 class junit for check MD5 class
+ */
 public class MD5Test {
 
 	/**
-	 * can chack it too at: http://md5encryption.com/
+	 * can check it too at: http://md5encryption.com/
 	 */
 	@Test
 	public void testEncryptMD5() {

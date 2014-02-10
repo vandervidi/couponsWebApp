@@ -41,7 +41,7 @@
       
 <div class="container"><h2>ADMIN PANEL <small> List of up to date coupons</small></h2></div>
 
-<div class="container" style="display:inline;">          
+<div class="container" style="display:inline; align:center;">          
 <% 
 Iterator couponsIterator = DAO.getInstance().getAllCoupons();
 Coupon coupon;
