@@ -14,23 +14,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 /**
  * Servlet implementation class CouponsPlatformController
+ * 
  */
 @WebServlet("/controller/*")
 public class CouponsPlatformController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	* Log4j logger
+	*/
+	private static Logger logger = Logger.getLogger("CouponsPlatformController");
+	
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public CouponsPlatformController() {
 		super();
 		// TODO Auto-generated constructor stub
+		logger.error("CouponsPlatformController constructor");
 	}
 
-	
+	/**
+	 * DoPost()
+	 * login - for login page (POST)
+	 * send cookies with request
+	 */
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			 throws ServletException, IOException
 	 {
@@ -110,6 +124,46 @@ public class CouponsPlatformController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * run on all if..else if...else if.....else.    
+	 * until find the request
+	 * in the else if's:
+	 * 
+	 *   
+	 * category					-for nevigate for user request category of coupons
+	 * 
+	 * *****************************************************************************************
+	 * customJavaBean			-JavaBean ex. create rectangle with parameters (12.4 , 13.5)
+	 * customTag				-custom tag ex. create custom tag in jsp and show it
+	 * *****************************************************************************************
+	 * 
+	 * register					-(for future use) register a new user
+	 * logout					-logout if user login before
+	 * 
+	 * addCoupon				-add a coupon to db
+	 * addBusiness				-add a business to db
+	 * 
+	 * updateBusinessPreview	-Preview the business that is to be updated in a form
+	 * updateBusiness     		-Update a Business in db
+	 * 
+	 * updateCouponPreview		-Preview the coupon that is to be updated in a form
+	 * updateCoupon				-Update a Coupon in db
+	 * 
+	 * help						-help page for explain somethings
+	 * contact					-contact with us future send mail
+	 * about					-about us
+	 * 
+	 * location					-show coupons from a location by length and width
+	 * 
+	 * coupons					-show all ACTIVE coupons
+	 * expiredCoupons			-show all EXPIRED coupons
+	 * 
+	 * businesses				-show all businesses
+	 * deleteCoupon				-delete a coupon by ID
+	 * deleteBusiness			-delete a business by ID
+	 * 
+	 * coupon					-show a Specific coupon
+	 * 
+	 * if none of those.. show the index.jsp page
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -126,6 +180,23 @@ public class CouponsPlatformController extends HttpServlet {
 							.getRequestDispatcher("/views/categories.jsp");
 					dispatcher.forward(request, response);
 				} 
+				
+				// JavaBean ex. create rectangle with parameters (12.4 , 13.5)
+				else if(str.equals("/customJavaBean")){
+					Rectangle ob = new Rectangle(12.4,13.5);
+					request.setAttribute("rec", ob);
+					
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/customJavaBean.jsp");
+					dispatcher.forward(request, response);
+				}
+				
+				//custom tag ex. create custom tag in jsp and show it
+				else if (str.equals("/customTag")){
+					RequestDispatcher dispatcher = getServletContext()
+							.getRequestDispatcher("/views/customTag.jsp");
+					dispatcher.forward(request, response);;
+				}
 				
 		// Register
 				else if(str.equals("/register")) {					
@@ -284,7 +355,7 @@ public class CouponsPlatformController extends HttpServlet {
 			dispatcher.forward(request, response);			
 		}			
 				
-		// Show location of a business
+		// Show all coupons by location of theyier businesses
 		//example : .../location&length=100&width=100
 			else if(str.equals("/location")) {
 				

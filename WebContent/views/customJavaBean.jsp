@@ -4,13 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>about</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h2>Login</h2>
-	<%
-	Object ob = request.getAttribute("timestamp");
-	out.println(ob);
-	%>
+	<jsp:useBean id="rec" class="com.oa.couponsWebApp.Rectangle" scope="request"></jsp:useBean><br>
+	width = <jsp:getProperty property="width" name="rec" /><br>
+	height = <jsp:getProperty property="height" name="rec" />
+	
 </body>
 </html>
